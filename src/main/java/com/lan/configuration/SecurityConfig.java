@@ -27,6 +27,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/work/**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()

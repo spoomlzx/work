@@ -78,10 +78,11 @@ var initWork = function () {
                 var basis = data.basis;
                 var tips = data.tips;
                 var keyword = $("#w-keyword").val();
+                var kwpattern =new RegExp(keyword,"g");
                 if (keyword != "") {
-                    content = content.replace(keyword, "<span class='search'> " + keyword + " </span>");
-                    basis = basis.replace(keyword, "<span class='search'> " + keyword + " </span>");
-                    tips = tips.replace(keyword, "<span class='search'> " + keyword + " </span>");
+                    content = content.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
+                    basis = basis.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
+                    tips = tips.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
                 }
                 //绑定work的各个信息
                 $("#p-name").html(data.name);
@@ -99,7 +100,8 @@ var initWork = function () {
                     $("#regulation-modal .modal-title").empty();
                     $("#regulation-modal .modal-title").html(b.title);
                     $("#regulation-modal .modal-body").empty();
-                    $("#regulation-modal .modal-body").html(b.content);
+                    var c=b.content.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
+                    $("#regulation-modal .modal-body").html(c);
                 })
                 $("#p-regulations ul").empty();
                 $.each(data.regulations, function (i, item) {

@@ -2,13 +2,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8" />
-    <title></title>
+    <title>403</title>
 </head>
 <body>
-FreeMarker模板引擎
-<h1>adminindex</h1>
-sfd
-sdfsdfdsfd<br>
-cache
+Sorry<br>
+禁止访问该资源
 </body>
 </html>

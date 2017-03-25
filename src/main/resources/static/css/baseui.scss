@@ -89,7 +89,7 @@ body {
 
 /*container-content*/
 .container-content {
-  margin-left: 120px;
+  padding-left: 120px;
   .toolbar{
     height: 50px;
     border-radius: 0px;
@@ -97,7 +97,7 @@ body {
     border-bottom: #c8c8c8 solid 1px;
     background: linear-gradient(#fff, #f4f4f4);
     box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 8px;
-    position: fixed;
+    position: inherit;
     width: 100%;
     padding: 7px;
     z-index: 100;
@@ -105,16 +105,15 @@ body {
       float: right;
       margin-right: 13px;
     }
-    .search {
-      color: #ff0000;
-      font-weight: bold;
-    }
-
   }
+
+}
+
+.search {
+  color: #ff0000;
 }
 
 .center-container {
-  padding-top: 50px;
   z-index: 50;
 }
 

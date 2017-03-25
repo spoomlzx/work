@@ -1,9 +1,7 @@
 package com.lan.model.utilMoel;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-
-import java.util.Collection;
+import com.lan.model.User;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 /**
  * package com.lan.security
@@ -11,28 +9,24 @@ import java.util.Collection;
  * @author spoomlzx
  * @date 2016/8/24
  */
-public class UserInfo extends User {
-    private Integer unitId;
-    private Integer unitTypeId;
-    public UserInfo(Integer unitId,Integer unitTypeId,String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        this.unitId=unitId;
-        this.unitTypeId=unitTypeId;
+public class UserInfo extends org.springframework.security.core.userdetails.User {
+    private com.lan.model.User user;
+
+    public UserInfo(User user){
+        super(user.getUserName(), user.getPassword(),true,true,true,true, AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
+        this.user=user;
     }
 
     public Integer getUnitId() {
-        return unitId;
-    }
-
-    public void setUnitId(Integer unitId) {
-        this.unitId = unitId;
+        return user.getUnitId();
     }
 
     public Integer getUnitTypeId() {
-        return unitTypeId;
+        return user.getUnitTypeId();
     }
 
-    public void setUnitTypeId(Integer unitTypeId) {
-        this.unitTypeId = unitTypeId;
+    public String getRole(){
+        return user.getRoles();
     }
+
 }

@@ -105,8 +105,7 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-swagger2.version}</version>
         </dependency>
-
-
+        <!--json-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

@@ -1,10 +1,8 @@
 package com.lan.controller;
 
 import com.lan.model.WorkFull;
-import com.lan.model.WorkHistory;
 import com.lan.model.WorkSet;
 import com.lan.service.RegulationService;
-import com.lan.service.WorkHistoryService;
 import com.lan.service.WorkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +22,6 @@ public class WorkController {
     private RegulationService regulationService;
     @Autowired
     private WorkService workService;
-    @Autowired
-    private WorkHistoryService workHistoryService;
 
     /**
      * 获取一条work的信息，返回给前端
@@ -53,15 +49,4 @@ public class WorkController {
         return workService.selectWorkIdsByKeyword(unitTypeId, keyword);
     }
 
-    /**
-     * 返回unitId对应的所有工作的list
-     *
-     * @param unitId
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getWorkHistory/{unitId}", method = RequestMethod.GET)
-    public List<WorkHistory> getWorkHistoryByUnitId(@PathVariable Integer unitId) {
-        return workHistoryService.getWorkHistoryByUnitId(unitId);
-    }
 }

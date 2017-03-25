@@ -1,2 +1,5 @@
-# springboot-test
-springboot+mybatis+swagger
+# work
+- springboot
+- mybatis
+- swagger
+- freemarker

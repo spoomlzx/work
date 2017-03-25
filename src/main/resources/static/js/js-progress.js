@@ -12,7 +12,7 @@ $(document).ready(function () {
             $.fn.zTree.init($("#treeDemo"), setting, data);
         }
     })
-    initTable();
+    //initTable();
 
 })
 

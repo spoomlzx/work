@@ -209,7 +209,7 @@ body {
 
 /*container-content*/
 .container-content {
-  margin-left: 120px; }
+  padding-left: 120px; }
   .container-content .toolbar {
     height: 50px;
     border-radius: 0px;
@@ -217,19 +217,18 @@ body {
     border-bottom: #c8c8c8 solid 1px;
     background: linear-gradient(#fff, #f4f4f4);
     box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 8px;
-    position: fixed;
+    position: inherit;
     width: 100%;
     padding: 7px;
     z-index: 100; }
     .container-content .toolbar .btn-add {
       float: right;
       margin-right: 13px; }
-    .container-content .toolbar .search {
-      color: #ff0000;
-      font-weight: bold; }
+
+.search {
+  color: #ff0000; }
 
 .center-container {
-  padding-top: 50px;
   z-index: 50; }
 
 .input-message {
@@ -248,6 +247,10 @@ body {
   background-color: #F0F6E4; }
 
 @CHARSET "UTF-8";
+.login-body {
+  background: url(../image/bk.jpg);
+  background-size: 100% 100%; }
+
 .login-info {
   margin: 24px;
   float: right; }
