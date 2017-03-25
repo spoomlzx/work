@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+.login-info {
+  margin: 24px;
+  float: right; }
+
+.login-box {
+  width: 700px;
+  margin: 20px auto;
+  background: #ffffff;
+  -webkit-box-shadow: 1px 1px 4px #767676;
+  box-shadow: 1px 1px 4px #767676; }
+
+.form-login {
+  padding: 50px 10px 30px 10px; }
+
+.form-login .form-control {
+  height: 40px; }
+
+.reg-box {
+  border-left: 2px solid #eee;
+  padding-left: 20px;
+  height: 200px;
+  width: 150px; }
+
+.login-box i.fa {
+  width: 16px;
+  font-size: 16px; }
+
+/*# sourceMappingURL=login.css.map */

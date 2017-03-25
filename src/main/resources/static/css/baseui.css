@@ -1,0 +1,79 @@
+@charset "UTF-8";
+html, body {
+  display: block;
+  height: 100%;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei UI", "Microsoft YaHei", sans-serif; }
+
+/*layout begin*/
+body {
+  padding-top: 80px;
+  background-color: #e6e6e6;
+  font-size: 16px; }
+
+.header {
+  position: fixed;
+  height: 80px;
+  margin: 0 auto;
+  width: 100%;
+  -webkit-box-shadow: 0 0 10px -2px #0B203A;
+  box-shadow: 0 0 10px -2px #0B203A;
+  background: linear-gradient(to right, #0b203a, rgba(11, 32, 58, 0.85) 50%, rgba(11, 32, 58, 0.6));
+  z-index: 101; }
+
+.right {
+  float: right; }
+
+.left {
+  float: left; }
+
+.logo {
+  padding-left: 40px;
+  padding-top: 2px;
+  float: left; }
+
+.logo a, .logo a:hover {
+  font-family: '妤蜂綋', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Open Sans', sans-serif;
+  font-size: 52px;
+  color: #ffffff;
+  text-decoration: none; }
+
+/*sidebar*/
+.left-sidebar {
+  position: fixed;
+  padding-top: 50px;
+  width: 120px;
+  min-height: 560px;
+  height: 100%;
+  _overflow: hidden;
+  background: #e4e5e6;
+  z-index: 88;
+  box-shadow: rgba(0, 0, 0, 0.1) 3px 0px 6px;
+  border-right: 1px #cbcccc solid; }
+
+.left-sidebar .active, .left-sidebar .active:hover {
+  background-color: #FFFFFF;
+  border-left: 6px #44b549 solid; }
+
+.nav-sidebar {
+  border-top: 1px #9d9d9d solid; }
+
+.nav-sidebar > li {
+  border-left: 6px #e4e5e6 solid; }
+
+.nav-sidebar > li > a {
+  color: #666;
+  height: 45px;
+  padding: 10px 0px;
+  font-size: 16px;
+  text-align: center; }
+
+.nav-sidebar > li > a > span {
+  padding-right: 3px; }
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #666;
+  background-color: #ffffff; }
+
+/*# sourceMappingURL=baseui.css.map */

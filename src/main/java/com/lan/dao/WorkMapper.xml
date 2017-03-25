@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.dao.WorkMapper">
+    <!--auto generated Code-->
+    <resultMap id="WorkColumnMap" type="com.lan.model.Work">
+        <result column="work_id" property="workId"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+    </resultMap>
+    <resultMap id="WorkFullColumnMap" type="com.lan.model.WorkFull">
+        <result column="work_id" property="workId"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="basis" property="basis"/>
+        <result column="content" property="content"/>
+        <result column="flow_chart" property="flowChart"/>
+        <result column="regulation_ids" property="regulationIds"/>
+        <result column="tips" property="tips"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `work_id`, `name`, `type`, `basis`, `content`, `flow_chart`, `regulation_ids`, `tips`
+    </sql>
+    
+    <select id="selectWorkList" resultMap="WorkColumnMap">
+        select w.work_id,w.name,w.type from type_work t inner join `work` w on t.work_id=w.work_id and t.unit_type_id=#{unitTypeId}
+        where 1=1
+        <if test="type != null">
+            and w.type=#{type}
+        </if>
+    </select>
+
+    <select id="selectWork" resultMap="WorkFullColumnMap">
+        SELECT w.*,case when h.`status`->'$.${index}'=1 then 1 else 0 end `check`
+        FROM `work` w
+        INNER JOIN history h ON w.work_id=h.work_id AND h.unit_id=#{unitId} AND w.work_id=${workId}
+    </select>
+
+    <select id="selectWorkIdsByKeyword" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select s.work_id from type_work t
+        inner join searchtext s on t.unit_type_id=#{unitTypeId} and t.work_id=s.work_id
+        and s.text like '%${keyword}%'
+    </select>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.workId">
+        INSERT INTO work (
+            `work_id`,
+            `name`,
+            `type`,
+            `basis`,
+            `content`,
+            `flow_chart`,
+            `regulation_ids`,
+            `tips`
+        ) VALUES (
+            #{pojo.workId},
+            #{pojo.name},
+            #{pojo.type},
+            #{pojo.basis},
+            #{pojo.content},
+            #{pojo.flowChart},
+            #{pojo.regulationIds},
+            #{pojo.tips}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.workId">
+        INSERT INTO work
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.workId!=null"> `work_id`,</if>
+            <if test="pojo.name!=null"> `name`,</if>
+            <if test="pojo.type!=null"> `type`,</if>
+            <if test="pojo.basis!=null"> `basis`,</if>
+            <if test="pojo.content!=null"> `content`,</if>
+            <if test="pojo.flowChart!=null"> `flow_chart`,</if>
+            <if test="pojo.regulationIds!=null"> `regulation_ids`,</if>
+            <if test="pojo.tips!=null"> `tips`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.workId!=null">#{pojo.workId},</if>
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.type!=null">#{pojo.type},</if>
+            <if test="pojo.basis!=null">#{pojo.basis},</if>
+            <if test="pojo.content!=null">#{pojo.content},</if>
+            <if test="pojo.flowChart!=null">#{pojo.flowChart},</if>
+            <if test="pojo.regulationIds!=null">#{pojo.regulationIds},</if>
+            <if test="pojo.tips!=null">#{pojo.tips},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO work (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.workId},
+            #{pojo.name},
+            #{pojo.type},
+            #{pojo.basis},
+            #{pojo.content},
+            #{pojo.flowChart},
+            #{pojo.regulationIds},
+            #{pojo.tips}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE work
+        <set>
+            <if test="pojo.workId != null"> `work_id` = #{pojo.workId}, </if>
+            <if test="pojo.name != null"> `name` = #{pojo.name}, </if>
+            <if test="pojo.type != null"> `type` = #{pojo.type}, </if>
+            <if test="pojo.basis != null"> `basis` = #{pojo.basis}, </if>
+            <if test="pojo.content != null"> `content` = #{pojo.content}, </if>
+            <if test="pojo.flowChart != null"> `flow_chart` = #{pojo.flowChart}, </if>
+            <if test="pojo.regulationIds != null"> `regulation_ids` = #{pojo.regulationIds}, </if>
+            <if test="pojo.tips != null"> `tips` = #{pojo.tips} </if>
+        </set>
+        WHERE work_id = #{pojo.workId}
+    </update>
+</mapper>
+

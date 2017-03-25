@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.dao.UnitMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.lan.model.Unit">
+        <result column="unit_id" property="id"/>
+        <result column="parent_id" property="pId"/>
+        <result column="name" property="name"/>
+        <result column="unit_type_id" property="unitTypeId"/>
+        <result column="active" property="active"/>
+    </resultMap>
+    
+    <resultMap id="typeColumnMap" type="com.lan.model.UnitType">
+        <result column="unit_type_id" property="unitTypeId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `unit_id`,
+        `parent_id`,
+        `name`,
+        `unit_type_id`,
+        `active`
+    </sql>
+
+    <select id="getUnitTreeById" resultMap="AllColumnMap">
+        select unit_id,parent_id,name,case when unit_id=#{unitId} then 1 else 0 end `open` from unit where FIND_IN_SET(unit_id,queryUnitTree(#{unitId})) and active=1
+    </select>
+
+    <select id="getUnitTypeList" resultMap="typeColumnMap">
+        select unit_type_id,name from unit_type
+    </select>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.unitId">
+        INSERT INTO unit (
+            `unit_id`,
+            `parent_id`,
+            `name`,
+            `unit_type_id`
+        ) VALUES (
+            #{pojo.unitId},
+            #{pojo.parentId},
+            #{pojo.name},
+            #{pojo.unitTypeId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.unitId">
+        INSERT INTO unit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.unitId!=null"> `unit_id`,</if>
+            <if test="pojo.parentId!=null"> `parent_id`,</if>
+            <if test="pojo.name!=null"> `name`,</if>
+            <if test="pojo.type!=null"> `unit_type_id`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.unitId!=null">#{pojo.unitId},</if>
+            <if test="pojo.parentId!=null">#{pojo.parentId},</if>
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.type!=null">#{pojo.unitTypeId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO unit (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.unitId},
+            #{pojo.parentId},
+            #{pojo.name},
+            #{pojo.unitTypeId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE unit
+        <set>
+            <if test="pojo.unitId != null"> `unit_id` = #{pojo.unitId}, </if>
+            <if test="pojo.parentId != null"> `parent_id` = #{pojo.parentId}, </if>
+            <if test="pojo.name != null"> `name` = #{pojo.name}, </if>
+            <if test="pojo.type != null"> `unit_type_id` = #{pojo.unitTypeId} </if>
+            <if test="pojo.active != null"> `active` = #{pojo.active} </if>
+        </set>
+        WHERE unit_id = #{pojo.unitId}
+    </update>
+</mapper>
+

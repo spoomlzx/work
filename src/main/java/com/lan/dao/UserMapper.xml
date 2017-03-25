@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.dao.UserMapper">
+
+<!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.lan.model.User">
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="roles" property="roles"/>
+        <result column="unit_id" property="unitId"/>
+        <result column="email" property="email"/>
+        <result column="create_time" property="createTime"/>
+        <result column="enabled" property="enabled"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="unit_type_id" property="unitTypeId"/>
+    </resultMap>
+
+<!--auto generated Code-->
+    <sql id="all_column">
+        `user_id`,
+        `user_name`,
+        `password`,
+        `roles`,
+        `unit_id`,
+        `email`,
+        `create_time`,
+        `enabled`,
+        `last_login_time`
+    </sql>
+
+    <select id="getUserByName" resultMap="AllColumnMap">
+        select `user`.`user_id`,`user`.`user_name`,`user`.`password`,`user`.`roles`,`user`.unit_id,unit.unit_type_id unit_type_id from user
+        inner join unit on `user`.user_name=#{userName} and `user`.unit_id=`unit`.unit_id
+    </select>
+</mapper>

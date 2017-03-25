@@ -1,0 +1,45 @@
+@charset "UTF-8";
+//table
+table th {
+  text-align: center;
+}
+
+table td {
+  text-align: center;
+}
+
+table.table tbody tr.selected, table.table tbody tr:hover.selected {
+  background-color: #abb9d3;
+}
+
+.regulation-list {
+  padding: 8px;
+}
+
+table.table-bordered>tbody > tr > td{
+  line-height: 32px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+  margin: 0;
+  white-space: nowrap;
+  text-align: right;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+  margin: 2px 0;
+  white-space: nowrap;
+}
+
+div.dataTables_wrapper div.dataTables_length {
+  text-align: right;
+}
+
+.dataTables_filter {
+  display: inline-block;
+  padding-left: 5px;
+}
+
+.dt-buttons {
+  padding-bottom: 5px;
+}
