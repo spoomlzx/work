@@ -101,6 +101,16 @@
 .tab-content > .tab-pane {
   padding: 28px; }
 
+.work-log {
+  width: 24%;
+  padding-left: 10px; }
+  .work-log > .panel {
+    margin-bottom: 0px; }
+  .work-log .panel-body {
+    padding: 0px; }
+    .work-log .panel-body .list-group {
+      margin-bottom: 0px; }
+
 table th {
   text-align: center; }
 

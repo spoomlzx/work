@@ -5,6 +5,7 @@ import com.lan.dao.UserMapper;
 import com.lan.model.User;
 import com.lan.model.utilMoel.UserInfo;
 import com.lan.service.UserDetailsServiceImpl;
+import com.lan.service.WorkService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class WorkApplicationTests {
 
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private WorkService workService;
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
@@ -38,5 +41,10 @@ public class WorkApplicationTests {
 	public void encoder(){
 		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
 		System.out.println(encoder.encode("asdf"));
+	}
+
+	@Test
+	public void testSelectWork(){
+		Gson gson=new Gson();
 	}
 }

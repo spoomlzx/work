@@ -7,7 +7,6 @@
   overflow: hidden;
 }
 
-
 .work-list {
   margin-bottom: 0px;
   width: 16%;
@@ -131,4 +130,18 @@
 
 .tab-content > .tab-pane {
   padding: 28px;
+}
+
+.work-log {
+  width: 24%;
+  padding-left: 10px;
+  >.panel{
+    margin-bottom: 0px;
+  }
+  .panel-body{
+    padding: 0px;
+    .list-group{
+      margin-bottom: 0px;
+    }
+  }
 }

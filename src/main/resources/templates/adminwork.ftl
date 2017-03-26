@@ -8,7 +8,6 @@
     <meta content="" name="author"/>
     <link href="/plugin/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="/plugin/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="/plugin/datetime/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/spoom.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -19,12 +18,25 @@
     <div class="toolbar">
         <input style="width: 12%" type="text" class="form-control left" id="w-keyword" placeholder="输入关键词">
         <button class="btn btn-info left" id="w-search" data-unittypeid="${unitTypeId}" data-unitid="${unitId}">搜索</button>
-        <button class="btn btn-success right hidden" id="w-check-btn">
-            <span class="fa fa-hand-o-left check-state" data-check="1"></span> <span class="check-info">现在完成</span>
+    <#if currentUser?? && currentUser.role == "ADMIN">
+
+        <button class="btn btn-success right" id="w-edit">
+            <span class="fa fa-edit"></span> 修改工作
         </button>
+        <button href="#work-modal" data-toggle="modal" class="btn btn-warning right" id="w-add">
+            <span class="fa fa-plus"></span> 添加工作
+        </button>
+        <div class="right">
+            <select class="form-control" id="w-type-select">
+                <#list unitTypes as type>
+                    <option value="${type.unitTypeId}" <#if type.unitTypeId==unitTypeId>selected="selected"</#if>>${type.name}</option>
+                </#list>
+            </select>
+        </div>
+    </#if>
     </div>
     <div class="center-container">
-        <div class="panel panel-default work-list">
+        <div class="panel panel-default work-list" style="width: 20%">
             <div class="panel-heading">工作列表</div>
             <div class="panel-group search-result" id="accordion" role="tablist" aria-multiselectable="true">
             <#list typelist as type>
@@ -43,11 +55,8 @@
             </#list>
             </div>
         </div>
-        <div class="work-detail">
+        <div class="work-detail" style="width: 80%">
             <div class="alert alert-warning title">
-                <label class="btn btn-danger left m-left-10" id="w-check">
-                    <span class="fa fa-spinner check-state"></span> <span class="check-info">该项工作待完成</span>
-                </label>
                 <span id="p-name">工作标题</span>
             </div>
             <div>
@@ -90,21 +99,6 @@
                 </div>
             </div>
         </div>
-        <div class="work-panel right work-log">
-            <div class="panel panel-danger">
-                <div class="panel-heading">工作日志</div>
-                <div class="panel-body">
-                    <ul class="list-group" id="l-list">
-                    </ul>
-                </div>
-            </div>
-            <div>
-                <button href="#log-add-modal" data-toggle="modal" class="btn btn-success right hidden" id="l-add-btn">
-                    <span class="fa fa-plus"></span> <span>添加日志</span>
-                </button>
-            </div>
-
-        </div>
     </div>
 
 
@@ -115,7 +109,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
             <div class="modal-body regulation-content">
 
@@ -126,105 +120,66 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="log-show-modal" tabindex="-1">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="work-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">日志</h4>
-            </div>
-            <div class="modal-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">时间:</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-time">List group item heading</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">责任人：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-duty-person">List group item heading</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">参加人员类别：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-person-type">List group item heading</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">人数：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-count">List group item heading</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">工作情况描述：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-describe">List group item heading</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="log-add-modal" tabindex="-1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modal-title">添加日志</h4>
+                <h4 class="modal-title" id="modal-title">添加法规制度</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-body">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">时间</label>
-                            <div class="input-group date form_datetime col-md-9" style="padding: 0px 15px">
-                                <input class="form-control" type="text" id="l-time" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                            <label class="col-md-2 control-label">法规名称</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="r-title" placeholder="输入法规名称">
                             </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br/>
+                            <span class="input-message" id="r-title-error"></span>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">责任人</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="l-duty-person" placeholder="责任人姓名">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">人员类别</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="l-person-type" placeholder="参加人员类别">
+                            <label class="col-md-2 control-label">发文机关</label>
+                            <div class="col-md-5">
+                                <select class="form-control" id="r-department">
+                                    <option>军委</option>
+                                    <option>海军</option>
+                                    <option>舰队</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">人数</label>
-                            <div class="col-md-9">
-                                <input onkeydown="onlyNum();" style="ime-mode:Disabled" type="text" class="form-control" id="l-count" placeholder="人数">
+                            <label class="col-md-2 control-label">类别</label>
+                            <div class="col-md-5">
+                                <select class="form-control" id="r-category">
+                                    <option>政工类</option>
+                                    <option>军事类</option>
+                                    <option>后勤类</option>
+                                    <option>装备类</option>
+                                    <option>综合类</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">工作情况描述</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" rows="6" id="l-describe"></textarea>
+                            <label class="col-md-2 control-label">法规内容</label>
+                            <div class="col-md-10">
+                                <script id="r-content" type="text/plain"></script>
                             </div>
                         </div>
-                        <span class="input-message" id="l-add-error"></span>
+
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" id="l-add">添 加</button>
+                <button class="btn btn-success" id="r-add">添 加</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
             </div>
         </div>
     </div>
 </div>
 
-
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
-<script src="/plugin/datetime/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<script src="/plugin/datetime/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
 <script src="/js/js-work.js" type="text/javascript"></script>
 </body>
 </html>

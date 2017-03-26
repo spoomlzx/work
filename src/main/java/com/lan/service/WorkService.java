@@ -8,6 +8,7 @@ import com.lan.model.WorkSet;
 import com.lan.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,38 +38,39 @@ public class WorkService {
         return workSets;
     }
 
-    public WorkFull selectWork(Integer workId, Integer unitId, String type) {
-        Date date = new Date();
-        WorkFull work;
-        switch (type) {
-            case "年度":
-            case "按需":
-                work = workMapper.selectWork(workId, unitId, "y");
-                break;
-            case "半年":
-                work=workMapper.selectWork(workId,unitId,"h"+ DateUtils.getHalfYear(date));
-                break;
-            case "季度":
-                work=workMapper.selectWork(workId,unitId,"q"+ DateUtils.getSeason(date));
-                break;
-            case "月度":
-                work=workMapper.selectWork(workId,unitId,"m"+ DateUtils.getMonth(date));
-                break;
-            case "周":
-                work=workMapper.selectWork(workId,unitId,"w"+ DateUtils.getWeek(date));
-                break;
-            case "日":
-                work=workMapper.selectWork(workId,unitId,"d"+ DateUtils.getDay(date));
-                break;
-            default:
-                work = new WorkFull();
-                break;
-        }
+    public WorkFull selectWorkById(Integer workId) {
+        WorkFull work = workMapper.selectWorkById(workId);
         if (work.getRegulationIds() != null) {
             String[] ids = work.getRegulationIds().split(",");
             work.setRegulations(regulationMapper.selectRegualtionsByIds(ids));
         }
         return work;
+    }
+
+    public WorkFull selectWork(Integer workId, Integer unitId) {
+        String type = workMapper.getTypeById(workId);
+        WorkFull work = workMapper.selectWork(workId, unitId, getIndex(type));
+        if (work.getRegulationIds() != null) {
+            String[] ids = work.getRegulationIds().split(",");
+            work.setRegulations(regulationMapper.selectRegualtionsByIds(ids));
+        }
+        return work;
+    }
+
+    @Transactional
+    public int updateWorkStatus(Integer workId, Integer unitId, Boolean check) {
+        int i = -1;
+        String type = workMapper.getTypeById(workId);
+        try {
+            if (check) {
+                i = workMapper.deleteWorkRecord(workId, unitId, getIndex(type));
+            } else {
+                i = workMapper.insertWorkRecord(workId, unitId, getIndex(type));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return i;
     }
 
     public List<Integer> selectWorkIdsByKeyword(Integer unitTypeId, String keyword) {
@@ -81,5 +83,33 @@ public class WorkService {
 
     public int update(Work pojo) {
         return workMapper.update(pojo);
+    }
+
+
+    private String getIndex(String type) {
+        Date date = new Date();
+        String index = "$.year" + DateUtils.getYear(date) + ".u";
+        switch (type) {
+            case "年度":
+            case "按需":
+                index = index + 1;
+                break;
+            case "半年":
+                index = index + DateUtils.getHalfYear(date);
+                break;
+            case "季度":
+                index = index + DateUtils.getSeason(date);
+                break;
+            case "月度":
+                index = index + DateUtils.getMonth(date);
+                break;
+            case "周":
+                index = index + DateUtils.getWeek(date);
+                break;
+            case "日":
+                index = index + DateUtils.getDay(date);
+                break;
+        }
+        return index;
     }
 }

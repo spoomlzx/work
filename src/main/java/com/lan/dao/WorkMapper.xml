@@ -22,6 +22,10 @@
     <sql id="all_column">
         `work_id`, `name`, `type`, `basis`, `content`, `flow_chart`, `regulation_ids`, `tips`
     </sql>
+
+    <select id="getTypeById" resultType="java.lang.String">
+        select type from work where work_id=#{workId}
+    </select>
     
     <select id="selectWorkList" resultMap="WorkColumnMap">
         select w.work_id,w.name,w.type from type_work t inner join `work` w on t.work_id=w.work_id and t.unit_type_id=#{unitTypeId}
@@ -31,10 +35,14 @@
         </if>
     </select>
 
+    <select id="selectWorkById" resultMap="WorkFullColumnMap">
+        select <include refid="all_column"/> from work where work_id=#{workId}
+    </select>
+
     <select id="selectWork" resultMap="WorkFullColumnMap">
-        SELECT w.*,case when h.`status`->'$.${index}'=1 then 1 else 0 end `check`
+        SELECT w.*,case when h.`status`->'${index}'=1 then 1 else 0 end `check`
         FROM `work` w
-        INNER JOIN history h ON w.work_id=h.work_id AND h.unit_id=#{unitId} AND w.work_id=${workId}
+        INNER JOIN history h ON w.work_id=h.work_id AND h.unit_id=#{unitId} AND w.work_id=#{workId}
     </select>
 
     <select id="selectWorkIdsByKeyword" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -42,6 +50,14 @@
         inner join searchtext s on t.unit_type_id=#{unitTypeId} and t.work_id=s.work_id
         and s.text like '%${keyword}%'
     </select>
+
+    <update id="deleteWorkRecord">
+        update history set status=JSON_REMOVE(status,'${index}') where unit_id=#{unitId} and work_id=#{workId}
+    </update>
+
+    <update id="insertWorkRecord">
+        update history set status=JSON_INSERT(status,'${index}',1) where unit_id=#{unitId} and work_id=#{workId}
+    </update>
 
     <!--auto generated Code-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.workId">

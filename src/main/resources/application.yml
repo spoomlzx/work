@@ -1,6 +1,6 @@
 logging:
   pattern:
-    console: log@%clr(%d{mm:ss}){blue}%clr(-%5p){red} [%logger{20}] =%clr(%m){magenta}%n
+    console: log@%clr(%d{mm:ss SSS}){blue}%clr(-%5p){red} [%logger{20}] =%clr(%m){magenta}%n
   level:
     com.lan: debug
     freemarker.cache: debug

@@ -2,7 +2,6 @@ package com.lan.controller;
 
 import com.lan.model.Unit;
 import com.lan.service.UnitService;
-import com.lan.service.WorkHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +21,6 @@ import java.util.List;
 public class UnitController {
     @Autowired
     private UnitService unitService;
-    @Autowired
-    private WorkHistoryService workHistoryService;
 
     /**
      * 返回单位树的json

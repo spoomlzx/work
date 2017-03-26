@@ -196,7 +196,7 @@ public class DateUtils {
     }
 
     /**
-     * 取得日期：日
+     * 取得日期：一年中第几天
      *
      * @param date
      * @return
@@ -204,7 +204,7 @@ public class DateUtils {
     public static int getDay(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
-        int da = c.get(Calendar.DAY_OF_MONTH);
+        int da = c.get(Calendar.DAY_OF_YEAR);
         return da;
     }
 
