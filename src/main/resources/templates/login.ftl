@@ -15,7 +15,7 @@
     <div class="logo">
         <a href="/"><span>基层部队标准工作程序规范</span></a>
     </div>
-    <div class="btn-group login-info">
+    <div class="btn-group login-info right">
     <#if currentUser??>
         <a href="/loginPage" type="button" class="btn btn-danger">
             <span class="fa fa-user"></span> ${currentUser.username}

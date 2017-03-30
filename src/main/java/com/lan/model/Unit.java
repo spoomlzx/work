@@ -11,7 +11,7 @@ public class Unit {
     private Integer pId;
     private String name;
     private boolean open;
-    private Integer unitTypeId;
+    private String iconSkin;
     private boolean active;
 
     public Integer getId() {
@@ -46,12 +46,12 @@ public class Unit {
         this.open = open;
     }
 
-    public Integer getUnitTypeId() {
-        return unitTypeId;
+    public String getIconSkin() {
+        return "l"+iconSkin;
     }
 
-    public void setUnitTypeId(Integer unitTypeId) {
-        this.unitTypeId = unitTypeId;
+    public void setIconSkin(String iconSkin) {
+        this.iconSkin = iconSkin;
     }
 
     public boolean isActive() {

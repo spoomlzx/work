@@ -8,14 +8,14 @@ html, body {
 /*layout begin*/
 
 body {
-  padding-top: 80px;
+  padding-top: 60px;
   background-color: #e6e6e6;
   font-size: 16px;
 }
 
 .header {
   position: fixed;
-  height: 80px;
+  height: 60px;
   margin: 0 auto;
   width: 100%;
   -webkit-box-shadow: 0 0 10px -2px #0B203A;
@@ -42,7 +42,7 @@ body {
   float: left;
   a, a:hover {
     font-family: '楷体', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Open Sans', sans-serif;
-    font-size: 52px;
+    font-size: 42px;
     color: #ffffff;
     text-decoration: none;
   }
@@ -51,7 +51,6 @@ body {
 /*sidebar*/
 .left-sidebar {
   position: fixed;
-  padding-top: 50px;
   width: 120px;
   min-height: 560px;
   height: 100%;
@@ -67,7 +66,6 @@ body {
 }
 
 .nav-sidebar {
-  border-top: 1px #9d9d9d solid;
   >li{
     border-left: 6px #e4e5e6 solid;
     >a{
@@ -90,6 +88,7 @@ body {
 /*container-content*/
 .container-content {
   padding-left: 120px;
+  padding-top: 10px;
   .toolbar{
     height: 50px;
     border-radius: 0px;

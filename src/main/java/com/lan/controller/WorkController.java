@@ -3,6 +3,7 @@ package com.lan.controller;
 import com.lan.model.WorkFull;
 import com.lan.model.WorkLog;
 import com.lan.model.WorkSet;
+import com.lan.model.WorkStatus;
 import com.lan.model.utilMoel.Message;
 import com.lan.model.utilMoel.UserInfo;
 import com.lan.service.RegulationService;
@@ -87,6 +88,18 @@ public class WorkController {
     public List<WorkSet> getWorkList(@PathVariable Integer unitTypeId) {
         List<WorkSet> workSets = workService.selectWorkSetList(unitTypeId);
         return workSets;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/getWorkStatusList/{unitId}"}, method = RequestMethod.GET)
+    public Map<Integer, WorkStatus> getWorkListWithStatus(@PathVariable Integer unitId) {
+        Map<Integer, WorkStatus> map = new HashMap<>();
+        List<WorkStatus> workStatuses = workService.selectWorkListWithStatus(unitId);
+        for (WorkStatus workStatus : workStatuses) {
+
+            map.put(workStatus.getWorkId(),workStatus);
+        }
+        return map;
     }
 
     /**

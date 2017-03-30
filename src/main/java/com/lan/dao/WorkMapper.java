@@ -2,6 +2,7 @@ package com.lan.dao;
 
 import com.lan.model.Work;
 import com.lan.model.WorkFull;
+import com.lan.model.WorkStatus;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,8 @@ public interface WorkMapper {
     List<Work> selectWorkList(@Param("unitTypeId") Integer unitTypeId, @Param("type") String type);
 
     List<Integer> selectWorkIdsByKeyword(@Param("unitTypeId") Integer unitTypeId, @Param("keyword") String keyword);
+
+    List<WorkStatus> getWorkListWithStatus(@Param("unitId") Integer unitId,@Param("index") String index);
 
     int deleteWorkRecord(@Param("workId") Integer workId, @Param("unitId") Integer unitId, @Param("index") String index);
     int insertWorkRecord(@Param("workId") Integer workId, @Param("unitId") Integer unitId, @Param("index") String index);

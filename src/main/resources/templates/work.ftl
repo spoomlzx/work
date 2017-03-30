@@ -15,16 +15,12 @@
 <#include "./sidebar.ftl"/>
 
 <div class="container-content">
-
-    <div class="toolbar">
-        <input style="width: 12%" type="text" class="form-control left" id="w-keyword" placeholder="输入关键词">
-        <button class="btn btn-info left" id="w-search" data-unittypeid="${unitTypeId}" data-unitid="${unitId}">搜索</button>
-        <button class="btn btn-success right hidden" id="w-check-btn">
-            <span class="fa fa-hand-o-left check-state" data-check="1"></span> <span class="check-info">现在完成</span>
-        </button>
-    </div>
     <div class="center-container">
         <div class="panel panel-default work-list">
+            <div class="form-inline">
+                <input type="text" class="form-control" id="w-keyword" placeholder="输入关键词">
+                <button class="btn btn-info right" id="w-search" data-unittypeid="${unitTypeId}" data-unitid="${unitId}">搜索</button>
+            </div>
             <div class="panel-heading">工作列表</div>
             <div class="panel-group search-result" id="accordion" role="tablist" aria-multiselectable="true">
             <#list typelist as type>
@@ -45,10 +41,10 @@
         </div>
         <div class="work-detail">
             <div class="alert alert-warning title">
-                <label class="btn btn-danger left m-left-10" id="w-check">
+                <label class="btn btn-danger left m-left-10 hidden" id="w-check">
                     <span class="fa fa-spinner check-state"></span> <span class="check-info">该项工作待完成</span>
                 </label>
-                <span id="p-name">工作标题</span>
+                <span id="p-name" style="padding-left: 10px">工作标题</span>
             </div>
             <div>
                 <div class="work-panel" style="width: 60%">
@@ -74,8 +70,6 @@
                     <li><a href="#p-flowchart" data-toggle="tab">流程图</a></li>
                     <li><a href="#p-tips" data-toggle="tab">注意事项</a></li>
                 </ul>
-
-                <!-- Tab panes -->
                 <div class="tab-content" style="background-color: #ffffff">
                     <div class="tab-pane active" id="p-regulations">
                         <ul>

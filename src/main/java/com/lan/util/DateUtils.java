@@ -81,6 +81,13 @@ public class DateUtils {
         return strDate;
     }
 
+    public static int getYearDaysNum(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int days = c.getActualMaximum(Calendar.DAY_OF_YEAR);
+        return days;
+    }
+
     /**
      * 取得日期：年
      *
@@ -456,9 +463,10 @@ public class DateUtils {
 
     public static void main(String[] args) {
 
-        String strDate = "2013-01-01";
+        String strDate = "2017-12-31";
 
-        Date date = new Date();
+        Date date = parseDate(strDate);
+        System.out.println(getYearDaysNum(date));
         System.out.println("今年是："+getYear(date));
         System.out.println("现在是："+getHalfYear(date)+"半年");
         System.out.println("现在是第："+getSeason(date)+"季度");

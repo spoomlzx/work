@@ -1,6 +1,7 @@
 package com.lan;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lan.dao.UserMapper;
 import com.lan.model.User;
 import com.lan.model.utilMoel.UserInfo;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -46,5 +49,10 @@ public class WorkApplicationTests {
 	@Test
 	public void testSelectWork(){
 		Gson gson=new Gson();
+		String a="{\"u1\": 1, \"u2\": 1, \"u3\": 1, \"u5\": 1}";
+		Map<String,Integer> m=gson.fromJson(a,new TypeToken<Map<String, Integer>>() { }.getType());
+		//System.out.println(m);
+
+		System.out.println(gson.toJson(workService.selectWorkListWithStatus(1)));
 	}
 }

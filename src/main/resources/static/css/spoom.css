@@ -10,6 +10,12 @@
   margin-bottom: 0px;
   width: 16%;
   float: left; }
+  .work-list .form-inline {
+    padding: 3px 0px; }
+    .work-list .form-inline input {
+      width: 75%; }
+    .work-list .form-inline button {
+      width: 20%; }
 
 .work-list .panel-heading {
   border: none;
@@ -152,13 +158,13 @@ html, body {
 
 /*layout begin*/
 body {
-  padding-top: 80px;
+  padding-top: 60px;
   background-color: #e6e6e6;
   font-size: 16px; }
 
 .header {
   position: fixed;
-  height: 80px;
+  height: 60px;
   margin: 0 auto;
   width: 100%;
   -webkit-box-shadow: 0 0 10px -2px #0B203A;
@@ -181,14 +187,13 @@ body {
   float: left; }
   .logo a, .logo a:hover {
     font-family: '楷体', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Open Sans', sans-serif;
-    font-size: 52px;
+    font-size: 42px;
     color: #ffffff;
     text-decoration: none; }
 
 /*sidebar*/
 .left-sidebar {
   position: fixed;
-  padding-top: 50px;
   width: 120px;
   min-height: 560px;
   height: 100%;
@@ -201,25 +206,24 @@ body {
     background-color: #FFFFFF;
     border-left: 6px #44b549 solid; }
 
-.nav-sidebar {
-  border-top: 1px #9d9d9d solid; }
-  .nav-sidebar > li {
-    border-left: 6px #e4e5e6 solid; }
-    .nav-sidebar > li > a {
-      color: #666;
-      height: 45px;
-      padding: 10px 0px;
-      font-size: 16px;
-      text-align: center; }
-      .nav-sidebar > li > a > span {
-        padding-right: 3px; }
-  .nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+.nav-sidebar > li {
+  border-left: 6px #e4e5e6 solid; }
+  .nav-sidebar > li > a {
     color: #666;
-    background-color: #ffffff; }
+    height: 45px;
+    padding: 10px 0px;
+    font-size: 16px;
+    text-align: center; }
+    .nav-sidebar > li > a > span {
+      padding-right: 3px; }
+.nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+  color: #666;
+  background-color: #ffffff; }
 
 /*container-content*/
 .container-content {
-  padding-left: 120px; }
+  padding-left: 120px;
+  padding-top: 10px; }
   .container-content .toolbar {
     height: 50px;
     border-radius: 0px;
@@ -262,8 +266,7 @@ body {
   background-size: 100% 100%; }
 
 .login-info {
-  margin: 24px;
-  float: right; }
+  margin: 13px; }
 
 .login-box {
   width: 700px;
@@ -290,32 +293,68 @@ body {
 
 /*unit list*/
 .unit-list {
-  width: 20%;
+  width: 18%;
   float: left;
   overflow-x: scroll; }
 
-.ztree li span.button.switch.level0 {
-  visibility: hidden;
-  width: 1px; }
-
-.ztree li ul.level0 {
-  padding: 0;
-  background: none; }
+.unit-work-list {
+  width: 21%;
+  float: left;
+  margin-left: 0.5%; }
+  .unit-work-list .table {
+    overflow-x: scroll;
+    overflow-y: scroll; }
 
 .unit-detail {
-  width: 79%;
+  width: 40%;
   float: left;
-  margin-left: 1%;
+  margin-left: 0.5%;
   padding: 8px; }
+  .unit-detail .btn {
+    margin: 2px 5px; }
+
+.unit-work-log {
+  width: 19.5%;
+  margin-left: 0.5%;
+  float: left; }
+
+.work-log .list-group-item {
+  overflow: hidden; }
 
 .temp-detail {
-  width: 20%;
+  width: 15%;
   float: left; }
 
 .temp-calendar {
-  width: 79%;
+  width: 84%;
   float: left;
   margin-left: 1%;
-  padding: 8px 15px 8px 8px; }
+  padding: 4px 15px 8px 8px; }
+  .temp-calendar .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 4px; }
+    .temp-calendar .fc-toolbar.fc-header-toolbar .fc-button {
+      height: 1.8em; }
+    .temp-calendar .fc-toolbar.fc-header-toolbar h2 {
+      font-size: 20px; }
+  .temp-calendar .fc .fc-widget-header {
+    background-color: #eee; }
+  .temp-calendar .fc-event .fc-content {
+    border: 0;
+    padding: 2px 3px; }
+  .temp-calendar .fc-event .fc-time {
+    float: left;
+    text-align: left;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 300;
+    padding-right: 5px; }
+  .temp-calendar .fc-event .fc-title {
+    text-align: left;
+    float: left;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 300; }
+  .temp-calendar .fc-basic-view .fc-week-number, .temp-calendar .fc-basic-view .fc-day-number {
+    padding: 0px; }
 
 /*# sourceMappingURL=spoom.css.map */

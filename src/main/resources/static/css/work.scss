@@ -11,6 +11,15 @@
   margin-bottom: 0px;
   width: 16%;
   float: left;
+  .form-inline{
+    padding: 3px 0px;
+    input{
+      width:75%
+    }
+    button{
+      width: 20%;
+    }
+  }
 }
 
 .work-list .panel-heading {

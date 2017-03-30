@@ -5,6 +5,7 @@ import com.lan.dao.WorkMapper;
 import com.lan.model.Work;
 import com.lan.model.WorkFull;
 import com.lan.model.WorkSet;
+import com.lan.model.WorkStatus;
 import com.lan.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,11 @@ public class WorkService {
             work.setRegulations(regulationMapper.selectRegualtionsByIds(ids));
         }
         return work;
+    }
+
+    public List<WorkStatus> selectWorkListWithStatus(Integer unitId){
+        String index="$.year"+DateUtils.getYear(new Date());
+        return workMapper.getWorkListWithStatus(unitId,index);
     }
 
     @Transactional

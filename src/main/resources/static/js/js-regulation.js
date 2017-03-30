@@ -39,7 +39,6 @@ var bindRegulationAdd = function () {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (message) {
-                    $("#r-add-message").text(message.messageInfo);
                     if (message.result == "success") {
                         $('#regulation-modal').modal('hide');
                     } else {
@@ -60,7 +59,6 @@ var bindRegulationDelete = function (reguid, btn) {
             type: "get",
             url: "/admin/deleteRegulation/" + reguid,
             success: function (message) {
-                $("#r-add-message").text(message.messageInfo);
                 $('#delete-modal').modal('hide');
                 if (message.result == "success") {
                     table.row(btn.parents('tr')).remove().draw();
@@ -85,7 +83,6 @@ var bindRegulationEdit = function (btn) {
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (message) {
-                $("#r-add-message").text(message.messageInfo);
                 $('#edit-modal').modal('hide');
                 if(message.result=="success"){
                     btn.parent().children('.regulation-content').html(data.content);

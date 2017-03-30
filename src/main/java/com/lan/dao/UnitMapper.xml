@@ -6,7 +6,7 @@
         <result column="unit_id" property="id"/>
         <result column="parent_id" property="pId"/>
         <result column="name" property="name"/>
-        <result column="unit_type_id" property="unitTypeId"/>
+        <result column="unit_type_id" property="iconSkin"/>
         <result column="active" property="active"/>
     </resultMap>
     
@@ -25,7 +25,7 @@
     </sql>
 
     <select id="getUnitTreeById" resultMap="AllColumnMap">
-        select unit_id,parent_id,name,case when unit_id=#{unitId} then 1 else 0 end `open` from unit where FIND_IN_SET(unit_id,queryUnitTree(#{unitId})) and active=1
+        select unit_id,parent_id,unit_type_id,name,case when unit_id=#{unitId} then 1 else 0 end `open` from unit where FIND_IN_SET(unit_id,queryUnitTree(#{unitId})) and active=1
     </select>
 
     <select id="getUnitTypeList" resultMap="typeColumnMap">

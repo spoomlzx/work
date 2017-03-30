@@ -14562,7 +14562,7 @@ fcViews.list = {
 
 fcViews.listDay = {
 	type: 'list',
-	duration: { days: 1 },
+    duration: { days: 1 },
 	defaults: {
 		listDayFormat: 'dddd' // day-of-week is all we need. full date is probably in header
 	}

@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+.temp-detail {
+    width: 15%;
+    float: left;
+}
+
+.temp-calendar {
+    width: 84%;
+    float: left;
+    margin-left: 1%;
+    padding: 4px 15px 8px 8px;
+    .fc-toolbar.fc-header-toolbar {
+        margin-bottom: 4px;
+        .fc-button{
+            height: 1.8em;
+        }
+        h2{
+            font-size: 20px;
+        }
+    }
+    .fc .fc-widget-header {
+        background-color: #eee;
+    }
+    .fc-event {
+        .fc-content {
+            border: 0;
+            padding: 2px 3px;
+        }
+        .fc-time {
+            float: left;
+            text-align: left;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 300;
+            padding-right: 5px;
+        }
+        .fc-title {
+            text-align: left;
+            float: left;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 300;
+        }
+    }
+    .fc-basic-view .fc-week-number, .fc-basic-view .fc-day-number {
+        padding: 0px;
+    }
+}

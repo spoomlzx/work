@@ -18,12 +18,6 @@
 <#include "./sidebar.ftl"/>
 
 <div class="container-content">
-    <div class="toolbar">
-    <#if currentUser?? && currentUser.role == "ADMIN">
-        <button href="#regulation-modal" data-toggle="modal" class="btn btn-warning btn-add">添加法规</button>
-    </#if>
-        <span class="input-message col-md-offset-1" id="r-add-message"></span>
-    </div>
     <div class="center-container bk-white">
         <div class="regulation-list">
             <table class="table table-bordered table-hover" id="regulation_table" style="width:100%;">
@@ -69,6 +63,9 @@
                 </#list>
                 </tbody>
             </table>
+        <#if currentUser?? && currentUser.role == "ADMIN">
+            <button href="#regulation-modal" data-toggle="modal" class="btn btn-warning btn-add">添加法规</button>
+        </#if>
         </div>
 
     </div>

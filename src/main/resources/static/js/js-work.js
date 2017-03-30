@@ -73,8 +73,8 @@ var initWork = function () {
             success: function (data) {
                 $("#w-check").data("workid", data.workId);
                 $("#w-check").data("type", data.type);
-                $("#w-check-btn").removeClass("hidden");
                 $("#l-add-btn").removeClass("hidden");
+                $("#w-check").removeClass("hidden");
 
                 changeWorkStatus(data.check);
 
@@ -131,7 +131,7 @@ var getWorkLogList=function(workId,unitId){
         success: function (data){
             for(var key in data){
                 $("#l-list").append("<li class='list-group-item' data-toggle='modal' href='#log-show-modal' data-id=" + key + ">" +
-                    "<a href='javascript:;'>" + data[key].describe.substring(0,14) + "</a><span class='right'>"+data[key].time+"</span><span class='fa fa-clock-o right'></span></li>");
+                    "<div><a href='javascript:;'>" + data[key].describe.substring(0,16) + "</a></div><div class='right'><span class='fa fa-clock-o'></span>"+data[key].time.substring(0,10)+"</div></li>");
             }
             bindLogShow(data);
         }
@@ -214,10 +214,10 @@ var bindUnitTypeChange = function () {
 }
 
 var bindUpdateWorkStatus = function () {
-    $("#w-check-btn").click(function () {
+    $("#w-check").click(function () {
         var workId = $("#w-check").data("workid");
         var unitId = $("#w-search").data("unitid");
-        var check = $("#w-check-btn .check-state").data("check");
+        var check = $("#w-check").data("check");
         $.ajax({
             type: "post",
             url: "/updateWorkStatus",
@@ -229,10 +229,8 @@ var bindUpdateWorkStatus = function () {
             success: function (data) {
                 if (data.object) {
                     changeWorkStatus(1);
-                    $("#w-check-btn .check-state").data("check",1);
                 } else {
                     changeWorkStatus(0);
-                    $("#w-check-btn .check-state").data("check", 0);
                 }
             }
         })
@@ -276,25 +274,17 @@ var bindInsertWorkLog=function(){
  */
 var changeWorkStatus = function (check) {
     if (check) {
-        $("#w-check-btn .check-state").data("check", 1);
+        $("#w-check").data("check", 1);
         $("#w-check").removeClass("btn-danger").removeClass("btn-success").addClass("btn-success");
         $("#w-check span.fa").removeClass("fa-spinner").removeClass("fa-check").addClass("fa-check");
         $("#w-check span.check-info").empty();
         $("#w-check span.check-info").html("已完成");
-        $("#w-check-btn").removeClass("btn-success").removeClass("btn-danger").addClass("btn-danger");
-        $("#w-check-btn .check-state").removeClass("fa-hand-o-left").removeClass("fa-remove").addClass("fa-remove");
-        $("#w-check-btn span.check-info").empty();
-        $("#w-check-btn span.check-info").html("取消完成状态");
     } else {
-        $("#w-check-btn .check-state").data("check", 0);
+        $("#w-check").data("check", 0);
         $("#w-check").removeClass("btn-danger").removeClass("btn-success").addClass("btn-danger");
         $("#w-check span.fa").removeClass("fa-spinner").removeClass("fa-check").addClass("fa-spinner");
         $("#w-check span.check-info").empty();
         $("#w-check span.check-info").html("待完成");
-        $("#w-check-btn").removeClass("btn-success").removeClass("btn-danger").addClass("btn-success");
-        $("#w-check-btn .check-state").removeClass("fa-hand-o-left").removeClass("fa-remove").addClass("fa-hand-o-left");
-        $("#w-check-btn span.check-info").empty();
-        $("#w-check-btn span.check-info").html("完成该项工作");
     }
 }
 

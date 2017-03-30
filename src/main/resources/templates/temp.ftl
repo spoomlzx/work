@@ -16,19 +16,13 @@
 <#include "./sidebar.ftl">
 
 <div class="container-content">
-    <div class="toolbar">
-    <#if currentUser?? && currentUser.role == "ADMIN">
-        <button href="#regulation-modal" data-toggle="modal" class="btn btn-warning btn-add">添加法规</button>
-    </#if>
-        <span class="input-message" id="r-add-message"></span>
-    </div>
     <div class="center-container">
         <div class="temp-detail">
             <div class="work-panel">
                 <div class="panel panel-success">
                     <div class="panel-heading">法规依据</div>
                     <div class="panel-body" id="p-basis">
-                        法规条目依据
+                        <button type="button" class="fc-listWeek-button fc-button fc-state-default fc-corner-right fc-state-hover">list week</button>
                     </div>
                 </div>
             </div>
