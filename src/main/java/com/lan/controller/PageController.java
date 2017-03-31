@@ -112,7 +112,7 @@ public class PageController {
     }
 
     @RequestMapping(value = "/temp")
-    public String tempWorkPage(Model model, HttpServletRequest request) {
+    public String tempWorkPage(Model model, @ModelAttribute("currentUser") UserInfo userInfo) {
         return "temp";
     }
 }

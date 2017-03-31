@@ -25,11 +25,12 @@
     </sql>
 
     <select id="getUnitTreeById" resultMap="AllColumnMap">
-        select unit_id,parent_id,unit_type_id,name,case when unit_id=#{unitId} then 1 else 0 end `open` from unit where FIND_IN_SET(unit_id,queryUnitTree(#{unitId})) and active=1
+        SELECT unit_id,parent_id,unit_type_id,name,CASE WHEN unit_id=#{unitId} THEN 1 ELSE 0 END `open`
+        FROM unit WHERE FIND_IN_SET(unit_id,queryUnitTree(#{unitId})) AND active=1
     </select>
 
     <select id="getUnitTypeList" resultMap="typeColumnMap">
-        select unit_type_id,name from unit_type
+        SELECT unit_type_id,name FROM unit_type
     </select>
 
     <!--auto generated Code-->

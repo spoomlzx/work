@@ -30,7 +30,7 @@
     </sql>
 
     <select id="getUserByName" resultMap="AllColumnMap">
-        select `user`.`user_id`,`user`.`user_name`,`user`.`password`,`user`.`roles`,`user`.unit_id,unit.unit_type_id unit_type_id from user
-        inner join unit on `user`.user_name=#{userName} and `user`.unit_id=`unit`.unit_id
+        SELECT `user`.`user_id`,`user`.`user_name`,`user`.`password`,`user`.`roles`,`user`.unit_id,unit.unit_type_id unit_type_id FROM user
+        INNER JOIN unit ON `user`.user_name=#{userName} AND `user`.unit_id=`unit`.unit_id
     </select>
 </mapper>

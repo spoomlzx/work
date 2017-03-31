@@ -17,18 +17,9 @@
 
 <div class="container-content">
     <div class="center-container">
-        <div class="temp-detail">
-            <div class="work-panel">
-                <div class="panel panel-success">
-                    <div class="panel-heading">法规依据</div>
-                    <div class="panel-body" id="p-basis">
-                        <button type="button" class="fc-listWeek-button fc-button fc-state-default fc-corner-right fc-state-hover">list week</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="temp-calendar bk-white">
-            <div id="calendar"></div>
+            <div id="calendar" data-unitid="<#if currentUser??>${currentUser.unitId}</#if>"></div>
         </div>
 
     </div>
@@ -50,6 +41,44 @@
     </div>
 </div>
 
+
+<div id="new-issue-panel" class="margin-top-35 modal fade in" aria-hidden="false" style="display: block;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title modal-title-issue">新建任务</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="q-title">
+                    <label>标题<span class="not_empty_tips">*</span></label>
+                    <input type="text" id="q-title" name="title" class="form-control" onkeydown="if(event.keyCode==13){return false;}" autofocus="">
+                </div>
+                <div class="issue_finish_priority">
+                    <div class="create_left finish_at" id="q-plan-started-at-datepicker" style="width: 254px;">
+                        <label>计划开始时间</label>
+
+                    </div>
+                    <div class="priority-label create_priority" style="margin-left: 65px;">
+                        <label class="to-block">优先级</label>
+                        <div class="modal-priority-list">
+                            <input class="show-none" type="radio" id="pri-0" name="priority" value="未指定" checked="checked">
+                            <label class="q-pri-label" for="pri-0">不指定</label>
+                            <input class="show-none" type="radio" id="pri-1" name="priority" value="严重">
+                            <label class="q-pri-label" for="pri-1">严重</label>
+                            <input class="show-none" type="radio" id="pri-2" name="priority" value="主要">
+                            <label class="q-pri-label" for="pri-2">主要</label>
+                            <input class="show-none" type="radio" id="pri-3" name="priority" value="次要">
+                            <label class="q-pri-label" for="pri-3">次要</label>
+                            <input class="show-none" type="radio" id="pri-4" name="priority" value="不重要">
+                            <label class="q-pri-label" for="pri-4">不重要</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/plugin/fullcalendar/moment.min.js" type="text/javascript"></script>

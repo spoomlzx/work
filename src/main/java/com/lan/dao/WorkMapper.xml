@@ -31,46 +31,46 @@
     </sql>
 
     <select id="getTypeById" resultType="java.lang.String">
-        select type from work where work_id=#{workId}
+        SELECT type FROM work WHERE work_id=#{workId}
     </select>
 
     <select id="selectWorkList" resultMap="WorkColumnMap">
-        select w.work_id,w.name,w.type from type_work t inner join `work` w on t.work_id=w.work_id and t.unit_type_id=#{unitTypeId}
-        where 1=1
+        SELECT w.work_id,w.name,w.type FROM type_work t INNER JOIN `work` w ON t.work_id=w.work_id AND t.unit_type_id=#{unitTypeId}
+        WHERE 1=1
         <if test="type != null">
-            and w.type=#{type}
+            AND w.type=#{type}
         </if>
     </select>
 
     <select id="selectWorkById" resultMap="WorkFullColumnMap">
-        select
+        SELECT
         <include refid="all_column"/>
-        from work where work_id=#{workId}
+        FROM work WHERE work_id=#{workId}
     </select>
 
     <select id="selectWork" resultMap="WorkFullColumnMap">
-        SELECT w.*,case when h.`status`->'${index}'=1 then 1 else 0 end `check`
+        SELECT w.*,CASE WHEN h.`status`->'${index}'=1 THEN 1 ELSE 0 END `check`
         FROM `work` w
         INNER JOIN history h ON w.work_id=h.work_id AND h.unit_id=#{unitId} AND w.work_id=#{workId}
     </select>
 
     <select id="selectWorkIdsByKeyword" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select s.work_id from type_work t
-        inner join searchtext s on t.unit_type_id=#{unitTypeId} and t.work_id=s.work_id
-        and s.text like '%${keyword}%'
+        SELECT s.work_id FROM type_work t
+        INNER JOIN searchtext s ON t.unit_type_id=#{unitTypeId} AND t.work_id=s.work_id
+        AND s.text LIKE '%${keyword}%'
     </select>
 
     <select id="getWorkListWithStatus" resultMap="WorkStatusMap">
-        select h.work_id,w.`name`,h.`status`->'${index}' as status,JSON_LENGTH(h.`status`->'${index}') as finish_days,w.type from history h
-        inner join work w on h.work_id=w.work_id and h.unit_id=#{unitId}
+        SELECT h.work_id,w.`name`,h.`status`->'${index}' AS status,JSON_LENGTH(h.`status`->'${index}') AS finish_days,w.type FROM history h
+        INNER JOIN work w ON h.work_id=w.work_id AND h.unit_id=#{unitId}
     </select>
 
     <update id="deleteWorkRecord">
-        update history set status=JSON_REMOVE(status,'${index}') where unit_id=#{unitId} and work_id=#{workId}
+        UPDATE history SET status=JSON_REMOVE(status,'${index}') WHERE unit_id=#{unitId} AND work_id=#{workId}
     </update>
 
     <update id="insertWorkRecord">
-        update history set status=JSON_INSERT(status,'${index}',1) where unit_id=#{unitId} and work_id=#{workId}
+        UPDATE history SET status=JSON_INSERT(status,'${index}',1) WHERE unit_id=#{unitId} AND work_id=#{workId}
     </update>
 
     <!--auto generated Code-->

@@ -26,7 +26,7 @@
     </sql>
     
     <select id="selectLogList" resultMap="AllColumnMap">
-        select <include refid="all_column"/> from work_log where work_id=#{workId} and unit_id=#{unitId} order by time asc
+        SELECT <include refid="all_column"/> FROM work_log WHERE work_id=#{workId} AND unit_id=#{unitId} ORDER BY `time` ASC
     </select>
 
     <!--auto generated Code-->

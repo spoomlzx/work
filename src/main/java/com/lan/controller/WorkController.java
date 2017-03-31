@@ -68,7 +68,7 @@ public class WorkController {
         try {
             workService.updateWorkStatus(workId, unitId, check);
             message.setResult("success");
-            message.setObject(!check);
+            message.setData(!check);
             message.setMessageInfo("修改工作状态成功！");
         } catch (RuntimeException e) {
             message.setResult(e.getClass().getName() + ":" + e.getMessage());

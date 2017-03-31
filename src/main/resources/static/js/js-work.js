@@ -24,10 +24,8 @@ $(document).ready(function () {
         todayBtn:  1,
         autoclose: 1,
         todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1,
-        format:'yyyy-mm-dd hh:ii:ss'
+        minuteStep: 10,
+        format:'yyyy-mm-dd hh:ii'
     });
 })
 
@@ -99,9 +97,8 @@ var initWork = function () {
                 //重新绑定regulation的modal的显示动作
                 $('#regulation-modal').off('show.bs.modal');
                 $('#regulation-modal').on('show.bs.modal', function (e) {
-                    var a = e.relatedTarget;
-                    var i = a.dataset.id;
-                    var b = data.regulations[i];
+                    var id = e.relatedTarget.dataset.id;
+                    var b = data.regulations[id];
                     $("#regulation-modal .modal-title").empty();
                     $("#regulation-modal .modal-title").html(b.title);
                     $("#regulation-modal .modal-body").empty();
@@ -121,39 +118,6 @@ var initWork = function () {
             }
         })
     });
-}
-
-var getWorkLogList=function(workId,unitId){
-    $("#l-list").empty();
-    $.ajax({
-        type: "get",
-        url: "/getWorkLogList/"+workId+"/"+unitId,
-        success: function (data){
-            for(var key in data){
-                $("#l-list").append("<li class='list-group-item' data-toggle='modal' href='#log-show-modal' data-id=" + key + ">" +
-                    "<div><a href='javascript:;'>" + data[key].describe.substring(0,16) + "</a></div><div class='right'><span class='fa fa-clock-o'></span>"+data[key].time.substring(0,10)+"</div></li>");
-            }
-            bindLogShow(data);
-        }
-    })
-}
-
-var bindLogShow=function(logMap){
-    $('#log-show-modal').off('show.bs.modal');
-    $('#log-show-modal').on('show.bs.modal', function (e) {
-        var li = $(e.relatedTarget);
-        var id = li.data("id");
-        $("#l-show-time").empty();
-        $("#l-show-time").html(logMap[id].time);
-        $("#l-show-duty-person").empty();
-        $("#l-show-duty-person").html(logMap[id].dutyPerson);
-        $("#l-show-person-type").empty();
-        $("#l-show-person-type").html(logMap[id].personType);
-        $("#l-show-count").empty();
-        $("#l-show-count").html(logMap[id].count);
-        $("#l-show-describe").empty();
-        $("#l-show-describe").html(logMap[id].describe);
-    })
 }
 
 var bindSearch = function () {
@@ -226,14 +190,35 @@ var bindUpdateWorkStatus = function () {
                 unitId: unitId,
                 check: check
             },
-            success: function (data) {
-                if (data.object) {
+            success: function (message) {
+                if (message.data) {
                     changeWorkStatus(1);
                 } else {
                     changeWorkStatus(0);
                 }
             }
         })
+    })
+}
+
+
+/**
+ * worklog list
+ * @param workId
+ * @param unitId
+ */
+var getWorkLogList=function(workId,unitId){
+    $("#l-list").empty();
+    $.ajax({
+        type: "get",
+        url: "/getWorkLogList/"+workId+"/"+unitId,
+        success: function (data){
+            for(var key in data){
+                $("#l-list").append("<li class='list-group-item' data-toggle='modal' href='#log-show-modal' data-id=" + key + ">" +
+                    "<div><a href='javascript:;'>" + data[key].describe.substring(0,16) + "</a></div><div class='right'><span class='fa fa-clock-o'></span>"+moment(data[key].time).format("YYYY-MM-DD")+"</div></li>");
+            }
+            bindLogShow(data);
+        }
     })
 }
 
@@ -267,6 +252,26 @@ var bindInsertWorkLog=function(){
         })
     })
 }
+
+var bindLogShow=function(logMap){
+    $('#log-show-modal').off('show.bs.modal');
+    $('#log-show-modal').on('show.bs.modal', function (e) {
+        var li = $(e.relatedTarget);
+        var id = li.data("id");
+        $("#l-show-time").empty();
+        $("#l-show-time").html(moment(logMap[id].time).format("YYYY-MM-DD"));
+        $("#l-show-duty-person").empty();
+        $("#l-show-duty-person").html(logMap[id].dutyPerson);
+        $("#l-show-person-type").empty();
+        $("#l-show-person-type").html(logMap[id].personType);
+        $("#l-show-count").empty();
+        $("#l-show-count").html(logMap[id].count);
+        $("#l-show-describe").empty();
+        $("#l-show-describe").html(logMap[id].describe);
+    })
+}
+
+
 
 /*
  check=1,完成

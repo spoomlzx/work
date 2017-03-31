@@ -13,7 +13,7 @@ public class Message implements Serializable {
     private static final long serialVersionUID = -8384851165488597002L;
     private String result = "success";
     private String messageInfo;
-    private Object object;
+    private Object data;
 
     public String getResult() {
         return result;
@@ -31,11 +31,11 @@ public class Message implements Serializable {
         this.messageInfo = messageInfo;
     }
 
-    public Object getObject() {
-        return object;
+    public Object getData() {
+        return data;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public void setData(Object data) {
+        this.data = data;
     }
 }

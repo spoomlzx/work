@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group last">
                     <div class="right" style="padding-right: 15px">
-                        <input type="checkbox" name="remember-me" id="remember-me"/>记住密码
+                        <input type="checkbox" checked="checked" name="remember-me" id="remember-me"/>记住密码
                     </div>
                 </div>
 

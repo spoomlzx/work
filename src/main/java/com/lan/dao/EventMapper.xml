@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lan.dao.EventMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.lan.model.Event">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="describe" property="describe"/>
+        <result column="unit_id" property="unitId"/>
+        <result column="start" property="start"/>
+        <result column="end" property="end"/>
+        <result column="color" property="color"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `id`,
+        `title`,
+        `describe`,
+        `unit_id`,
+        `start`,
+        `end`,
+        `color`
+    </sql>
+
+
+    <select id="getEvents" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/> FROM event
+        WHERE unit_id=#{unitId} AND `start` BETWEEN #{start} AND #{end}
+        UNION
+        SELECT <include refid="all_column"/> FROM event
+        WHERE unit_id=#{unitId} AND `end` BETWEEN #{start} AND #{end}
+    </select>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO event (
+            `id`,
+            `title`,
+            `describe`,
+            `unit_id`,
+            `start`,
+            `end`,
+            `color`
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.title},
+            #{pojo.describe},
+            #{pojo.unitId},
+            #{pojo.start},
+            #{pojo.end},
+            #{pojo.color}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> `id`,</if>
+            <if test="pojo.title!=null"> `title`,</if>
+            <if test="pojo.describe!=null"> `describe`,</if>
+            <if test="pojo.unitId!=null"> `unit_id`,</if>
+            <if test="pojo.start!=null"> `start`,</if>
+            <if test="pojo.end!=null"> `end`,</if>
+            <if test="pojo.color!=null"> `color`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.title!=null">#{pojo.title},</if>
+            <if test="pojo.describe!=null">#{pojo.describe},</if>
+            <if test="pojo.unitId!=null">#{pojo.unitId},</if>
+            <if test="pojo.start!=null">#{pojo.start},</if>
+            <if test="pojo.end!=null">#{pojo.end},</if>
+            <if test="pojo.color!=null">#{pojo.color},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO event (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.title},
+            #{pojo.describe},
+            #{pojo.unitId},
+            #{pojo.start},
+            #{pojo.end},
+            #{pojo.color}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE event
+        <set>
+            <if test="pojo.id != null"> `id` = #{pojo.id}, </if>
+            <if test="pojo.title != null"> `title` = #{pojo.title}, </if>
+            <if test="pojo.describe != null"> `describe` = #{pojo.describe}, </if>
+            <if test="pojo.unitId != null"> `unit_id` = #{pojo.unitId}, </if>
+            <if test="pojo.start != null"> `start` = #{pojo.start}, </if>
+            <if test="pojo.end != null"> `end` = #{pojo.end}, </if>
+            <if test="pojo.color != null"> `color` = #{pojo.color} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+
