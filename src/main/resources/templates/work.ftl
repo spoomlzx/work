@@ -172,10 +172,9 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">时间</label>
                             <div class="input-group date form_datetime col-md-9" style="padding: 0px 15px">
-                                <input class="form-control" type="text" id="l-time" value="" readonly>
+                                <input class="form-control" type="text" id="l-time" value="">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                             </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br/>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">责任人</label>
@@ -216,6 +215,7 @@
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
 <script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/plugin/datetime/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <script src="/plugin/datetime/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>

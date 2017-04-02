@@ -27,6 +27,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/admin**").hasAnyAuthority("ADMIN")
                 .antMatchers("/work**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/regulation**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/progress**").hasAnyAuthority("ADMIN","USER")

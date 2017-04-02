@@ -180,14 +180,12 @@ var bindUnitTypeChange = function () {
 var bindUpdateWorkStatus = function () {
     $("#w-check").click(function () {
         var workId = $("#w-check").data("workid");
-        var unitId = $("#w-search").data("unitid");
         var check = $("#w-check").data("check");
         $.ajax({
             type: "post",
             url: "/updateWorkStatus",
             data: {
                 workId: workId,
-                unitId: unitId,
                 check: check
             },
             success: function (message) {
@@ -235,13 +233,13 @@ var bindInsertWorkLog=function(){
         };
         $.ajax({
             type: "post",
-            url: "/insertWorkLog",
+            url: "/addWorkLog",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (message) {
-                $("#l-add-error").text(message.messageInfo);
-                if (message.result == "success") {
+                if (message.code) {
                     $('#log-add-modal').modal('hide');
+                    showTip("success","成功",message.msg);
                 }
                 $("#l-duty-person").val("");
                 $("#l-person-type").val("");

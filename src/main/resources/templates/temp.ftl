@@ -9,6 +9,7 @@
     <meta content="" name="author"/>
     <link href="/plugin/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="/plugin/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="/plugin/datetime/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/spoom.css" rel="stylesheet" type="text/css"/>
     <link href="/plugin/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -18,72 +19,124 @@
 <div class="container-content">
     <div class="center-container">
 
-        <div class="temp-calendar bk-white">
-            <div id="calendar" data-unitid="<#if currentUser??>${currentUser.unitId}</#if>"></div>
+        <div class="event-calendar bk-white">
+            <div id="calendar"></div>
         </div>
 
     </div>
 </div>
 
-<div class="modal fade" id="content-modal" tabindex="-1">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><span class="fa fa-file-code-o" style="color: #1c8f5f"></span> 法规原文</h4>
+<#--显示event详情-->
+<div id="event-show-modal" class="modal modal-sidebar" tabindex="-1">
+    <div class="sidebar right-fade">
+        <div class="form-group">
+            <button type="button" class="btn btn-danger" href="#delete-modal" data-toggle="modal">删除</button>
+            <button type="button" class="btn btn-info">编辑</button>
+        </div>
+        <div class="form-group event-title-show">
+            <h3>开发工作规范软件</h3>
+        </div>
+        <div class="form-group event-time-show">
+            <div class="display-inline-block ">
+                <span class="fa fa-calendar"></span><span>04-27 15:00 – 04-29 10:30</span>
             </div>
-            <div class="modal-body regulation-content">
+        </div>
+        <div class="form-group event-person-show">
+            <div class="display-inline-block ">
+                <label class="label">重要</label><span>责任人：杨洋</span>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-            </div>
+        </div>
+        <div class="form-group event-describe-show">
+
         </div>
     </div>
 </div>
 
-
-<div id="new-issue-panel" class="margin-top-35 modal fade in" aria-hidden="false" style="display: block;">
+<#--添加event-->
+<div id="event-add-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title modal-title-issue">新建任务</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title modal-title-issue">添加工作</h4>
             </div>
 
             <div class="modal-body">
-                <div class="q-title">
+                <div class="form-group event-title">
                     <label>标题<span class="not_empty_tips">*</span></label>
-                    <input type="text" id="q-title" name="title" class="form-control" onkeydown="if(event.keyCode==13){return false;}" autofocus="">
+                    <input type="text" name="title" class="form-control">
                 </div>
-                <div class="issue_finish_priority">
-                    <div class="create_left finish_at" id="q-plan-started-at-datepicker" style="width: 254px;">
-                        <label>计划开始时间</label>
 
+                <div class="form-group">
+                    <div class="display-inline-block event-person">
+                        <label>责任人</label>
+                        <input class="form-control" type="text" value="">
                     </div>
-                    <div class="priority-label create_priority" style="margin-left: 65px;">
-                        <label class="to-block">优先级</label>
-                        <div class="modal-priority-list">
-                            <input class="show-none" type="radio" id="pri-0" name="priority" value="未指定" checked="checked">
-                            <label class="q-pri-label" for="pri-0">不指定</label>
-                            <input class="show-none" type="radio" id="pri-1" name="priority" value="严重">
-                            <label class="q-pri-label" for="pri-1">严重</label>
-                            <input class="show-none" type="radio" id="pri-2" name="priority" value="主要">
-                            <label class="q-pri-label" for="pri-2">主要</label>
-                            <input class="show-none" type="radio" id="pri-3" name="priority" value="次要">
-                            <label class="q-pri-label" for="pri-3">次要</label>
-                            <input class="show-none" type="radio" id="pri-4" name="priority" value="不重要">
-                            <label class="q-pri-label" for="pri-4">不重要</label>
+                </div>
+
+                <div class="form-group">
+                    <div class="event-time-picker display-inline-block">
+                        <div class="display-inline-block event-start">
+                            <label>开始时间<span class="not_empty_tips">*</span></label>
+                            <input class="form-control event-time" type="text" value="">
+                        </div>
+                        <div class="display-inline-block event-end right">
+                            <label>结束时间<span class="not_empty_tips">*</span></label>
+                            <input class="form-control event-time" type="text" value="">
                         </div>
                     </div>
+                    <div class="display-inline-block event-priority">
+                        <label>优先级<span class="not_empty_tips">*</span></label>
+                        <div>
+                            <input class="display-none" type="radio" id="pri-0" name="priority" value="#FF9933">
+                            <label class="priority-label" for="pri-0">不指定</label>
+                            <input class="display-none" type="radio" id="pri-1" name="priority" value="#d9534f">
+                            <label class="priority-label" for="pri-1">严重</label>
+                            <input class="display-none" type="radio" id="pri-2" name="priority" value="#428bca">
+                            <label class="priority-label" for="pri-2">主要</label>
+                            <input class="display-none" type="radio" id="pri-3" name="priority" value="#5bc0de">
+                            <label class="priority-label" for="pri-3">次要</label>
+                            <input class="display-none" type="radio" id="pri-4" name="priority" value="#5cb85c">
+                            <label class="priority-label" for="pri-4">不重要</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group event-describe">
+                    <label>详情</label>
+                    <textarea class="form-control" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" id="event-add-btn">确认添加</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="delete-modal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group notice-msg">
+                    删除后无法恢复,确定删除这条法规吗?
+                </div>
+                <div class="form-group notice-btn">
+                    <button class="btn btn-danger" id="e-delete">删 除</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/plugin/fullcalendar/moment.min.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
 <script src="/plugin/fullcalendar/fullcalendar.js" type="text/javascript"></script>
 <script src="/plugin/fullcalendar/zh-cn.js" type="text/javascript"></script>
+<script src="/plugin/datetime/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="/plugin/datetime/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
 <script src="/js/js-temp.js" type="text/javascript"></script>
 </body>
 </html>

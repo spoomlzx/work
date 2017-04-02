@@ -4,6 +4,7 @@ import com.lan.dao.EventMapper;
 import com.lan.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,12 +18,13 @@ public class EventService{
         return eventMapper.getEvents(unitId,start,end);
     }
 
-    public int insert(Event pojo){
-        return eventMapper.insert(pojo);
-    }
-
-    public int insertSelective(Event pojo){
-        return eventMapper.insertSelective(pojo);
+    @Transactional
+    public void insertSelective(Event pojo){
+        try {
+            eventMapper.insertSelective(pojo);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public int insertList(List<Event> pojos){
@@ -31,5 +33,14 @@ public class EventService{
 
     public int update(Event pojo){
         return eventMapper.update(pojo);
+    }
+
+    @Transactional
+    public void deleteEvent(Integer unitId,Integer id){
+        try {
+            eventMapper.deleteEvent(unitId,id);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

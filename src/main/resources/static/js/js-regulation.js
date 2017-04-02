@@ -17,11 +17,7 @@ $(document).ready(function () {
 })
 
 var bindRegulationAdd = function () {
-    $("#r-add").click(function (e) {
-        // var workid = $(this).data("workid");
-        // var work_li = e.target;
-        // $(".work-list ul > li.active").removeClass("active");
-        // $(work_li).addClass("active");
+    $("#r-add").one("click",function (e) {
         var title = $("#r-title").val();
         var titleError = $("#r-title-error");
         var content = editor.getContent();
@@ -39,7 +35,7 @@ var bindRegulationAdd = function () {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (message) {
-                    if (message.result == "success") {
+                    if (message.code) {
                         $('#regulation-modal').modal('hide');
                     } else {
                         $("#r-title").text("");
@@ -54,13 +50,13 @@ var bindRegulationAdd = function () {
 }
 
 var bindRegulationDelete = function (reguid, btn) {
-    $("#r-delete").click(function () {
+    $("#r-delete").one("click",function () {
         $.ajax({
             type: "get",
             url: "/admin/deleteRegulation/" + reguid,
             success: function (message) {
                 $('#delete-modal').modal('hide');
-                if (message.result == "success") {
+                if (message.code) {
                     table.row(btn.parents('tr')).remove().draw();
                 }
             }
@@ -69,7 +65,7 @@ var bindRegulationDelete = function (reguid, btn) {
 }
 
 var bindRegulationEdit = function (btn) {
-    $("#r-save").click(function () {
+    $("#r-save").one("click",function () {
         var data = {
             reguId: $(this).data("reguid"),
             title: $("#r-e-title").val(),
@@ -84,7 +80,7 @@ var bindRegulationEdit = function (btn) {
             data: JSON.stringify(data),
             success: function (message) {
                 $('#edit-modal').modal('hide');
-                if(message.result=="success"){
+                if(message.code){
                     btn.parent().children('.regulation-content').html(data.content);
                     btn.parents('tr').children('.r-title').html(data.title);
                     btn.parents('tr').children('.r-department').html(data.department);

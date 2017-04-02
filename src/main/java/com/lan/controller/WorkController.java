@@ -9,6 +9,8 @@ import com.lan.model.utilMoel.UserInfo;
 import com.lan.service.RegulationService;
 import com.lan.service.WorkLogService;
 import com.lan.service.WorkService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ import java.util.Map;
  */
 @Controller
 public class WorkController {
+    private final static Logger logger= LoggerFactory.getLogger(WorkController.class);
     @Autowired
     private RegulationService regulationService;
     @Autowired
@@ -54,25 +57,27 @@ public class WorkController {
 
     /**
      * 更新工作的完成状态
-     *
      * @param workId
-     * @param unitId
      * @param check
+     * @param userInfo
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/updateWorkStatus", method = RequestMethod.POST)
-    public Message updateWorkStatus(@RequestParam(value = "workId") Integer workId,
-                                    @RequestParam(value = "unitId") Integer unitId, @RequestParam(value = "check") Boolean check) {
+    public Message updateWorkStatus(@RequestParam(value = "workId") Integer workId,@RequestParam(value = "check") Boolean check,
+                                    @ModelAttribute("currentUser") UserInfo userInfo) {
         Message message = new Message();
         try {
+            Integer unitId=userInfo.getUnitId();
             workService.updateWorkStatus(workId, unitId, check);
-            message.setResult("success");
+            message.setCode(1);
             message.setData(!check);
-            message.setMessageInfo("修改工作状态成功！");
+            message.setMsg("修改工作状态成功！");
         } catch (RuntimeException e) {
-            message.setResult(e.getClass().getName() + ":" + e.getMessage());
-            message.setMessageInfo("修改工作状态失败！");
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setData(check);
+            message.setMsg("修改工作状态失败！");
         }
         return message;
     }
@@ -116,16 +121,17 @@ public class WorkController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/insertWorkLog", method = RequestMethod.POST)
-    public Message insertWorkLog(@RequestBody WorkLog workLog) {
+    @RequestMapping(value = "/addWorkLog", method = RequestMethod.POST)
+    public Message addWorkLog(@RequestBody WorkLog workLog) {
         Message message = new Message();
         try {
             workLogService.insertSelective(workLog);
-            message.setResult("success");
-            message.setMessageInfo("添加日志成功！");
+            message.setCode(1);
+            message.setMsg("添加日志成功！");
         } catch (RuntimeException e) {
-            message.setResult(e.getClass().getName() + ":" + e.getMessage());
-            message.setMessageInfo("添加日志失败！");
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("添加日志失败！");
         }
         return message;
     }

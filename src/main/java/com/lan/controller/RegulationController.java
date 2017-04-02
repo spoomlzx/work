@@ -4,10 +4,13 @@ import com.lan.model.Regulation;
 import com.lan.model.utilMoel.Message;
 import com.lan.model.utilMoel.UserInfo;
 import com.lan.service.RegulationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 /**
  * package com.zzc.controller
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 public class RegulationController {
+    private final static Logger logger= LoggerFactory.getLogger(RegulationController.class);
+
     @Autowired
     private RegulationService regulationService;
 
@@ -28,10 +33,11 @@ public class RegulationController {
         Message message = new Message();
         try {
             regulationService.insert(regulation);
-            message.setMessageInfo("添加法规成功！");
+            message.setMsg("添加法规成功！");
         } catch (RuntimeException e) {
-            message.setResult(e.getClass().getName() + ":" + e.getMessage());
-            message.setMessageInfo("添加法规失败！");
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("添加法规失败！");
         }
         return message;
     }
@@ -47,10 +53,11 @@ public class RegulationController {
         Message message=new Message();
         try{
             regulationService.deleteByReguId(reguId);
-            message.setMessageInfo("删除法规成功！");
+            message.setMsg("删除法规成功！");
         }catch(RuntimeException e){
-            message.setResult(e.getClass().getName() + ":" + e.getMessage());
-            message.setMessageInfo("删除法规失败！");
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("删除法规失败！");
         }
         return message;
     }
@@ -66,10 +73,11 @@ public class RegulationController {
         Message message = new Message();
         try{
             regulationService.update(regulation);
-            message.setMessageInfo("修改法规成功！");
+            message.setMsg("修改法规成功！");
         }catch(RuntimeException e){
-            message.setResult(e.getClass().getName() + ":" + e.getMessage());
-            message.setMessageInfo("修改法规失败！");
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("修改法规失败！");
         }
         return message;
     }

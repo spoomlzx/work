@@ -21,7 +21,7 @@
         <div class="unit-list bk-green-dan">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
-        <div class="unit-work-list bk-green-dan" style="max-height: 800px">
+        <div class="unit-work-list bk-green-dan">
             <div>
                 <span class="left" style="line-height: 34px">根据类别筛选：</span>
                 <select class="form-control left" style="width: 100px" id="p-w-type">
@@ -43,7 +43,7 @@
                     <th>完成率</th>
                 </tr>
                 </thead>
-                <tbody id="p-w-list" style="font-size: 14px">
+                <tbody id="p-w-list" style="font-size: 14px;">
                 </tbody>
             </table>
 
@@ -144,6 +144,7 @@
 </div>
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
 <script src="/plugin/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="/plugin/ztree/jquery.ztree.js" type="text/javascript"></script>
 <script src="/js/js-progress.js" type="text/javascript"></script>

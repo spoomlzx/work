@@ -11,24 +11,24 @@ import java.io.Serializable;
 public class Message implements Serializable {
 
     private static final long serialVersionUID = -8384851165488597002L;
-    private String result = "success";
-    private String messageInfo;
+    private int code=1;
+    private String msg;
     private Object data;
 
-    public String getResult() {
-        return result;
+    public int getCode() {
+        return code;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public String getMessageInfo() {
-        return messageInfo;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessageInfo(String messageInfo) {
-        this.messageInfo = messageInfo;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public Object getData() {

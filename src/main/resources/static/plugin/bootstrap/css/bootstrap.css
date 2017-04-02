@@ -6999,7 +6999,6 @@ button.close {
 
 .modal-open .modal {
     overflow-x: hidden;
-    overflow-y: auto;
 }
 
 .modal-dialog {
@@ -7065,7 +7064,7 @@ button.close {
 
 .modal-body {
     position: relative;
-    padding: 15px;
+    padding: 20px;
 }
 
 .modal-footer {

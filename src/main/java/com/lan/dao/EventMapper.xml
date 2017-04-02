@@ -5,6 +5,7 @@
     <resultMap id="AllColumnMap" type="com.lan.model.Event">
         <result column="id" property="id"/>
         <result column="title" property="title"/>
+        <result column="person" property="person"/>
         <result column="describe" property="describe"/>
         <result column="unit_id" property="unitId"/>
         <result column="start" property="start"/>
@@ -16,6 +17,7 @@
     <sql id="all_column">
         `id`,
         `title`,
+        `person`,
         `describe`,
         `unit_id`,
         `start`,
@@ -33,32 +35,12 @@
     </select>
 
     <!--auto generated Code-->
-    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
-        INSERT INTO event (
-            `id`,
-            `title`,
-            `describe`,
-            `unit_id`,
-            `start`,
-            `end`,
-            `color`
-        ) VALUES (
-            #{pojo.id},
-            #{pojo.title},
-            #{pojo.describe},
-            #{pojo.unitId},
-            #{pojo.start},
-            #{pojo.end},
-            #{pojo.color}
-        )
-    </insert>
-
-    <!--auto generated Code-->
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO event
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.id!=null"> `id`,</if>
             <if test="pojo.title!=null"> `title`,</if>
+            <if test="pojo.person!=null"> `person`,</if>
             <if test="pojo.describe!=null"> `describe`,</if>
             <if test="pojo.unitId!=null"> `unit_id`,</if>
             <if test="pojo.start!=null"> `start`,</if>
@@ -69,6 +51,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.id!=null">#{pojo.id},</if>
             <if test="pojo.title!=null">#{pojo.title},</if>
+            <if test="pojo.person!=null">#{pojo.person},</if>
             <if test="pojo.describe!=null">#{pojo.describe},</if>
             <if test="pojo.unitId!=null">#{pojo.unitId},</if>
             <if test="pojo.start!=null">#{pojo.start},</if>
@@ -109,5 +92,9 @@
         </set>
         WHERE id = #{pojo.id}
     </update>
+
+    <delete id="deleteEvent">
+        delete from event where unit_id=#{unitId} and id=#{id}
+    </delete>
 </mapper>
 

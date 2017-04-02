@@ -9,11 +9,20 @@ package com.lan.model;
 public class Event {
     private Integer id;
     private String title;
+    private String person;
     private String describe;
     private Integer unitId;
     private String start;
     private String end;
     private String color;
+
+    public String getPerson() {
+        return person;
+    }
+
+    public void setPerson(String person) {
+        this.person = person;
+    }
 
     public Integer getId() {
         return id;
