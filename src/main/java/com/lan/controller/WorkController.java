@@ -1,9 +1,6 @@
 package com.lan.controller;
 
-import com.lan.model.WorkFull;
-import com.lan.model.WorkLog;
-import com.lan.model.WorkSet;
-import com.lan.model.WorkStatus;
+import com.lan.model.*;
 import com.lan.model.utilMoel.Message;
 import com.lan.model.utilMoel.UserInfo;
 import com.lan.service.RegulationService;
@@ -12,6 +9,7 @@ import com.lan.service.WorkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +25,7 @@ import java.util.Map;
  */
 @Controller
 public class WorkController {
-    private final static Logger logger= LoggerFactory.getLogger(WorkController.class);
+    private final static Logger logger = LoggerFactory.getLogger(WorkController.class);
     @Autowired
     private RegulationService regulationService;
     @Autowired
@@ -56,7 +54,52 @@ public class WorkController {
     }
 
     /**
+     * 添加一项工作
+     * @param work
+     * @return
+     */
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseBody
+    @RequestMapping(value = "/addWork", method = RequestMethod.POST)
+    public Message addWork(@RequestBody WorkFull work) {
+        Message message = new Message();
+        try {
+            workService.insert(work);
+            message.setCode(1);
+            message.setMsg("添加工作成功！");
+        } catch (RuntimeException e) {
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("添加工作失败！");
+        }
+        return message;
+    }
+
+    /**
+     * 编辑一项工作
+     * @param work
+     * @return
+     */
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseBody
+    @RequestMapping(value = "/editWork", method = RequestMethod.POST)
+    public Message editWork(@RequestBody WorkFull work) {
+        Message message = new Message();
+        try {
+            workService.update(work);
+            message.setCode(1);
+            message.setMsg("修改工作成功！");
+        } catch (RuntimeException e) {
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("修改工作失败！");
+        }
+        return message;
+    }
+
+    /**
      * 更新工作的完成状态
+     *
      * @param workId
      * @param check
      * @param userInfo
@@ -64,11 +107,11 @@ public class WorkController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateWorkStatus", method = RequestMethod.POST)
-    public Message updateWorkStatus(@RequestParam(value = "workId") Integer workId,@RequestParam(value = "check") Boolean check,
+    public Message updateWorkStatus(@RequestParam(value = "workId") Integer workId, @RequestParam(value = "check") Boolean check,
                                     @ModelAttribute("currentUser") UserInfo userInfo) {
         Message message = new Message();
         try {
-            Integer unitId=userInfo.getUnitId();
+            Integer unitId = userInfo.getUnitId();
             workService.updateWorkStatus(workId, unitId, check);
             message.setCode(1);
             message.setData(!check);
@@ -90,9 +133,19 @@ public class WorkController {
      */
     @ResponseBody
     @RequestMapping(value = {"/getWorkList/{unitTypeId}"}, method = RequestMethod.GET)
-    public List<WorkSet> getWorkList(@PathVariable Integer unitTypeId) {
+    public Map<String, WorkSet> getWorkList(@PathVariable Integer unitTypeId) {
+        Map<String, WorkSet> map = new HashMap<>();
         List<WorkSet> workSets = workService.selectWorkSetList(unitTypeId);
-        return workSets;
+        for (WorkSet workSet : workSets) {
+            map.put(workSet.getWorkType(), workSet);
+        }
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/getWorkListByUnitId/{unitId}"}, method = RequestMethod.GET)
+    public Map<String,List<WorkFull>> getWorkListByUnitId(@PathVariable Integer unitId) {
+        return workService.selectWorkSetListByUnitId(unitId);
     }
 
     @ResponseBody
@@ -101,8 +154,7 @@ public class WorkController {
         Map<Integer, WorkStatus> map = new HashMap<>();
         List<WorkStatus> workStatuses = workService.selectWorkListWithStatus(unitId);
         for (WorkStatus workStatus : workStatuses) {
-
-            map.put(workStatus.getWorkId(),workStatus);
+            map.put(workStatus.getWorkId(), workStatus);
         }
         return map;
     }
@@ -118,6 +170,48 @@ public class WorkController {
     @RequestMapping(value = {"/searchWork"}, method = RequestMethod.POST)
     public List<Integer> searchWork(@RequestParam(value = "unitTypeId") Integer unitTypeId, @RequestParam(value = "keyword", required = false) String keyword) {
         return workService.selectWorkIdsByKeyword(unitTypeId, keyword);
+    }
+
+
+    /**
+     * map 1: wokrlist in type_work
+     * map 2: worklist not in type_work
+     * @param unitTypeId
+     * @param type
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getWorkInTypeWork/{unitTypeId}/{type}",method = RequestMethod.GET)
+    public Message getWorkInTypeWork(@PathVariable Integer unitTypeId,@PathVariable String type){
+        Message message = new Message();
+        try {
+            List<Work> listInTypeWork= workService.getWorkListInTypeWork(unitTypeId,type);
+            message.setCode(1);
+            message.setMsg("查询成功！");
+            message.setData(listInTypeWork);
+        } catch (RuntimeException e) {
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("查询失败！");
+        }
+        return message;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getWorkNotInTypeWork",method = RequestMethod.POST)
+    public Message getWorkNotInTypeWork(@RequestParam(value = "unitTypeId") Integer unitTypeId,@RequestParam(value = "type") String type){
+        Message message = new Message();
+        try {
+            List<Work> listNotInTypeWork= workService.getWorkListNotInTypeWork(unitTypeId,type);
+            message.setCode(1);
+            message.setMsg("查询成功！");
+            message.setData(listNotInTypeWork);
+        } catch (RuntimeException e) {
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("查询失败！");
+        }
+        return message;
     }
 
     @ResponseBody
@@ -142,7 +236,7 @@ public class WorkController {
         Map<Integer, WorkLog> map = new HashMap<>();
         List<WorkLog> logs = workLogService.selectLogList(workId, unitId);
         for (WorkLog log : logs) {
-            map.put(log.getLogId(),log);
+            map.put(log.getLogId(), log);
         }
         return map;
     }

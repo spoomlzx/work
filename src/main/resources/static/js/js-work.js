@@ -2,16 +2,8 @@
  * Created by spoomlzx on 2017/2/25.
  */
 $(document).ready(function () {
-    $('.left-sidebar li.active').removeClass('active');
-    $('#li-work').addClass('active');
-    $("#p-content").slimScroll({
-        height: '360px'
-    });
-    $("#p-basis").slimScroll({
-        height: '360px'
-    });
-    var unitTypeId = $("#w-search").data("unittypeid");
-    initWorkList(unitTypeId);
+    var unitId = $("#w-search").data("unitid");
+    initWorkList(unitId);
     bindUnitTypeChange();
     initWork();
     bindSearch();
@@ -29,19 +21,25 @@ $(document).ready(function () {
     });
 })
 
-var initWorkList = function (unitTypeId) {
+var initWorkList = function (unitId) {
     $.ajax({
         type: "get",
-        url: "/getWorkList/" + unitTypeId,
+        url: "/getWorkListByUnitId/" + unitId,
         success: function (data) {
-            $.each(data, function (i, itemi) {
-                $("#w-badge-" + i).html(itemi.workNum);
-                $("#w-ul-" + i).empty();
-                $.each(itemi.workList, function (j, itemj) {
-                    var index = j + 1;
-                    $("#w-ul-" + i).append("<li class='list-group-item search-show' data-type='" + itemj.type + "' data-workid='" + itemj.workId + "'><span>" + index + "、</span>" + itemj.name + "</li>");
+            for(var key in data){
+                $("span.badge[data-type='"+key+"']").html(data[key].length);
+                $("ul.list-group[data-type='"+key+"']").empty();
+                var index=1;
+                $.each(data[key], function (j, itemj) {
+                    if(itemj.check){
+                        $("ul.list-group[data-type='"+key+"']").append("<li class='list-group-item search-show' data-type='" + itemj.type + "' data-workid='" + itemj.workId + "'><span>" + index + "、</span>" + itemj.name + "</li>");
+                    }else{
+                        $("ul.list-group[data-type='"+key+"']").append("<li class='list-group-item search-show font-red' data-type='" + itemj.type + "' data-workid='" + itemj.workId + "'><span>" + index + "、</span>" + itemj.name + "</li>");
+                    }
+                    index=index+1;
                 })
-            })
+            }
+            getWork(unitId,data["年度"][0].workId);
         }
     })
 }
@@ -55,69 +53,71 @@ var initWork = function () {
     $(".work-list ul").on("click", "li", function (e) {
         var workId = $(this).data("workid");
         var unitId = $("#w-search").data("unitid");
-        var type = $(this).data("type");
         var work_li = e.target;
         //选中项class为active
         $(".work-list ul > li.active").removeClass("active");
         $(work_li).addClass("active");
-        $.ajax({
-            type: "post",
-            url: "/getWork",
-            data: {
-                workId: workId,
-                unitId: unitId,
-                type: type
-            },
-            success: function (data) {
-                $("#w-check").data("workid", data.workId);
-                $("#w-check").data("type", data.type);
-                $("#l-add-btn").removeClass("hidden");
-                $("#w-check").removeClass("hidden");
-
-                changeWorkStatus(data.check);
-
-                //将文中出现的关键词标红加粗
-                var content = data.content;
-                var basis = data.basis;
-                var tips = data.tips;
-                var keyword = $("#w-keyword").val();
-                var kwpattern = new RegExp(keyword, "g");
-                if (keyword != "") {
-                    content = content.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
-                    basis = basis.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
-                    tips = tips.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
-                }
-                //绑定work的各个信息
-                $("#p-name").html(data.name);
-                $("#p-content").html(content);
-                $("#p-basis").html(basis);
-                $("#p-tips").html(tips);
-                $("#p-flowchart").empty();
-                $("#p-flowchart").append("<img src='" + data.flowChart + "' width='90%'/>")
-                //重新绑定regulation的modal的显示动作
-                $('#regulation-modal').off('show.bs.modal');
-                $('#regulation-modal').on('show.bs.modal', function (e) {
-                    var id = e.relatedTarget.dataset.id;
-                    var b = data.regulations[id];
-                    $("#regulation-modal .modal-title").empty();
-                    $("#regulation-modal .modal-title").html(b.title);
-                    $("#regulation-modal .modal-body").empty();
-                    if (keyword != "") {
-                        var c = b.content.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
-                        $("#regulation-modal .modal-body").html(c);
-                    } else {
-                        $("#regulation-modal .modal-body").html(b.content);
-                    }
-                })
-                //添加regulation列表
-                $("#p-regulations ul").empty();
-                $.each(data.regulations, function (i, item) {
-                    $("#p-regulations ul").append("<li data-toggle='modal' href='#regulation-modal' data-id=" + i + "><a href='javascript:;'>" + item.title + "</a></li>");
-                })
-                getWorkLogList(workId,unitId);
-            }
-        })
+        getWork(unitId,workId);
     });
+}
+
+var getWork=function(unitId,workId){
+    $.ajax({
+        type: "post",
+        url: "/getWork",
+        data: {
+            workId: workId,
+            unitId: unitId
+        },
+        success: function (data) {
+            $("#w-check").data("workid", data.workId);
+            $("#w-check").data("type", data.type);
+            $("#l-add-btn").removeClass("hidden");
+            $("#w-check").removeClass("hidden");
+
+            changeWorkStatus(data.check);
+
+            //将文中出现的关键词标红加粗
+            var content = data.content;
+            var basis = data.basis;
+            var tips = data.tips;
+            var keyword = $("#w-keyword").val();
+            var kwpattern = new RegExp(keyword, "g");
+            if (keyword != "") {
+                content = content.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
+                basis = basis.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
+                tips = tips.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
+            }
+            //绑定work的各个信息
+            $("#p-name").html(data.name);
+            $("#p-content").html(content);
+            $("#p-basis").html(basis);
+            $("#p-tips").html(tips);
+            $("#p-flowchart").empty();
+            $("#p-flowchart").append("<img src='" + data.flowChart + "' width='90%'/>")
+            //重新绑定regulation的modal的显示动作
+            $('#regulation-modal').off('show.bs.modal');
+            $('#regulation-modal').on('show.bs.modal', function (e) {
+                var id = e.relatedTarget.dataset.id;
+                var b = data.regulations[id];
+                $("#regulation-modal .modal-title").empty();
+                $("#regulation-modal .modal-title").html(b.title);
+                $("#regulation-modal .modal-body").empty();
+                if (keyword != "") {
+                    var c = b.content.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
+                    $("#regulation-modal .modal-body").html(c);
+                } else {
+                    $("#regulation-modal .modal-body").html(b.content);
+                }
+            })
+            //添加regulation列表
+            $("#p-regulations ul").empty();
+            $.each(data.regulations, function (i, item) {
+                $("#p-regulations ul").append("<li data-toggle='modal' href='#regulation-modal' data-id=" + i + "><a href='javascript:;'>" + item.title + "</a></li>");
+            })
+            getWorkLogList(workId,unitId);
+        }
+    })
 }
 
 var bindSearch = function () {

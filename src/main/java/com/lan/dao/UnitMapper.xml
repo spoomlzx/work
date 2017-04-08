@@ -93,5 +93,22 @@
         </set>
         WHERE unit_id = #{pojo.unitId}
     </update>
+
+
+    <!--typeWork 部分的sql-->
+    <insert id="insertTypeWorkList">
+        INSERT INTO type_work (`unit_type_id`, `work_id`)
+        VALUES
+        <foreach collection="workIds" item="workId" index="index" separator=",">
+            (
+            #{unitTypeId},
+            #{workId}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteTypeWork">
+        DELETE FROM type_work where unit_type_id=#{unitTypeId} and work_id=#{workId}
+    </delete>
 </mapper>
 

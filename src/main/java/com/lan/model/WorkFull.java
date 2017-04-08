@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * package com.zzc.model
+ * 包含content,basis等信息的Work
  *
  * @author spoomlzx
  * @date 2017/3/22

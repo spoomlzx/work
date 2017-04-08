@@ -36,7 +36,7 @@ public final class ConfigManager {
         rootPath = rootPath.replace("\\", "/");
         this.rootPath=rootPath;
         this.contextPath = contextPath;
-        this.originalPath = rootPath + "WEB-INF/classes" + File.separator + "config.json";
+        this.originalPath = "D:/Project/work/src/main/resources/config.json";
         this.initEnv();
 
     }

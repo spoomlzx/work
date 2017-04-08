@@ -13,7 +13,7 @@ spring:
     cache: false
   datasource:
     name: test
-    url: jdbc:mysql://localhost:3307/work?useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://localhost:3307/work?useUnicode=true&characterEncoding=utf8&useSSL=true&allowMultiQueries=true
     username: root
     password: root
     ###### 使用druid数据源 ############
@@ -36,3 +36,5 @@ spring:
     multipart:
       max-file-size: 8Mb
       max-request-size: 20Mb
+server:
+  port: 8180

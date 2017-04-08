@@ -6,6 +6,7 @@ import com.lan.model.utilMoel.Message;
 import com.lan.model.utilMoel.UserInfo;
 import com.lan.service.EventService;
 import com.lan.service.UnitService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,38 @@ public class UnitController {
             logger.error(e.getClass().getName() + ":" + e.getMessage());
             message.setCode(0);
             message.setMsg("删除工作失败！");
+        }
+        return message;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addTypeWork",method = RequestMethod.POST)
+    public Message addTypeWork(@Param("unitTypeId") Integer unitTypeId, @Param("workIds") Integer[] workIds){
+        Message message = new Message();
+        try{
+            unitService.insertTypeWorkList(unitTypeId, workIds);
+            message.setCode(1);
+            message.setMsg("添加成功！");
+        }catch(RuntimeException e){
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("添加失败！");
+        }
+        return message;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteTypeWork",method = RequestMethod.POST)
+    public Message deleteTypeWork(@Param("unitTypeId") Integer unitTypeId, @Param("workId") Integer workId){
+        Message message = new Message();
+        try{
+            unitService.deleteTypeWork(unitTypeId, workId);
+            message.setCode(1);
+            message.setMsg("删除成功！");
+        }catch(RuntimeException e){
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("删除失败！");
         }
         return message;
     }

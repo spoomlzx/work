@@ -11,7 +11,7 @@ import java.util.List;
 public class WorkSet {
     private String workType;
     private Integer workNum;
-    private List<Work> workList;
+    private List<WorkStatus> workList;
 
     public String getWorkType() {
         return workType;
@@ -29,11 +29,11 @@ public class WorkSet {
         this.workNum = workNum;
     }
 
-    public List<Work> getWorkList() {
+    public List<WorkStatus> getWorkList() {
         return workList;
     }
 
-    public void setWorkList(List<Work> workList) {
+    public void setWorkList(List<WorkStatus> workList) {
         this.workList = workList;
     }
 }

@@ -2,8 +2,6 @@
  * Created by spoomlzx on 2017/3/21.
  */
 $(document).ready(function () {
-    $('.left-sidebar li.active').removeClass('active');
-    $('#li-temp').addClass('active');
     initCalendar();
     var height = document.body.offsetHeight - 82;
     $('#calendar').fullCalendar('option', 'height', height);
@@ -62,11 +60,13 @@ initCalendar = function () {
                 time = event.start.format("MM月DD日 HH:mm") + " – " + event.end.format("MM月DD日 HH:mm");
             }
             $(".event-time-show > div > span:nth-child(2)").html(time);
+            $(".event-person-show > div > span:nth-child(3)").html(event.person);
             $(".event-person-show label").css("background-color", event.color);
             $(".event-describe-show").html(event.describe);
 
             $('#delete-modal').on('show.bs.modal', function (e) {
-                $("#e-delete").one("click",function () {
+                $("#e-delete").unbind();
+                $("#e-delete").click(function () {
                     $.ajax({
                         type: "get",
                         url: "/deleteEvent/" + event.id,
@@ -75,6 +75,14 @@ initCalendar = function () {
                             if (message.code) {
                                 showTip("success","提示",message.msg);
                                 $('#calendar').fullCalendar('removeEvents',event.id);
+                            }
+                            //删除成功以后关闭event详情显示
+                            var _con = $(".sidebar");
+                            if (!_con.is(e.target) && _con.has(e.target).length === 0) {
+                                $(".sidebar").removeClass("in");
+                                setTimeout(function () {
+                                    $(".modal-sidebar").removeClass("display-block");
+                                }, 300);
                             }
                         }
                     })
@@ -106,6 +114,13 @@ initCalendar = function () {
                     alert('获取工作失败！');
                 }
             }
+        ],
+        events:[
+            {
+                title: 'Event1',
+                start: '2017-04-04',
+                className:'very'
+            },
         ]
     });
 }

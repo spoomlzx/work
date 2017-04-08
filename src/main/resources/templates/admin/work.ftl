@@ -9,9 +9,11 @@
     <link href="/plugin/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="/plugin/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
     <link href="/css/spoom.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.js"></script>
 </head>
 <body>
-<#include "./sidebar.ftl"/>
+<#include "../sidebar.ftl"/>
 
 <div class="container-content">
     <div class="center-container">
@@ -27,11 +29,11 @@
                     <a class="panel-container" data-toggle="collapse" data-parent="#accordion" href="#collapse-${type_index}">
                         <div class="panel-heading title-${type_index}">
                         ${type}
-                            <span class="badge" id="w-badge-${type_index}"></span>
+                            <span class="badge" data-type="${type}工作"></span>
                         </div>
                     </a>
                     <div id="collapse-${type_index}" class="panel-collapse collapse">
-                        <ul class="list-group" id="w-ul-${type_index}">
+                        <ul class="list-group" data-type="${type}工作">
                         </ul>
                     </div>
                 </div>
@@ -39,52 +41,62 @@
             </div>
         </div>
         <div class="work-detail" style="width: 80%">
-            <div class="alert alert-warning title">
-                <span id="p-name">工作标题</span>
+            <div class="panel panel-default title">
+                <input class="form-control left" placeholder="工作标题" id="w-e-name" style="width:40%">
+                <select class="form-control left" id="w-e-type" style="width: 10%">
+                    <option value="年度">年度</option>
+                    <option value="半年">半年</option>
+                    <option value="季度">季度</option>
+                    <option value="月度">月度</option>
+                    <option value="周">周</option>
+                    <option value="日">日</option>
+                    <option value="按需">按需</option>
+                </select>
+                <div class="right">
+                    <button type="button" class="btn btn-primary hidden" id="w-edit-btn">编辑</button>
+                    <button href="/addWork" type="button" class="btn btn-warning" id="w-add-btn">添加</button>
+                    <button href="#delete-modal" data-toggle="modal" type="button" class="btn btn-danger" id="w-delete-btn">删除</button>
+                </div>
             </div>
             <div>
-                <div class="work-panel" style="width: 60%">
+                <div class="work-panel" style="width: 50%">
                     <div class="panel panel-success">
                         <div class="panel-heading">工作内容</div>
-                        <div class="panel-body" id="p-content">
-                            详细工作内容
+                        <div class="panel-body edit">
+                            <script id="w-e-content" type="text/plain"></script>
                         </div>
                     </div>
                 </div>
-                <div class="work-panel" style="width: 40%">
+                <div class="work-panel" style="width: 50%">
                     <div class="panel panel-danger">
                         <div class="panel-heading">法规依据</div>
-                        <div class="panel-body" id="p-basis">
-                            法规条目依据
+                        <div class="panel-body edit">
+                            <script id="w-e-basis" type="text/plain"></script>
+                        </div>
+                        <div class="panel-body hidden">
+                            <div id="p-basis">
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="padding-left: 10px">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#p-regulations" data-toggle="tab">引用法规</a></li>
-                    <li><a href="#p-flowchart" data-toggle="tab">流程图</a></li>
-                    <li><a href="#p-tips" data-toggle="tab">注意事项</a></li>
-                </ul>
 
-                <!-- Tab panes -->
-                <div class="tab-content" style="background-color: #ffffff">
-                    <div class="tab-pane active" id="p-regulations">
-                        <ul>
-
-                        </ul>
+            <div class="work-panel" style="width: 50%">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">注意事项</div>
+                    <div class="panel-body edit">
+                        <script id="w-e-tips" type="text/plain"></script>
                     </div>
-                    <div class="tab-pane" id="p-flowchart">
+                    <div class="panel-body hidden">
+                        <div id="p-basis">
 
-                    </div>
-                    <div class="tab-pane" id="p-tips">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 
 <div class="modal fade" id="regulation-modal" tabindex="-1">
@@ -92,7 +104,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body regulation-content">
 
@@ -104,9 +116,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="delete-modal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group notice-msg">
+                    删除后无法恢复,确定删除这项工作吗?
+                </div>
+                <div class="form-group notice-btn">
+                    <button class="btn btn-danger" id="w-delete">删 除</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
 <script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
-<script src="/js/js-work.js" type="text/javascript"></script>
+<script src="/js/js-admin-work.js" type="text/javascript"></script>
 </body>
 </html>

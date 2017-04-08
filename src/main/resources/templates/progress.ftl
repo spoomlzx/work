@@ -18,35 +18,40 @@
 
 <div class="container-content" id="p-container" data-unitid="${currentUser.unitId}">
     <div class="center-container bk-white">
-        <div class="unit-list bk-green-dan">
-            <ul id="treeDemo" class="ztree"></ul>
-        </div>
-        <div class="unit-work-list bk-green-dan">
-            <div>
-                <span class="left" style="line-height: 34px">根据类别筛选：</span>
-                <select class="form-control left" style="width: 100px" id="p-w-type">
-                    <option value="全部" selected="selected">全部</option>
-                    <option value="年度">年度</option>
-                    <option value="半年">半年</option>
-                    <option value="季度">季度</option>
-                    <option value="月度">月度</option>
-                    <option value="周">周</option>
-                    <option value="日">日</option>
-                </select>
+        <div class="unit-list panel panel-warning bk-green-dan">
+            <div class="panel-heading">单位结构</div>
+            <div class="panel-body">
+                <ul id="treeDemo" class="ztree"></ul>
             </div>
+        </div>
+        <div class="unit-work-list panel panel-warning">
+            <div class="panel-heading">工作进度</div>
+            <div class="panel-body">
+                <div style="padding: 4px">
+                    <span class="left" style="line-height: 34px">根据类别筛选：</span>
+                    <select class="form-control left" style="width: 100px" id="p-w-type">
+                        <option value="全部" selected="selected">全部</option>
+                        <option value="年度">年度</option>
+                        <option value="半年">半年</option>
+                        <option value="季度">季度</option>
+                        <option value="月度">月度</option>
+                        <option value="周">周</option>
+                        <option value="日">日</option>
+                    </select>
+                </div>
 
-            <table class="table table-striped">
-                <thead>
-                <tr class="active">
-                    <th style="width: 8%">#</th>
-                    <th style="width: 66%">工作名称</th>
-                    <th>完成率</th>
-                </tr>
-                </thead>
-                <tbody id="p-w-list" style="font-size: 14px;">
-                </tbody>
-            </table>
-
+                <table class="table table-striped">
+                    <thead>
+                    <tr class="active">
+                        <th style="width: 8%">#</th>
+                        <th style="width: 66%">工作名称</th>
+                        <th>完成率</th>
+                    </tr>
+                    </thead>
+                    <tbody id="p-w-list">
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="unit-detail bk-white">
             <div class="alert alert-info title">

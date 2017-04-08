@@ -7,6 +7,7 @@ import com.lan.service.RegulationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class RegulationController {
     @Autowired
     private RegulationService regulationService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @RequestMapping(value = {"/admin/addRegulation"}, method = RequestMethod.POST)
     public Message addRegulation(@RequestBody Regulation regulation) {
@@ -47,6 +49,7 @@ public class RegulationController {
      * @param reguId
      * @return
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @RequestMapping(value = {"/admin/deleteRegulation/{reguId}"},method = RequestMethod.GET)
     public Message deleteRegulation(@PathVariable Integer reguId){
@@ -67,6 +70,7 @@ public class RegulationController {
      * @param regulation
      * @return
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @RequestMapping(value = {"/admin/editRegulation"},method = RequestMethod.POST)
     public Message editRegulation(@RequestBody Regulation regulation){

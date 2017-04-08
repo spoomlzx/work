@@ -34,7 +34,7 @@
         SELECT type FROM work WHERE work_id=#{workId}
     </select>
 
-    <select id="selectWorkList" resultMap="WorkColumnMap">
+    <select id="selectWorkList" resultMap="WorkStatusMap">
         SELECT w.work_id,w.name,w.type FROM type_work t INNER JOIN `work` w ON t.work_id=w.work_id AND t.unit_type_id=#{unitTypeId}
         WHERE 1=1
         <if test="type != null">
@@ -54,6 +54,12 @@
         INNER JOIN history h ON w.work_id=h.work_id AND h.unit_id=#{unitId} AND w.work_id=#{workId}
     </select>
 
+    <select id="selectWorkListByUnitId" resultMap="WorkFullColumnMap">
+        SELECT w.work_id,w.name,w.type,CASE WHEN h.`status`->'${index}'=1 THEN 1 ELSE 0 END `check`
+        FROM `work` w
+        INNER JOIN history h ON w.work_id=h.work_id AND h.unit_id=#{unitId} AND w.type=#{type}
+    </select>
+
     <select id="selectWorkIdsByKeyword" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT s.work_id FROM type_work t
         INNER JOIN searchtext s ON t.unit_type_id=#{unitTypeId} AND t.work_id=s.work_id
@@ -63,6 +69,19 @@
     <select id="getWorkListWithStatus" resultMap="WorkStatusMap">
         SELECT h.work_id,w.`name`,h.`status`->'${index}' AS status,JSON_LENGTH(h.`status`->'${index}') AS finish_days,w.type FROM history h
         INNER JOIN work w ON h.work_id=w.work_id AND h.unit_id=#{unitId}
+    </select>
+
+
+    <select id="getWorkListInTypeWork" resultMap="WorkStatusMap">
+        SELECT w.work_id, w.`name`, w.type FROM WORK w
+        WHERE w.work_id IN (SELECT work_id FROM type_work WHERE unit_type_id = #{unitTypeId})
+	    AND w.type = #{type}
+    </select>
+
+    <select id="getWorkListNotInTypeWork" resultMap="WorkStatusMap">
+        SELECT w.work_id, w.`name`, w.type FROM WORK w
+        WHERE w.work_id NOT IN (SELECT work_id FROM type_work WHERE unit_type_id = #{unitTypeId})
+        AND w.type = #{type}
     </select>
 
     <update id="deleteWorkRecord">

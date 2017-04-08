@@ -8,8 +8,6 @@ var editor;
 var reditor;
 var table;
 $(document).ready(function () {
-    $('.left-sidebar li.active').removeClass('active');
-    $('#li-regulation').addClass('active');
     editor = UE.getEditor('r-content');
     reditor = UE.getEditor('r-e-content');
     initModal();
@@ -106,7 +104,7 @@ var initTable = function () {
             "infoEmpty": "没有数据",
             "infoFiltered": "(总共有 _MAX_ 条数据)",
             "lengthMenu": "每页条数 _MENU_",
-            "search": "<span class='fa fa-search'></span>按文件名搜索：",
+            "search": "<span class='fa fa-search'></span>搜索：",
             "zeroRecords": "没有您查找的法规制度",
             "paginate": {
                 "previous": "上一页",

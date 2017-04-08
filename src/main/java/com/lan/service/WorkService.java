@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class WorkService {
@@ -28,7 +26,7 @@ public class WorkService {
         String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};
         for (int i = 0; i < typelist.length; i++) {
             WorkSet workSet = new WorkSet();
-            List<Work> works = workMapper.selectWorkList(unitTypeId, typelist[i]);
+            List<WorkStatus> works = workMapper.selectWorkList(unitTypeId, typelist[i]);
             if (works.size() > 0) {
                 workSet.setWorkNum(works.size());
                 workSet.setWorkType(typelist[i] + "工作");
@@ -37,6 +35,16 @@ public class WorkService {
             }
         }
         return workSets;
+    }
+
+    public Map<String,List<WorkFull>> selectWorkSetListByUnitId(Integer unitId) {
+        String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};
+        Map<String,List<WorkFull>> map=new LinkedHashMap<>();
+        for (int i = 0; i < typelist.length; i++) {
+            List<WorkFull> works = workMapper.selectWorkListByUnitId(unitId, getIndex(typelist[i]),typelist[i]);
+            map.put(typelist[i],works);
+        }
+        return map;
     }
 
     public WorkFull selectWorkById(Integer workId) {
@@ -83,12 +91,32 @@ public class WorkService {
         return workMapper.selectWorkIdsByKeyword(unitTypeId, keyword);
     }
 
-    public int insert(Work pojo) {
-        return workMapper.insert(pojo);
+
+    public List<Work> getWorkListInTypeWork(Integer unitTypeId,String type){
+        return workMapper.getWorkListInTypeWork(unitTypeId,type);
     }
 
+    public List<Work> getWorkListNotInTypeWork(Integer unitTypeId,String type){
+        return workMapper.getWorkListNotInTypeWork(unitTypeId,type);
+    }
+
+
+    @Transactional
+    public int insert(Work pojo) {
+        try{
+            return workMapper.insertSelective(pojo);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Transactional
     public int update(Work pojo) {
-        return workMapper.update(pojo);
+        try {
+            return workMapper.update(pojo);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
 

@@ -36,7 +36,7 @@
     //获取路径
     //var applicationPath = window.document.location.href;
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
-    var serverURL = "http://localhost:8080/";
+    var serverURL = "http://localhost:8180/";
 
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
@@ -52,11 +52,11 @@
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
         , toolbars: [[
             'fullscreen', 'source', '|', 'undo', 'redo', '|',
-            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset','pasteplain', '|',
+            'bold', 'italic', 'underline', 'removeformat', 'formatmatch', 'autotypeset','|',
 			'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist',  'cleardoc', '|',
             'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',  'date', 'spechars', 'inserttable', 'charts','link', 'unlink','|',
-            'customstyle', 'paragraph', 'fontfamily', 'fontsize','indent', '|',
-            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|','imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'paragraph', 'fontfamily', 'fontsize','indent', '|',
+            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
             'simpleupload', 'insertimage', 'emotion', 'music', 'attachment', 'pagebreak', 'background', '|',
             'print', 'preview', 'searchreplace', 'drafts'
         ]]
@@ -276,10 +276,10 @@
 
         //elementPathEnabled
         //是否启用元素路径，默认是显示
-        //,elementPathEnabled : true
+        ,elementPathEnabled : false
 
         //wordCount
-        //,wordCount:true          //是否开启字数统计
+        ,wordCount:false          //是否开启字数统计
         //,maximumWords:10000       //允许的最大字符数
         //字数统计提示，{#count}代表当前字数，{#leave}代表还可以输入多少字符数,留空支持多语言自动切换，否则按此配置显示
         //,wordCountMsg:''   //当前已输入 {#count} 个字符，您还可以输入{#leave} 个字符

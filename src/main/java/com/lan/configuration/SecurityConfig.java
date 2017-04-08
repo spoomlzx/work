@@ -32,6 +32,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/regulation**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/progress**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/temp**").hasAnyAuthority("ADMIN","USER")
+                .antMatchers("/assess**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()

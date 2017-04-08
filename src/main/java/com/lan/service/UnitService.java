@@ -5,6 +5,7 @@ import com.lan.model.Unit;
 import com.lan.model.UnitType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,5 +37,23 @@ public class UnitService{
 
     public int update(Unit pojo){
         return unitMapper.update(pojo);
+    }
+
+    @Transactional
+    public void insertTypeWorkList(Integer unitTypeId,Integer[] workIds){
+        try {
+            unitMapper.insertTypeWorkList(unitTypeId,workIds);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void deleteTypeWork(Integer unitTypeId,Integer workId){
+        try {
+            unitMapper.deleteTypeWork(unitTypeId, workId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

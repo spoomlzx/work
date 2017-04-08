@@ -20,4 +20,8 @@ public interface UnitMapper {
     int insertList(@Param("pojos") List<Unit> pojo);
 
     int update(@Param("pojo") Unit pojo);
+
+    int insertTypeWorkList(@Param("unitTypeId") Integer unitTypeId,@Param("workIds") Integer[] workIds);
+
+    int deleteTypeWork(@Param("unitTypeId") Integer unitTypeId,@Param("workId") Integer workId);
 }

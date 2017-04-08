@@ -22,6 +22,10 @@ body {
     box-shadow: 0 0 10px -2px #0B203A;
     background: linear-gradient(to right, rgba(11, 32, 58, 1), rgba(11, 32, 58, .85) 50%, rgba(11, 32, 58, .6));
     z-index: 101;
+    .header-container{
+        width: 100vw;
+        padding-right: 16px;
+    }
 }
 
 .right {
@@ -67,6 +71,7 @@ body {
 
 /*sidebar*/
 .left-sidebar {
+    padding-top:10px;
     position: fixed;
     width: 120px;
     min-height: 560px;
@@ -104,7 +109,9 @@ body {
 
 /*container-content*/
 .container-content {
-    padding-left: 120px;
+    width: calc(100vw - 120px);//防止出现滚动条时，显示内容抖动
+    margin-left: 120px;
+    padding-right: 16px;
     padding-top: 10px;
     .toolbar {
         height: 50px;
@@ -122,7 +129,6 @@ body {
             margin-right: 13px;
         }
     }
-
 }
 
 .search {

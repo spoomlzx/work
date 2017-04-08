@@ -6,7 +6,6 @@
     <groupId>com.lan</groupId>
     <artifactId>work</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
 
     <name>work</name>
     <description>Work System</description>
@@ -93,18 +92,6 @@
             <version>1.0.21</version>
         </dependency>
 
-        <!--swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox-swagger2.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-swagger2.version}</version>
-        </dependency>
         <!--json-->
         <dependency>
             <groupId>com.google.code.gson</groupId>

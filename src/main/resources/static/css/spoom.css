@@ -16,6 +16,9 @@
       width: 75%; }
     .work-list .form-inline button {
       width: 20%; }
+  .work-list ul.list-group {
+    height: calc(100vh - 413px);
+    overflow-y: auto; }
 
 .work-list .panel-heading {
   border: none;
@@ -39,7 +42,7 @@
   font-size: 22px; }
 
 .work-list .panel-container .panel-heading {
-  padding: 10px 20px;
+  padding: 7px 20px;
   font-size: 16px; }
 
 .work-list .title-0 {
@@ -100,9 +103,13 @@
 .work-detail .work-panel {
   padding-left: 10px;
   float: left; }
+  .work-detail .work-panel .panel-body.edit {
+    padding: 0px; }
 
 .work-detail .work-panel .panel-body {
-  height: 360px; }
+  height: 360px;
+  overflow-y: auto;
+  overflow-x: hidden; }
 
 .tab-content > .tab-pane {
   padding: 28px; }
@@ -171,6 +178,9 @@ body {
   box-shadow: 0 0 10px -2px #0B203A;
   background: linear-gradient(to right, #0b203a, rgba(11, 32, 58, 0.85) 50%, rgba(11, 32, 58, 0.6));
   z-index: 101; }
+  .header .header-container {
+    width: 100vw;
+    padding-right: 16px; }
 
 .right {
   float: right; }
@@ -206,6 +216,7 @@ body {
 
 /*sidebar*/
 .left-sidebar {
+  padding-top: 10px;
   position: fixed;
   width: 120px;
   min-height: 560px;
@@ -235,7 +246,9 @@ body {
 
 /*container-content*/
 .container-content {
-  padding-left: 120px;
+  width: calc(100vw - 120px);
+  margin-left: 120px;
+  padding-right: 16px;
   padding-top: 10px; }
   .container-content .toolbar {
     height: 50px;
@@ -281,6 +294,9 @@ body {
 .bk-green-dan {
   background-color: #F0F6E4; }
 
+.font-red {
+  color: red; }
+
 @CHARSET "UTF-8";
 .login-body {
   background: url(../image/bk.jpg);
@@ -312,19 +328,23 @@ body {
   width: 16px;
   font-size: 16px; }
 
-/*unit list*/
 .unit-list {
   width: 18%;
+  height: calc(100vh - 70px);
   float: left;
-  overflow-x: scroll; }
+  overflow-x: scroll;
+  margin-bottom: 0px; }
 
 .unit-work-list {
   width: 21%;
+  height: calc(100vh - 70px);
   float: left;
-  margin-left: 0.5%; }
-  .unit-work-list .table {
-    overflow-x: scroll;
-    overflow-y: scroll; }
+  margin-left: 0.5%;
+  margin-bottom: 0px; }
+  .unit-work-list .panel-body {
+    padding: 0px;
+    overflow-y: scroll;
+    height: calc(100vh - 112px); }
 
 .unit-detail {
   width: 40%;
@@ -341,6 +361,18 @@ body {
 
 .work-log .list-group-item {
   overflow: hidden; }
+
+.work-assign-list {
+  width: 18vw;
+  float: left;
+  height: calc(100vh - 70px);
+  margin-bottom: 0px;
+  overflow: auto; }
+
+.work-assign-detail {
+  width: calc(80vw - 120px);
+  float: left;
+  margin-left: 1vw; }
 
 .event-calendar {
   padding: 4px 15px 8px 8px; }

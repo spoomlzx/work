@@ -3,17 +3,16 @@
  */
 var table;
 $(document).ready(function () {
-    $('.left-sidebar li.active').removeClass('active');
-    $('#li-progress').addClass('active');
+    var unitId=$("#p-container").data("unitid");
     $.ajax({
         type: "get",
-        url: "/getUnitTree/" + $("#p-container").data("unitid"),
+        url: "/getUnitTree/" + unitId,
         success: function (data) {
             $.fn.zTree.init($("#treeDemo"), setting, data);
         }
     })
     bindWorkTypeChange();
-
+    getWorkStatusList(unitId);
 })
 
 var setting = {
@@ -36,9 +35,13 @@ function dblClickExpand(treeId, treeNode) {
 }
 
 function onClick(event, treeId, treeNode, clickFlag) {
+    getWorkStatusList(treeNode.id);
+}
+
+var getWorkStatusList = function(unitId){
     $.ajax({
         type: "get",
-        url: "/getWorkStatusList/" + treeNode.id,//unitId
+        url: "/getWorkStatusList/" + unitId,//unitId
         success: function (data) {
             var m={
                 "年度":1,
@@ -56,7 +59,7 @@ function onClick(event, treeId, treeNode, clickFlag) {
                 $("#p-w-list").append("<tr data-id='"+data[key].workId+"' data-type='"+data[key].type+"'><th>"+i+"</th><td>"+data[key].name+"</td><td>"+percent+"</td></tr>");
                 i++;
             }
-            bindShowStatusDetail(data,treeNode.id);
+            bindShowStatusDetail(data,unitId);
             $("#p-w-type").val("全部");
         }
     })

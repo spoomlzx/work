@@ -25,14 +25,14 @@
             <div class="panel-group search-result" id="accordion" role="tablist" aria-multiselectable="true">
             <#list typelist as type>
                 <div class="panel panel-default panel-worktype search-show">
-                    <a class="panel-container" data-toggle="collapse" data-parent="#accordion" href="#collapse-${type_index}">
+                    <a class="panel-container" data-toggle="collapse"  data-parent="#accordion" href="#collapse-${type_index}">
                         <div class="panel-heading title-${type_index}">
                         ${type}
-                            <span class="badge" id="w-badge-${type_index}"></span>
+                            <span class="badge" data-type="${type}"></span>
                         </div>
                     </a>
-                    <div id="collapse-${type_index}" class="panel-collapse collapse">
-                        <ul class="list-group" id="w-ul-${type_index}">
+                    <div id="collapse-${type_index}" class="panel-collapse collapse <#if type=='年度'>in</#if>">
+                        <ul class="list-group" data-type="${type}">
                         </ul>
                     </div>
                 </div>
@@ -131,24 +131,24 @@
             <div class="modal-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">时间:</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-time">List group item heading</p>
+                        <span class="list-group-item-heading col-md-4">时间:</span>
+                        <span class="list-group-item-text" id="l-show-time">List group item heading</span>
                     </li>
                     <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">责任人：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-duty-person">List group item heading</p>
+                        <span class="list-group-item-heading col-md-4">责任人：</span>
+                        <span class="list-group-item-text" id="l-show-duty-person">List group item heading</span>
                     </li>
                     <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">参加人员类别：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-person-type">List group item heading</p>
+                        <span class="list-group-item-heading col-md-4">参加人员类别：</span>
+                        <span class="list-group-item-text" id="l-show-person-type">List group item heading</span>
                     </li>
                     <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">人数：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-count">List group item heading</p>
+                        <span class="list-group-item-heading col-md-4">人数：</span>
+                        <span class="list-group-item-text" id="l-show-count">List group item heading</span>
                     </li>
                     <li class="list-group-item">
-                        <h4 class="list-group-item-heading col-md-4">工作情况描述：</h4>
-                        <p class="list-group-item-text col-md-offset-4" id="l-show-describe">List group item heading</p>
+                        <span class="list-group-item-heading col-md-4">工作情况描述：</span>
+                        <span class="list-group-item-text" id="l-show-describe">List group item heading</span>
                     </li>
                 </ul>
             </div>
@@ -216,7 +216,6 @@
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/js/app.js" type="text/javascript"></script>
-<script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/plugin/datetime/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <script src="/plugin/datetime/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
 <script src="/js/js-work.js" type="text/javascript"></script>

@@ -43,7 +43,7 @@
         </div>
         <div class="form-group event-person-show">
             <div class="display-inline-block ">
-                <label class="label">重要</label><span>责任人：杨洋</span>
+                <label class="label">重要</label><span>责任人：</span><span></span>
             </div>
         </div>
         <div class="form-group event-describe-show">
