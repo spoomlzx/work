@@ -3,6 +3,8 @@ package com.lan.service;
 import com.lan.dao.UnitMapper;
 import com.lan.model.Unit;
 import com.lan.model.UnitType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Service
 public class UnitService{
+    private final static Logger logger= LoggerFactory.getLogger(UnitService.class);
 
     @Autowired
     private UnitMapper unitMapper;
@@ -23,20 +26,33 @@ public class UnitService{
         return unitMapper.getUnitTypeList();
     }
 
+    @Transactional
     public int insert(Unit pojo){
-        return unitMapper.insert(pojo);
+        try {
+            return unitMapper.insertSelective(pojo);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
-    public int insertSelective(Unit pojo){
-        return unitMapper.insertSelective(pojo);
+    @Transactional
+    public void update(Unit pojo){
+        try {
+            unitMapper.update(pojo);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
-    public int insertList(List<Unit> pojos){
-        return unitMapper.insertList(pojos);
-    }
-
-    public int update(Unit pojo){
-        return unitMapper.update(pojo);
+    @Transactional
+    public void delete(Integer unitId){
+        try {
+            unitMapper.delete(unitId);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Transactional

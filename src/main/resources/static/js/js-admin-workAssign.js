@@ -155,7 +155,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "水面舰艇部队", id: 4, click: false,
+                name: "水面舰艇部队", id: 4, open: true, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -167,7 +167,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "陆（特）战队", id: 5, click: false,
+                name: "陆（特）战队", id: 5, open: true, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -179,7 +179,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "岸防部队", id: 6, click: false,
+                name: "岸防部队", id: 6, open: true, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -191,7 +191,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "信息作战部队", id: 7, click: false,
+                name: "信息作战部队", id: 7, open: true, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -203,7 +203,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "训练机构部队", id: 8, click: false,
+                name: "训练机构部队", id: 8, open: true, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -215,7 +215,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "后装保障部队", id: 9, click: false,
+                name: "后装保障部队", id: 9, open: true, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -283,7 +283,7 @@ var bindAddWork = function () {
  * 删除工作
  */
 var bindDeleteWork = function () {
-    $("#worklist-now").on('click','.wa-delete-btn', function (e) {
+    $("#worklist-now").on('click', '.wa-delete-btn', function (e) {
         var workId = $(e.target).data("id");
         var unitTypeId = $("#wa-add-btn").data("id");
         if (unitTypeId != null && workId != null) {

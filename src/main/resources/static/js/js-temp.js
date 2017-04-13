@@ -114,13 +114,6 @@ initCalendar = function () {
                     alert('获取工作失败！');
                 }
             }
-        ],
-        events:[
-            {
-                title: 'Event1',
-                start: '2017-04-04',
-                className:'very'
-            },
         ]
     });
 }

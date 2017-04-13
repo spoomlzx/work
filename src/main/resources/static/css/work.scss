@@ -133,17 +133,20 @@
 }
 
 .work-detail .work-panel {
+    width: 95%;
     padding-left: 10px;
     float: left;
-    .panel-body.edit {
-        padding: 0px;
-    }
-}
+    .panel-body {
+        &.edit{
+            padding: 0px;
+        }
+        &.show-work{
+            height: 360px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
 
-.work-detail .work-panel .panel-body {
-    height: 360px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    }
 }
 
 .tab-content > .tab-pane {

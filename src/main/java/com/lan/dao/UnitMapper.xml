@@ -5,11 +5,13 @@
     <resultMap id="AllColumnMap" type="com.lan.model.Unit">
         <result column="unit_id" property="id"/>
         <result column="parent_id" property="pId"/>
+        <result column="sort_id" property="sortId"/>
         <result column="name" property="name"/>
-        <result column="unit_type_id" property="iconSkin"/>
+        <result column="unit_type_id" property="unitTypeId"/>
+        <result column="icon_skin" property="iconSkin"/>
         <result column="active" property="active"/>
     </resultMap>
-    
+
     <resultMap id="typeColumnMap" type="com.lan.model.UnitType">
         <result column="unit_type_id" property="unitTypeId"/>
         <result column="name" property="name"/>
@@ -19,14 +21,15 @@
     <sql id="all_column">
         `unit_id`,
         `parent_id`,
+        `sort_id`,
         `name`,
         `unit_type_id`,
         `active`
     </sql>
 
     <select id="getUnitTreeById" resultMap="AllColumnMap">
-        SELECT unit_id,parent_id,unit_type_id,name,CASE WHEN unit_id=#{unitId} THEN 1 ELSE 0 END `open`
-        FROM unit WHERE FIND_IN_SET(unit_id,queryUnitTree(#{unitId})) AND active=1
+        SELECT unit_id,parent_id,sort_id,unit_type_id,unit_type_id as icon_skin,name,CASE WHEN unit_id=#{unitId} THEN 1 ELSE 0 END `open`
+        FROM unit WHERE FIND_IN_SET(unit_id,queryUnitTree(#{unitId})) AND active=1 order by parent_id,sort_id
     </select>
 
     <select id="getUnitTypeList" resultMap="typeColumnMap">
@@ -34,65 +37,41 @@
     </select>
 
     <!--auto generated Code-->
-    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.unitId">
-        INSERT INTO unit (
-            `unit_id`,
-            `parent_id`,
-            `name`,
-            `unit_type_id`
-        ) VALUES (
-            #{pojo.unitId},
-            #{pojo.parentId},
-            #{pojo.name},
-            #{pojo.unitTypeId}
-        )
-    </insert>
-
-    <!--auto generated Code-->
-    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.unitId">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO unit
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.unitId!=null"> `unit_id`,</if>
-            <if test="pojo.parentId!=null"> `parent_id`,</if>
-            <if test="pojo.name!=null"> `name`,</if>
-            <if test="pojo.type!=null"> `unit_type_id`,</if>
+            <if test="pojo.id!=null">`unit_id`,</if>
+            <if test="pojo.pId!=null">`parent_id`,</if>
+            <if test="pojo.sortId!=null">`sort_id`,</if>
+            <if test="pojo.name!=null">`name`,</if>
+            <if test="pojo.unitTypeId!=null">`unit_type_id`,</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.unitId!=null">#{pojo.unitId},</if>
-            <if test="pojo.parentId!=null">#{pojo.parentId},</if>
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.pId!=null">#{pojo.pId},</if>
+            <if test="pojo.sortId!=null">#{pojo.sortId},</if>
             <if test="pojo.name!=null">#{pojo.name},</if>
-            <if test="pojo.type!=null">#{pojo.unitTypeId},</if>
+            <if test="pojo.unitTypeId!=null">#{pojo.unitTypeId},</if>
         </trim>
     </insert>
 
-    <!--auto generated Code-->
-    <insert id="insertList">
-        INSERT INTO unit (
-        <include refid="all_column"/>
-        )VALUES
-        <foreach collection="pojos" item="pojo" index="index" separator=",">
-            (
-            #{pojo.unitId},
-            #{pojo.parentId},
-            #{pojo.name},
-            #{pojo.unitTypeId}
-            )
-        </foreach>
-    </insert>
 
     <!--auto generated Code-->
     <update id="update">
         UPDATE unit
         <set>
-            <if test="pojo.unitId != null"> `unit_id` = #{pojo.unitId}, </if>
-            <if test="pojo.parentId != null"> `parent_id` = #{pojo.parentId}, </if>
-            <if test="pojo.name != null"> `name` = #{pojo.name}, </if>
-            <if test="pojo.type != null"> `unit_type_id` = #{pojo.unitTypeId} </if>
-            <if test="pojo.active != null"> `active` = #{pojo.active} </if>
+            <if test="pojo.pId != null">`parent_id` = #{pojo.pId},</if>
+            <if test="pojo.sortId !=null">`sort_id` = #{pojo.sortId},</if>
+            <if test="pojo.name != null">`name` = #{pojo.name},</if>
+            <if test="pojo.unitTypeId != null">`unit_type_id` = #{pojo.unitTypeId}</if>
         </set>
-        WHERE unit_id = #{pojo.unitId}
+        WHERE unit_id = #{pojo.id}
     </update>
+
+    <delete id="delete">
+        DELETE FROM unit WHERE unit_id=#{unitId}
+    </delete>
 
 
     <!--typeWork 部分的sql-->

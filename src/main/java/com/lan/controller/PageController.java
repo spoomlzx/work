@@ -62,11 +62,17 @@ public class PageController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(Model model, @RequestParam(value = "login_error", required = false, defaultValue = "") String login_error) {
-        if ("true".equals(login_error)) {
+    public String loginPage(Model model, @RequestParam(value = "error", required = false, defaultValue = "") String error) {
+        if ("true".equals(error)) {
             model.addAttribute("result", "has-error");
         }
         return "login";
+    }
+
+    @RequestMapping(value = "/reg", method = RequestMethod.GET)
+    public String regPage(Model model) {
+
+        return "reg";
     }
 
     @RequestMapping(value = "/work")
@@ -79,6 +85,8 @@ public class PageController {
         if ("ADMIN".equals(userInfo.getRole())) {
             List<UnitType> unitTypes = unitService.getUnitTypeList();
             model.addAttribute("unitTypes", unitTypes);
+            List<Regulation> regulations=regulationService.getRegulationNames();
+            model.addAttribute("regulations",regulations);
             return "admin/work";
         } else {
             return "work";
@@ -100,8 +108,6 @@ public class PageController {
     @RequestMapping(value = "/progress")
     public String progressPage(Model model, HttpServletRequest request) {
         model.addAttribute("page","progress");
-        List<Regulation> regulations = regulationService.selectRegulationList();
-        model.addAttribute("regulations", regulations);
         return "progress";
     }
 
@@ -115,6 +121,9 @@ public class PageController {
     @RequestMapping(value = "/unit",method = RequestMethod.GET)
     public String unitPage(Model model){
         model.addAttribute("page","unit");
+
+        List<UnitType> unitTypes = unitService.getUnitTypeList();
+        model.addAttribute("types", unitTypes);
         // TODO: 2017/4/2 管理unit的page
         return "admin/unit";
     }
@@ -123,13 +132,13 @@ public class PageController {
     @RequestMapping(value = "/workAssign",method = RequestMethod.GET)
     public String workAssignPage(Model model){
         model.addAttribute("page","workAssign");
-        // TODO: 2017/4/2 管理work的page
         return "admin/workassign";
     }
 
     @RequestMapping(value = "/config",method = RequestMethod.GET)
     public String configPage(Model model){
         model.addAttribute("page","config");
+
         // TODO: 2017/4/5 配置page
         return "config";
     }

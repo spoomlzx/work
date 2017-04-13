@@ -22,6 +22,10 @@ public class RegulationService{
         return regulationMapper.selectRegulationList();
     }
 
+    public List<Regulation> getRegulationNames(){
+        return regulationMapper.getRegulationNames();
+    }
+
     public List<Regulation> selectRegualtionsByIds(String[] ids){
         return regulationMapper.selectRegualtionsByIds(ids);
     }

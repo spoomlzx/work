@@ -57,7 +57,6 @@
             'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',  'date', 'spechars', 'inserttable', 'charts','link', 'unlink','|',
             'paragraph', 'fontfamily', 'fontsize','indent', '|',
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-            'simpleupload', 'insertimage', 'emotion', 'music', 'attachment', 'pagebreak', 'background', '|',
             'print', 'preview', 'searchreplace', 'drafts'
         ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准

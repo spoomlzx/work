@@ -9,10 +9,14 @@ package com.lan.model;
 public class Unit {
     private Integer id;
     private Integer pId;
+    private Integer sortId;
     private String name;
     private boolean open;
+    private Integer unitTypeId;
     private String iconSkin;
     private boolean active;
+
+
 
     public Integer getId() {
         return id;
@@ -30,6 +34,14 @@ public class Unit {
         this.pId = pId;
     }
 
+    public Integer getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
+    }
+
     public String getName() {
         return name;
     }
@@ -44,6 +56,14 @@ public class Unit {
 
     public void setOpen(boolean open) {
         this.open = open;
+    }
+
+    public Integer getUnitTypeId() {
+        return unitTypeId;
+    }
+
+    public void setUnitTypeId(Integer unitTypeId) {
+        this.unitTypeId = unitTypeId;
     }
 
     public String getIconSkin() {

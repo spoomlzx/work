@@ -47,18 +47,18 @@
                 <span id="p-name" style="padding-left: 10px">工作标题</span>
             </div>
             <div>
-                <div class="work-panel" style="width: 60%">
+                <div class="work-panel" style="width: 55%">
                     <div class="panel panel-success">
                         <div class="panel-heading">工作内容</div>
-                        <div class="panel-body" id="p-content">
+                        <div class="panel-body show-work" id="p-content">
                             详细工作内容
                         </div>
                     </div>
                 </div>
-                <div class="work-panel" style="width: 40%">
+                <div class="work-panel" style="width: 45%">
                     <div class="panel panel-danger">
                         <div class="panel-heading">法规依据</div>
-                        <div class="panel-body" id="p-basis">
+                        <div class="panel-body show-work" id="p-basis">
                             法规条目依据
                         </div>
                     </div>

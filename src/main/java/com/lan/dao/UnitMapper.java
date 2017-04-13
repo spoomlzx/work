@@ -13,13 +13,12 @@ public interface UnitMapper {
 
     List<UnitType> getUnitTypeList();
 
-    int insert(@Param("pojo") Unit pojo);
 
     int insertSelective(@Param("pojo") Unit pojo);
 
-    int insertList(@Param("pojos") List<Unit> pojo);
-
     int update(@Param("pojo") Unit pojo);
+
+    int delete(@Param("unitId") Integer unitId);
 
     int insertTypeWorkList(@Param("unitTypeId") Integer unitTypeId,@Param("workIds") Integer[] workIds);
 

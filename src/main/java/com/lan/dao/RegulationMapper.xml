@@ -27,6 +27,10 @@
         SELECT <include refid="all_column"/> FROM regulation
     </select>
 
+    <select id="getRegulationNames" resultMap="AllColumnMap">
+        SELECT `regu_id`,`title` FROM regulation
+    </select>
+
     <select id="selectRegualtionsByIds" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/> FROM regulation WHERE regu_id IN
         <foreach collection="ids" item="id" open="(" close=")" separator=",">

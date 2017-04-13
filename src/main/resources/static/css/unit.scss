@@ -9,7 +9,7 @@
 }
 
 .unit-work-list {
-    width: 21%;
+    width: 20.5%;
     height: calc(100vh - 70px);
     float: left;
     margin-left: 0.5%;
@@ -32,7 +32,7 @@
 }
 
 .unit-work-log {
-    width: 19.5%;
+    width: 20%;
     margin-left: 0.5%;
     float: left;
 }
@@ -44,7 +44,7 @@
 }
 
 .work-assign-list {
-    width: 18vw;
+    width: 20%;
     float: left;
     height: calc(100vh - 70px);
     margin-bottom: 0px;
@@ -52,7 +52,21 @@
 }
 
 .work-assign-detail {
-    width: calc(80vw - 120px);
+    width: 80%;
+    padding-left: 1%;
     float: left;
-    margin-left: 1vw;
+}
+
+.unit-manage-list{
+    width: 20%;
+    height: calc(100vh - 70px);
+    float: left;
+    overflow-x: scroll;
+    margin-bottom: 0px;
+}
+
+.unit-manage-detail{
+    width: 79%;
+    padding-left: 1%;
+    float: left;
 }

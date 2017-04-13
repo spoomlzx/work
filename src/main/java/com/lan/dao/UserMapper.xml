@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lan.dao.UserMapper">
 
-<!--auto generated Code-->
+    <!--auto generated Code-->
     <resultMap id="AllColumnMap" type="com.lan.model.User">
         <result column="user_id" property="userId"/>
         <result column="user_name" property="userName"/>
@@ -16,7 +16,7 @@
         <result column="unit_type_id" property="unitTypeId"/>
     </resultMap>
 
-<!--auto generated Code-->
+    <!--auto generated Code-->
     <sql id="all_column">
         `user_id`,
         `user_name`,
@@ -31,6 +31,32 @@
 
     <select id="getUserByName" resultMap="AllColumnMap">
         SELECT `user`.`user_id`,`user`.`user_name`,`user`.`password`,`user`.`roles`,`user`.unit_id,unit.unit_type_id unit_type_id FROM user
-        INNER JOIN unit ON `user`.user_name=#{userName} AND `user`.unit_id=`unit`.unit_id
+        INNER JOIN unit ON `user`.user_name=#{userName} AND `user`.unit_id=`unit`.unit_id WHERE `user`.enabled=1
     </select>
+
+    <select id="getUserList" resultMap="AllColumnMap">
+        SELECT `user_id`,`user_name`,`roles`,`email`,`create_time`,`enabled`,`last_login_time`
+        FROM user
+        WHERE roles=#{role}
+        <if test="unitId >0">AND unit_id=#{unitId}</if>
+    </select>
+
+    <update id="setPassword">
+        UPDATE user SET password=#{password} WHERE user_id=#{userId}
+    </update>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="user.userId">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user.userName!=null">`user_name`,</if>
+            <if test="user.password!=null">`password`,</if>
+            <if test="user.unitId!=null">`unit_id`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user.userName!=null">#{user.userName},</if>
+            <if test="user.password!=null">#{user.password},</if>
+            <if test="user.unitId!=null">#{user.unitId},</if>
+        </trim>
+    </insert>
 </mapper>

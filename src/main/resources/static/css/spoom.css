@@ -101,15 +101,15 @@
   width: 60%; }
 
 .work-detail .work-panel {
+  width: 95%;
   padding-left: 10px;
   float: left; }
   .work-detail .work-panel .panel-body.edit {
     padding: 0px; }
-
-.work-detail .work-panel .panel-body {
-  height: 360px;
-  overflow-y: auto;
-  overflow-x: hidden; }
+  .work-detail .work-panel .panel-body.show-work {
+    height: 360px;
+    overflow-y: auto;
+    overflow-x: hidden; }
 
 .tab-content > .tab-pane {
   padding: 28px; }
@@ -224,7 +224,7 @@ body {
   _overflow: hidden;
   background: #e4e5e6;
   z-index: 88;
-  box-shadow: rgba(0, 0, 0, 0.1) 3px 0px 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 0px 2px;
   border-right: 1px #cbcccc solid; }
   .left-sidebar .active, .left-sidebar .active:hover {
     background-color: #FFFFFF;
@@ -336,7 +336,7 @@ body {
   margin-bottom: 0px; }
 
 .unit-work-list {
-  width: 21%;
+  width: 20.5%;
   height: calc(100vh - 70px);
   float: left;
   margin-left: 0.5%;
@@ -355,7 +355,7 @@ body {
     margin: 2px 5px; }
 
 .unit-work-log {
-  width: 19.5%;
+  width: 20%;
   margin-left: 0.5%;
   float: left; }
 
@@ -363,16 +363,28 @@ body {
   overflow: hidden; }
 
 .work-assign-list {
-  width: 18vw;
+  width: 20%;
   float: left;
   height: calc(100vh - 70px);
   margin-bottom: 0px;
   overflow: auto; }
 
 .work-assign-detail {
-  width: calc(80vw - 120px);
+  width: 80%;
+  padding-left: 1%;
+  float: left; }
+
+.unit-manage-list {
+  width: 20%;
+  height: calc(100vh - 70px);
   float: left;
-  margin-left: 1vw; }
+  overflow-x: scroll;
+  margin-bottom: 0px; }
+
+.unit-manage-detail {
+  width: 79%;
+  padding-left: 1%;
+  float: left; }
 
 .event-calendar {
   padding: 4px 15px 8px 8px; }

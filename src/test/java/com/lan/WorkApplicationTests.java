@@ -47,7 +47,7 @@ public class WorkApplicationTests {
     @Test
     public void encoder() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(encoder.encode("asdf"));
+        System.out.println(encoder.encode("qwer"));
     }
 
     @Test

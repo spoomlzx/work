@@ -4465,15 +4465,15 @@ S2.define('select2/i18n/en',[],function () {
   // English
   return {
     errorLoading: function () {
-      return 'The results could not be loaded.';
+      return '无法加载结果.';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Please delete ' + overChars + ' character';
+      var message = '请删除 ' + overChars + ' 个字符';
 
       if (overChars != 1) {
-        message += 's';
+        message += '';
       }
 
       return message;
@@ -4481,27 +4481,27 @@ S2.define('select2/i18n/en',[],function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Please enter ' + remainingChars + ' or more characters';
+      var message = '请输入多余 ' + remainingChars + ' 个字符';
 
       return message;
     },
     loadingMore: function () {
-      return 'Loading more results…';
+      return '加载更多结果…';
     },
     maximumSelected: function (args) {
-      var message = 'You can only select ' + args.maximum + ' item';
+      var message = '你只能选择 ' + args.maximum + ' 个选项';
 
       if (args.maximum != 1) {
-        message += 's';
+        message += '';
       }
 
       return message;
     },
     noResults: function () {
-      return 'No results found';
+      return '结果为空';
     },
     searching: function () {
-      return 'Searching…';
+      return '搜索中…';
     }
   };
 });

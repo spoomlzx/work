@@ -77,11 +77,11 @@
                 <#--<span>检查考评</span>-->
             <#--</a>-->
         <#--</li>-->
-        <li <#if page=="config">class="active"</#if> id="li-setting">
-            <a href="/config">
-                <span class="fa fa-cogs"></span>
-                <span>系统设置</span>
-            </a>
-        </li>
+        <#--<li <#if page=="config">class="active"</#if> id="li-setting">-->
+            <#--<a href="/config">-->
+                <#--<span class="fa fa-cogs"></span>-->
+                <#--<span>系统设置</span>-->
+            <#--</a>-->
+        <#--</li>-->
     </ul>
 </div>

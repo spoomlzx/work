@@ -12,6 +12,8 @@ public interface RegulationMapper {
 
     List<Regulation> selectRegulationList();
 
+    List<Regulation> getRegulationNames();
+
     List<Regulation> selectRegualtionsByIds(@Param("ids") String[] ids);
 
     int insertSelective(@Param("pojo") Regulation pojo);

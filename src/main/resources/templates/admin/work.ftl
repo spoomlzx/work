@@ -8,6 +8,7 @@
     <meta content="" name="author"/>
     <link href="/plugin/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="/plugin/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="/plugin/select2/css/select2.css" rel="stylesheet" type="text/css"/>
     <link href="/css/spoom.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.js"></script>
@@ -32,7 +33,7 @@
                             <span class="badge" data-type="${type}工作"></span>
                         </div>
                     </a>
-                    <div id="collapse-${type_index}" class="panel-collapse collapse">
+                    <div id="collapse-${type_index}" class="panel-collapse collapse <#if type=='年度'>in</#if>">
                         <ul class="list-group" data-type="${type}工作">
                         </ul>
                     </div>
@@ -58,43 +59,53 @@
                     <button href="#delete-modal" data-toggle="modal" type="button" class="btn btn-danger" id="w-delete-btn">删除</button>
                 </div>
             </div>
-            <div>
-                <div class="work-panel" style="width: 50%">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">工作内容</div>
-                        <div class="panel-body edit">
-                            <script id="w-e-content" type="text/plain"></script>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-panel" style="width: 50%">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">法规依据</div>
-                        <div class="panel-body edit">
-                            <script id="w-e-basis" type="text/plain"></script>
-                        </div>
-                        <div class="panel-body hidden">
-                            <div id="p-basis">
-
-                            </div>
-                        </div>
+            <div class="work-panel">
+                <div class="panel panel-success">
+                    <div class="panel-heading">工作内容</div>
+                    <div class="panel-body edit" style="overflow: hidden">
+                        <script id="w-e-content" type="text/plain"></script>
                     </div>
                 </div>
             </div>
-
-            <div class="work-panel" style="width: 50%">
+            <div class="work-panel">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">法规依据</div>
+                    <div class="panel-body edit" style="overflow: hidden">
+                        <script id="w-e-basis" type="text/plain"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="work-panel">
                 <div class="panel panel-danger">
                     <div class="panel-heading">注意事项</div>
-                    <div class="panel-body edit">
+                    <div class="panel-body edit" style="overflow: hidden">
                         <script id="w-e-tips" type="text/plain"></script>
-                    </div>
-                    <div class="panel-body hidden">
-                        <div id="p-basis">
-
-                        </div>
                     </div>
                 </div>
             </div>
+            <div class="work-panel">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">引用法规</div>
+                    <div class="panel-body">
+                        <select class="regulation-select form-control" multiple="multiple">
+                        <#list regulations as regulation>
+                            <option value="${regulation.reguId}">${regulation.title}</option>
+                        </#list>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="work-panel" style="margin-bottom: 400px">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">流程图</div>
+                    <div class="panel-body">
+                        <input type="file" value="sdgsdg" id="img_input" />
+                        <p id="img_area" style="margin-top: 10px;padding: 10px"></p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -134,6 +145,7 @@
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/plugin/select2/js/select2.full.js" type="text/javascript"></script>
 <script src="/js/app.js" type="text/javascript"></script>
 <script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/js/js-admin-work.js" type="text/javascript"></script>

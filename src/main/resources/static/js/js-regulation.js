@@ -15,7 +15,8 @@ $(document).ready(function () {
 })
 
 var bindRegulationAdd = function () {
-    $("#r-add").one("click",function (e) {
+    $("#r-add").off("click");
+    $("#r-add").on("click",function (e) {
         var title = $("#r-title").val();
         var titleError = $("#r-title-error");
         var content = editor.getContent();
@@ -48,7 +49,8 @@ var bindRegulationAdd = function () {
 }
 
 var bindRegulationDelete = function (reguid, btn) {
-    $("#r-delete").one("click",function () {
+    $("#r-delete").off("click")
+    $("#r-delete").on("click",function () {
         $.ajax({
             type: "get",
             url: "/admin/deleteRegulation/" + reguid,
@@ -63,7 +65,8 @@ var bindRegulationDelete = function (reguid, btn) {
 }
 
 var bindRegulationEdit = function (btn) {
-    $("#r-save").one("click",function () {
+    $("#r-save").off("click");
+    $("#r-save").on("click",function () {
         var data = {
             reguId: $(this).data("reguid"),
             title: $("#r-e-title").val(),
