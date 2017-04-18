@@ -141,6 +141,23 @@ public class UnitController {
         return message;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseBody
+    @RequestMapping(value = "/changeEnable/{userId}", method = RequestMethod.GET)
+    public Message changeEnable(@PathVariable Integer userId) {
+        Message message = new Message();
+        try {
+            userService.changeEnable(userId);
+            message.setMsg("修改状态成功！");
+        } catch (RuntimeException e) {
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("修改状态失败！");
+        }
+        return message;
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "/testUserName/{username}", method = RequestMethod.GET)
     public Message testUserName(@PathVariable String username) {

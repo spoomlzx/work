@@ -15,5 +15,7 @@ public interface UserMapper {
 
     public int setPassword(@Param("password") String password,@Param("userId") Integer userId);
 
+    public int changeEnable(@Param("userId") Integer userId);
+
     public int insertSelective(@Param("user") User user);
 }

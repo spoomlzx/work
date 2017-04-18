@@ -45,6 +45,10 @@
         UPDATE user SET password=#{password} WHERE user_id=#{userId}
     </update>
 
+    <update id="changeEnable">
+        UPDATE user SET enabled=1-enabled WHERE user_id=#{userId}
+    </update>
+
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="user.userId">
         INSERT INTO user
         <trim prefix="(" suffix=")" suffixOverrides=",">

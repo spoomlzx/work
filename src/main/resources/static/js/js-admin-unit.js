@@ -5,7 +5,7 @@ var table;
 $(document).ready(function () {
     $.ajax({
         type: "get",
-        url: "/getUnitTree/" + $("#p-container").data("unitid"),
+        url: "/getUnitTree/1",
         success: function (data) {
             $.fn.zTree.init($("#treeDemo"), setting, data);
         }
@@ -15,6 +15,7 @@ $(document).ready(function () {
     bindDelUnit();
     initTable();
     bindResetPassword();
+    bindChangeEnable();
 })
 
 var setting = {
@@ -203,9 +204,9 @@ var initTable = function () {
                 render: function (data, type, row, meta) {
                     var operation = '<button class="btn btn-primary user-reset-btn" data-id="' + row.userId + '" href="#reset-modal" data-toggle="modal"> 重置密码</button> ';
                     if (row.enabled) {
-                        operation += '<button class="btn btn-success user-delete-btn" data-id="' + row.userId + '" href="javascript:;"> 禁用</button>';
+                        operation += '<button class="btn btn-success user-enable-btn" data-enable="1" data-id="' + row.userId + '" href="javascript:;"> 生效</button>';
                     } else {
-                        operation += '<button class="btn btn-danger user-delete-btn" data-id="' + row.userId + '" href="javascript:;"> 生效</button>';
+                        operation += '<button class="btn btn-danger user-enable-btn" data-enable="0" data-id="' + row.userId + '" href="javascript:;"> 禁用</button>';
                     }
                     return operation;
                 }
@@ -235,4 +236,28 @@ var bindResetPassword=function(){
         })
     })
 
+}
+
+var bindChangeEnable=function () {
+    $("#user-list").on("click",".user-enable-btn",function(){
+        var enable=$(this).data("enable");
+        var userId=$(this).data("id");
+        var btn=$(this);
+        $.ajax({
+            type: "get",
+            url: "/changeEnable/"+userId,
+            success: function (message) {
+                if (message.code) {
+                    showTip("success", "提示", message.msg);
+                    if(enable){
+                        btn.removeClass("btn-success").addClass("btn-danger").html("禁用");
+                    }else{
+                        btn.removeClass("btn-danger").addClass("btn-success").html("生效");
+                    }
+                } else {
+                    showTip("danger", "提示", message.msg);
+                }
+            }
+        })
+    })
 }
