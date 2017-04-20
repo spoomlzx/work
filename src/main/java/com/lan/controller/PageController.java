@@ -3,6 +3,8 @@ package com.lan.controller;
 import com.baidu.ueditor.ActionEnter;
 import com.lan.model.Regulation;
 import com.lan.model.UnitType;
+import com.lan.model.Work;
+import com.lan.model.WorkFull;
 import com.lan.model.utilMoel.UserInfo;
 import com.lan.service.RegulationService;
 import com.lan.service.UnitService;
@@ -78,19 +80,38 @@ public class PageController {
     @RequestMapping(value = "/work")
     public String workPage(Model model, @ModelAttribute("currentUser") UserInfo userInfo) {
         model.addAttribute("page","work");
-        String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};
-        model.addAttribute("typelist", typelist);
-        model.addAttribute("unitTypeId", userInfo.getUnitTypeId());
-        model.addAttribute("unitId", userInfo.getUnitId());
         if ("ADMIN".equals(userInfo.getRole())) {
-            List<UnitType> unitTypes = unitService.getUnitTypeList();
-            model.addAttribute("unitTypes", unitTypes);
-            List<Regulation> regulations=regulationService.getRegulationNames();
-            model.addAttribute("regulations",regulations);
-            return "admin/work";
+            List<Work> workList=workService.getWorkList();
+            model.addAttribute("workList",workList);
+            return "admin/worklist";
         } else {
+            String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};
+            model.addAttribute("typelist", typelist);
+            model.addAttribute("unitTypeId", userInfo.getUnitTypeId());
+            model.addAttribute("unitId", userInfo.getUnitId());
             return "work";
         }
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/work/{workId}",method = RequestMethod.GET)
+    public String workEditPage(Model model,@PathVariable Integer workId){
+        model.addAttribute("page","work");
+        List<Regulation> regulations=regulationService.getRegulationNames();
+        model.addAttribute("regulations",regulations);
+
+        WorkFull work = workService.selectWorkById(workId);
+        model.addAttribute("work",work);
+        return "admin/work";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/workAdd",method = RequestMethod.GET)
+    public String workAddPage(Model model){
+        model.addAttribute("page","work");
+        List<Regulation> regulations=regulationService.getRegulationNames();
+        model.addAttribute("regulations",regulations);
+        return "admin/work";
     }
 
     @RequestMapping(value = "/regulation")
@@ -124,7 +145,6 @@ public class PageController {
 
         List<UnitType> unitTypes = unitService.getUnitTypeList();
         model.addAttribute("types", unitTypes);
-        // TODO: 2017/4/2 管理unit的page
         return "admin/unit";
     }
 
@@ -139,7 +159,6 @@ public class PageController {
     public String configPage(Model model){
         model.addAttribute("page","config");
 
-        // TODO: 2017/4/5 配置page
         return "config";
     }
 }

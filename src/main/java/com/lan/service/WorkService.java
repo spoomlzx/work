@@ -21,6 +21,10 @@ public class WorkService {
     @Autowired
     private RegulationMapper regulationMapper;
 
+    public List<Work> getWorkList(){
+        return workMapper.getWorkList();
+    }
+
     public List<WorkSet> selectWorkSetList(Integer unitTypeId) {
         List<WorkSet> workSets = new ArrayList<>();
         String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};

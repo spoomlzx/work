@@ -26,6 +26,12 @@ public interface WorkMapper {
     WorkFull selectWorkById(Integer workId);
 
     /**
+     * 获取所有work的list
+     * @return
+     */
+    List<Work> getWorkList();
+
+    /**
      * 获取一条work，包括status信息
      * @param workId
      * @param unitId

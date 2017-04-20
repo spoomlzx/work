@@ -140,10 +140,10 @@ var initTable = function () {
         //"pagingType": "bootstrap_full_number",
         "columnDefs": [
             {'orderable': false, "searchable": false, 'targets': 0, 'width': '10%'},
-            {'targets': 1, 'width': '40%'},
+            {'targets': 1, 'width': '50%'},
             {'targets': 2, 'width': '10%'},
             {'targets': 3, 'width': '10%'},
-            {'orderable': false, 'searchable': true, 'targets': 4, 'width': '30%'}
+            {'orderable': false, 'searchable': true, 'targets': 4, 'width': '20%'}
         ],
         "order": [
             [1, "asc"]

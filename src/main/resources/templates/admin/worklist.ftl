@@ -20,47 +20,37 @@
 <div class="container-content">
     <div class="center-container bk-white">
         <div class="regulation-list">
-            <table class="table table-bordered table-hover" style="width:100%;">
+            <table class="table table-bordered table-hover" id="workList_table" style="width:100%;">
                 <thead>
+                <tr>
+                    <th id="s-0">筛 选</th>
+                    <th id="s-1"></th>
+                    <th id="s-2"></th>
+                    <th></th>
+                </tr>
                 <tr class="bk-grey">
-                    <th> 序号</th>
-                    <th> 法规制度名称</th>
-                    <th> 发文机关</th>
-                    <th> 类别</th>
+                    <th> 工作ID</th>
+                    <th> 工作名称</th>
+                    <th> 工作类型</th>
                     <th> 操作</th>
                 </tr>
                 </thead>
-            </table>
-            <table class="table table-bordered table-hover" id="regulation_table" style="width:100%;">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th id="s-2"></th>
-                    <th id="s-3"></th>
-                    <th></th>
-                </tr>
-                </thead>
                 <tbody>
-                <#list regulations as regulation>
+                <#list workList as work>
                 <tr>
-                    <td></td>
-                    <td class="r-title"> ${regulation.title}</td>
-                    <td class="r-department"> ${regulation.department}</td>
-                    <td class="r-category"> ${regulation.category}</td>
+                    <td> ${work.workId}</td>
+                    <td> ${work.name}</td>
+                    <td> ${work.type}</td>
                     <td>
-                        <div class="regulation-content" style="display: none">${regulation.content}</div>
-                        <button href="#content-modal" data-toggle="modal" class="btn btn-info btn-show">
-                            <span class="fa fa-file"></span>原文
+                        <button class="btn btn-warning btn-show" onclick="window.location.href='/workAdd'">
+                            <span class="fa fa-edit"></span>添加
                         </button>
-                        <#if currentUser?? && currentUser.role == "ADMIN">
-                            <button href="#edit-modal" data-toggle="modal" class="btn btn-success btn-edit" data-reguid="${regulation.reguId}">
-                                <span class="fa fa-edit"></span>修改
-                            </button>
-                            <button href="#delete-modal" data-toggle="modal" class="btn btn-danger btn-delete" data-reguid="${regulation.reguId}">
-                                <span class="fa fa-cut"></span>删除
-                            </button>
-                        </#if>
+                        <button class="btn btn-success btn-show" onclick="window.location.href='/work/${work.workId}'">
+                            <span class="fa fa-edit"></span>编辑
+                        </button>
+                        <button class="btn btn-danger btn-show">
+                            <span class="fa fa-file"></span>删除
+                        </button>
                     </td>
                 </tr>
                 </#list>
@@ -74,8 +64,8 @@
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
 <script src="/plugin/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/js/js-admin-worklist.js" type="text/javascript"></script>
 </body>
 </html>

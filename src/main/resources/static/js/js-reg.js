@@ -4,7 +4,7 @@
 $(document).ready(function () {
     $.ajax({
         type: "get",
-        url: "/getUnitTree/126",
+        url: "/getUnitTree/1",
         success: function (data) {
             $.fn.zTree.init($("#treeDemo"), setting, data);
         }

@@ -18,15 +18,6 @@
             <a href="/logout" type="button" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span> 注册</a>
         </#if>
         </div>
-        <div class="right" style="margin: 13px">
-        <#if unitTypes??>
-            <select class="form-control" id="w-type-select">
-                <#list unitTypes as type>
-                    <option value="${type.unitTypeId}" <#if type.unitTypeId==unitTypeId>selected="selected"</#if>>${type.name}</option>
-                </#list>
-            </select>
-        </#if>
-        </div>
     </div>
 </div>
 <div class="left-sidebar">

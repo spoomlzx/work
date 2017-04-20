@@ -46,6 +46,7 @@ public class WorkController {
         WorkFull work;
         if ("ADMIN".equals(userInfo.getRole())) {
             //如果是ADMIN，则在工作详细页面不显示工作完成状态
+            // TODO: 2017/4/18 这里应该修改为workEditPage中调用 
             work = workService.selectWorkById(workId);
         } else {
             work = workService.selectWork(workId, unitId);
@@ -123,23 +124,6 @@ public class WorkController {
             message.setMsg("修改工作状态失败！");
         }
         return message;
-    }
-
-    /**
-     * 获取worklist，按type分类
-     *
-     * @param unitTypeId
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = {"/getWorkList/{unitTypeId}"}, method = RequestMethod.GET)
-    public Map<String, WorkSet> getWorkList(@PathVariable Integer unitTypeId) {
-        Map<String, WorkSet> map = new HashMap<>();
-        List<WorkSet> workSets = workService.selectWorkSetList(unitTypeId);
-        for (WorkSet workSet : workSets) {
-            map.put(workSet.getWorkType(), workSet);
-        }
-        return map;
     }
 
     @ResponseBody

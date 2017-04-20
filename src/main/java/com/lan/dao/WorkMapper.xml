@@ -34,18 +34,22 @@
         SELECT type FROM work WHERE work_id=#{workId}
     </select>
 
+    <select id="selectWorkById" resultMap="WorkFullColumnMap">
+        SELECT
+        <include refid="all_column"/>
+        FROM work WHERE work_id=#{workId}
+    </select>
+    
+    <select id="getWorkList" resultMap="WorkColumnMap">
+        SELECT work_id,`name`,type FROM work
+    </select>
+
     <select id="selectWorkList" resultMap="WorkStatusMap">
         SELECT w.work_id,w.name,w.type FROM type_work t INNER JOIN `work` w ON t.work_id=w.work_id AND t.unit_type_id=#{unitTypeId}
         WHERE 1=1
         <if test="type != null">
             AND w.type=#{type}
         </if>
-    </select>
-
-    <select id="selectWorkById" resultMap="WorkFullColumnMap">
-        SELECT
-        <include refid="all_column"/>
-        FROM work WHERE work_id=#{workId}
     </select>
 
     <select id="selectWork" resultMap="WorkFullColumnMap">

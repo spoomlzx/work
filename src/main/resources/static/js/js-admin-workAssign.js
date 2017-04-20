@@ -73,7 +73,12 @@ var initTable = function () {
                 data: "workId",
 
             },
-            {data: "name"},
+            {
+                data: "name",
+                render: function (data, type, row, meta) {
+                    return '<a href="/work/' + row.workId + '"> ' + row.name + ' </a>';
+                }
+            },
             {data: "type"},
             {
                 data: "workId",
@@ -167,7 +172,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "陆（特）战队", id: 5, open: true, click: false,
+                name: "陆（特）战队", id: 5, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -179,7 +184,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "岸防部队", id: 6, open: true, click: false,
+                name: "岸防部队", id: 6, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -191,7 +196,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "信息作战部队", id: 7, open: true, click: false,
+                name: "信息作战部队", id: 7, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -203,7 +208,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "训练机构部队", id: 8, open: true, click: false,
+                name: "训练机构部队", id: 8, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},
@@ -215,7 +220,7 @@ var zNodes = [
                 ]
             },
             {
-                name: "后装保障部队", id: 9, open: true, click: false,
+                name: "后装保障部队", id: 9, click: false,
                 children: [
                     {name: "年度"},
                     {name: "半年"},

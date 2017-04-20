@@ -23,11 +23,6 @@ var setting = {
         selectedMulti: false,
         dblClickExpand: dblClickExpand
     },
-    edit: {
-        enable: true,
-        showRemoveBtn: false,
-        showRenameBtn: false
-    },
     data: {
         simpleData: {
             enable: true

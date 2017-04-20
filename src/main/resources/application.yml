@@ -10,12 +10,12 @@ logging:
 spring:
   freemarker:
     charset: UTF-8
-    cache: false
+    cache: true
   datasource:
     name: test
-    url: jdbc:mysql://localhost:3307/work?useUnicode=true&characterEncoding=utf8&useSSL=true&allowMultiQueries=true
+    url: jdbc:mysql://localhost:1024/work?useUnicode=true&characterEncoding=utf8&useSSL=true
     username: root
-    password: root
+    password: zzc661111
     ###### 使用druid数据源 ############
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
