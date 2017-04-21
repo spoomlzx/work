@@ -179,7 +179,7 @@ var initTable = function () {
         // set the initial value
         "pageLength": 10,
         "order": [
-            [1, "asc"]
+            [0, "asc"]
         ],
         "ajax": {
             url: "../getUserListByUnitId/0",

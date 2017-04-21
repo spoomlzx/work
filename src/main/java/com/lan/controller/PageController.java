@@ -81,8 +81,11 @@ public class PageController {
     public String workPage(Model model, @ModelAttribute("currentUser") UserInfo userInfo) {
         model.addAttribute("page","work");
         if ("ADMIN".equals(userInfo.getRole())) {
-            List<Work> workList=workService.getWorkList();
+            List<Work> workList=workService.getWorkListByTypeId(1);
             model.addAttribute("workList",workList);
+
+            List<UnitType> unitTypes = unitService.getUnitTypeList();
+            model.addAttribute("types", unitTypes);
             return "admin/worklist";
         } else {
             String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};
@@ -111,6 +114,9 @@ public class PageController {
         model.addAttribute("page","work");
         List<Regulation> regulations=regulationService.getRegulationNames();
         model.addAttribute("regulations",regulations);
+
+        List<UnitType> unitTypes = unitService.getUnitTypeList();
+        model.addAttribute("types", unitTypes);
         return "admin/work";
     }
 
@@ -146,13 +152,6 @@ public class PageController {
         List<UnitType> unitTypes = unitService.getUnitTypeList();
         model.addAttribute("types", unitTypes);
         return "admin/unit";
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/workAssign",method = RequestMethod.GET)
-    public String workAssignPage(Model model){
-        model.addAttribute("page","workAssign");
-        return "admin/workassign";
     }
 
     @RequestMapping(value = "/config",method = RequestMethod.GET)

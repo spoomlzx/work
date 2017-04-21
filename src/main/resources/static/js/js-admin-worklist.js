@@ -4,10 +4,19 @@
 
 var table;
 $(document).ready(function () {
-    initTable();
+    initTable(1);
+    bindChangeUnitType();
+    $('#delete-modal').on('show.bs.modal', function (e) {
+        var btn = $(e.relatedTarget);
+        var workId=btn.data("id");
+        var name=btn.data("name");
+        $("#w-d-name").html(name);
+        $("#w-delete").data("id",workId);
+    })
+    bindDeleteWork();
 })
 
-var initTable = function () {
+var initTable = function (unitTypeId) {
     table = $('#workList_table').DataTable({
 
         // Internationalisation. For more info refer to http://datatables.net/manual/i18n
@@ -32,12 +41,8 @@ var initTable = function () {
         },
 
         //"dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-        "dom": "<'row'<'col-md-6 col-sm-12'Bf><'col-md-6 col-sm-12'l>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",// horizobtal scrollable datatable
-        buttons: [
-            {extend: 'print', className: 'btn btn-primary'},
-            {extend: 'copy', className: 'btn btn-info'},
-            {extend: 'excel', className: 'btn btn-success'}
-        ],
+        "dom": "<'row'<'col-md-6 col-sm-12'f><'col-md-6 col-sm-12'l>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",// horizobtal scrollable datatable
+        buttons: [],
 
         colReorder: {
             reorderCallback: function () {
@@ -46,8 +51,8 @@ var initTable = function () {
         },
         "pagingType": "full_numbers",
         "lengthMenu": [
-            [5, 10, 15, 20, -1],
-            [5, 10, 15, 20, "All"] // change per page values here
+            [5, 10, -1],
+            [5, 10, "All"] // change per page values here
         ],
         // set the initial value
         "pageLength": 10,
@@ -59,17 +64,39 @@ var initTable = function () {
             {'orderable': false, 'searchable': false, 'targets': 3, 'width': '25%'}
         ],
         "order": [
-            [1, "asc"]
+            [0, "asc"]
         ], // set first column as a default sort by asc
-
+        "ajax": {
+            url: "../getWorkListByTypeId/"+unitTypeId,
+            "type": "get",
+            dataSrc: "data"
+        },
+        "columns": [
+            {
+                data: "workId",
+                searchable: false,
+            },
+            {data: "name"},
+            {data: "type"},
+            {
+                data: "workId",
+                searchable: false,
+                orderable: false,
+                render: function (data, type, row, meta) {
+                    var operation = '<a class="btn btn-primary" href="/work/' + row.workId + '"> 编 辑</a> ';
+                    operation += '<a class="btn btn-danger" href="#delete-modal" data-toggle="modal" data-id="' + row.workId + '" data-name="'+row.name+'"> 删 除</a> ';
+                    return operation;
+                }
+            }
+        ],
         //字段搜索框
-        initComplete: function () {
+        "initComplete": function () {
             var api = this.api();
             api.columns().indexes().flatten().each(function (i) {
                 if (i > 0 && i < 3) {
                     var column = api.column(i);
                     var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo($("#s-" + i).empty())
+                        .appendTo($("#s-" + i).empty()).off('change')
                         .on('change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
@@ -78,7 +105,7 @@ var initTable = function () {
                                 .search(val ? '^' + val + '$' : '', true, false)
                                 .draw();
                         });
-                    column.data().unique().sort().each(function (d, j) {
+                    column.data().unique().each(function (d, j) {
                         select.append('<option value="' + d + '">' + d + '</option>')
                     });
                 }
@@ -86,4 +113,31 @@ var initTable = function () {
         }
 
     });
+}
+
+var bindChangeUnitType = function () {
+    $("#w-l-type").change(function () {
+        var unitTypeId = $(this).val();
+        table.destroy();
+        initTable(unitTypeId);
+    })
+}
+
+var bindDeleteWork=function () {
+    $("#w-delete").click(function () {
+        var workId=$(this).data("id");
+        $.ajax({
+            type: "get",
+            url: "/deleteWork/"+workId,
+            success:function (message) {
+                $('#delete-modal').modal('hide');
+                table.ajax.reload();
+                if (message.code) {
+                    showTip("success", "提示", message.msg);
+                } else {
+                    showTip("danger", "提示", message.msg);
+                }
+            }
+        })
+    })
 }

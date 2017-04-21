@@ -1,11 +1,4 @@
 @charset "UTF-8";
-.work-detail .title {
-  margin-left: 10px;
-  padding: 5px;
-  font-size: 28px;
-  line-height: 36px;
-  overflow: hidden; }
-
 .work-list {
   margin-bottom: 0px;
   width: 16%;
@@ -98,18 +91,38 @@
 
 .work-detail {
   float: left;
-  width: 100%; }
+  width: 60%; }
+  .work-detail .work-panel {
+    width: 50%;
+    padding-left: 10px;
+    float: left; }
+    .work-detail .work-panel .panel-body.edit {
+      padding: 0px; }
+    .work-detail .work-panel .panel-body.show-work {
+      height: 360px;
+      overflow-y: auto;
+      overflow-x: hidden; }
 
-.work-detail .work-panel {
-  width: 50%;
-  padding-left: 10px;
-  float: left; }
-  .work-detail .work-panel .panel-body.edit {
-    padding: 0px; }
-  .work-detail .work-panel .panel-body.show-work {
-    height: 360px;
-    overflow-y: auto;
-    overflow-x: hidden; }
+.work-edit-detail {
+  float: left;
+  width: 100%; }
+  .work-edit-detail .title {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 5px 5px 5px 0px;
+    font-size: 28px;
+    line-height: 36px;
+    overflow: hidden; }
+  .work-edit-detail .work-panel {
+    width: 50%;
+    padding-left: 10px;
+    float: left; }
+    .work-edit-detail .work-panel .panel-body.edit {
+      padding: 0px; }
+    .work-edit-detail .work-panel .panel-body.show-work {
+      height: 360px;
+      overflow-y: auto;
+      overflow-x: hidden; }
 
 .tab-content > .tab-pane {
   padding: 28px; }

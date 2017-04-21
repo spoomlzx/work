@@ -97,6 +97,7 @@ var bindAddWork = function () {
     $("#w-add-btn").click(function () {
         var name = $("#w-e-name").val();
         var type = $("#w-e-type").val();
+        var unitTypeId=$("#w-e-unit-type").val();
         var content = content_editor.getContent();
         var basis = basis_editor.getContent();
         var tips = tips_editor.getContent();
@@ -108,6 +109,7 @@ var bindAddWork = function () {
         ids = ids.substr(1);
         var data = {
             name: name,
+            unitTypeId:unitTypeId,
             type: type,
             content: content,
             basis: basis,

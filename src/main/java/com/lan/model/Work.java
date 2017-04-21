@@ -5,6 +5,16 @@ public class Work {
 
     private String name;
 
+    private Integer unitTypeId;
+
+    public Integer getUnitTypeId() {
+        return unitTypeId;
+    }
+
+    public void setUnitTypeId(Integer unitTypeId) {
+        this.unitTypeId = unitTypeId;
+    }
+
     private String type;
 
     public Integer getWorkId() {

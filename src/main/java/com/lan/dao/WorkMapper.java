@@ -26,10 +26,11 @@ public interface WorkMapper {
     WorkFull selectWorkById(Integer workId);
 
     /**
-     * 获取所有work的list
+     * 获取unitTypeId对应的所有work的list
+     * @param unitTypeId
      * @return
      */
-    List<Work> getWorkList();
+    List<Work> getWorkListByTypeId(Integer unitTypeId);
 
     /**
      * 获取一条work，包括status信息
@@ -50,14 +51,6 @@ public interface WorkMapper {
     List<WorkFull> selectWorkListByUnitId(@Param("unitId") Integer unitId, @Param("index") String index, @Param("type") String type);
 
     /**
-     * 获取unitTypeId对应的worklist,不包括status
-     * @param unitTypeId
-     * @param type
-     * @return
-     */
-    List<WorkStatus> selectWorkList(@Param("unitTypeId") Integer unitTypeId, @Param("type") String type);
-
-    /**
      * search到的work的ids
      * @param unitTypeId
      * @param keyword
@@ -73,11 +66,6 @@ public interface WorkMapper {
      */
     List<WorkStatus> getWorkListWithStatus(@Param("unitId") Integer unitId,@Param("index") String index);
 
-
-    List<Work> getWorkListInTypeWork(@Param("unitTypeId") Integer unitTypeId, @Param("type") String type);
-
-    List<Work> getWorkListNotInTypeWork(@Param("unitTypeId") Integer unitTypeId, @Param("type") String type);
-
     int deleteWorkRecord(@Param("workId") Integer workId, @Param("unitId") Integer unitId, @Param("index") String index);
     int insertWorkRecord(@Param("workId") Integer workId, @Param("unitId") Integer unitId, @Param("index") String index);
 
@@ -88,4 +76,6 @@ public interface WorkMapper {
     int insertList(@Param("pojos") List<Work> pojo);
 
     int update(@Param("pojo") Work pojo);
+
+    int delete(@Param("workId") Integer workId);
 }

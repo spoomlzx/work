@@ -4,14 +4,16 @@ import com.lan.dao.RegulationMapper;
 import com.lan.dao.WorkMapper;
 import com.lan.model.Work;
 import com.lan.model.WorkFull;
-import com.lan.model.WorkSet;
 import com.lan.model.WorkStatus;
 import com.lan.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class WorkService {
@@ -21,25 +23,10 @@ public class WorkService {
     @Autowired
     private RegulationMapper regulationMapper;
 
-    public List<Work> getWorkList(){
-        return workMapper.getWorkList();
+    public List<Work> getWorkListByTypeId(Integer unitTypeId){
+        return workMapper.getWorkListByTypeId(unitTypeId);
     }
 
-    public List<WorkSet> selectWorkSetList(Integer unitTypeId) {
-        List<WorkSet> workSets = new ArrayList<>();
-        String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};
-        for (int i = 0; i < typelist.length; i++) {
-            WorkSet workSet = new WorkSet();
-            List<WorkStatus> works = workMapper.selectWorkList(unitTypeId, typelist[i]);
-            if (works.size() > 0) {
-                workSet.setWorkNum(works.size());
-                workSet.setWorkType(typelist[i] + "工作");
-                workSet.setWorkList(works);
-                workSets.add(workSet);
-            }
-        }
-        return workSets;
-    }
 
     public Map<String,List<WorkFull>> selectWorkSetListByUnitId(Integer unitId) {
         String[] typelist = {"年度", "半年", "季度", "月度", "周", "日", "按需"};
@@ -96,15 +83,6 @@ public class WorkService {
     }
 
 
-    public List<Work> getWorkListInTypeWork(Integer unitTypeId,String type){
-        return workMapper.getWorkListInTypeWork(unitTypeId,type);
-    }
-
-    public List<Work> getWorkListNotInTypeWork(Integer unitTypeId,String type){
-        return workMapper.getWorkListNotInTypeWork(unitTypeId,type);
-    }
-
-
     @Transactional
     public int insert(Work pojo) {
         try{
@@ -118,6 +96,15 @@ public class WorkService {
     public int update(Work pojo) {
         try {
             return workMapper.update(pojo);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public int delete(Integer workId) {
+        try {
+            return workMapper.delete(workId);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

@@ -18,7 +18,7 @@
 
 
 <div class="container-content">
-    <div class="work-detail">
+    <div class="work-edit-detail">
         <div class="panel panel-default title">
             <input class="hidden" <#if work??>value="${work.workId}" </#if> id="w-e-workid">
             <input class="form-control left" placeholder="工作标题" <#if work??>value="${work.name}" </#if> id="w-e-name" style="width:40%">
@@ -30,6 +30,11 @@
                 <option value="周" <#if work?? && work.type='周'>selected</#if>>周</option>
                 <option value="日" <#if work?? && work.type='日'>selected</#if>>日</option>
                 <option value="按需" <#if work?? && work.type='按需'>selected</#if>>按需</option>
+            </select>
+            <select class="form-control left" id="w-e-unit-type" style="width: 10%">
+            <#list types as type>
+                <option value="${type.unitTypeId}">${type.name}</option>
+            </#list>
             </select>
             <div class="right">
                 <button type="button" class="btn btn-success" onclick="javascript :history.back(-1);">返 回</button>
@@ -88,21 +93,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="delete-modal" tabindex="-1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="form-group notice-msg">
-                    删除后无法恢复,确定删除这项工作吗?
-                </div>
-                <div class="form-group notice-btn">
-                    <button class="btn btn-danger" id="w-delete">删 除</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

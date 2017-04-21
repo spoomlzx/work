@@ -41,21 +41,14 @@ public class WorkController {
      */
     @ResponseBody
     @RequestMapping(value = {"/getWork"}, method = RequestMethod.POST)
-    public WorkFull getWork(@RequestParam(value = "workId") Integer workId,
-                            @RequestParam(value = "unitId") Integer unitId, @ModelAttribute("currentUser") UserInfo userInfo) {
-        WorkFull work;
-        if ("ADMIN".equals(userInfo.getRole())) {
-            //如果是ADMIN，则在工作详细页面不显示工作完成状态
-            // TODO: 2017/4/18 这里应该修改为workEditPage中调用 
-            work = workService.selectWorkById(workId);
-        } else {
-            work = workService.selectWork(workId, unitId);
-        }
+    public WorkFull getWork(@RequestParam(value = "workId") Integer workId, @RequestParam(value = "unitId") Integer unitId) {
+        WorkFull work = workService.selectWork(workId, unitId);
         return work;
     }
 
     /**
      * 添加一项工作
+     *
      * @param work
      * @return
      */
@@ -78,6 +71,7 @@ public class WorkController {
 
     /**
      * 编辑一项工作
+     *
      * @param work
      * @return
      */
@@ -94,6 +88,23 @@ public class WorkController {
             logger.error(e.getClass().getName() + ":" + e.getMessage());
             message.setCode(0);
             message.setMsg("修改工作失败！");
+        }
+        return message;
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseBody
+    @RequestMapping(value = "/deleteWork/{workId}", method = RequestMethod.GET)
+    public Message deleteWork(@PathVariable Integer workId) {
+        Message message = new Message();
+        try {
+            workService.delete(workId);
+            message.setCode(1);
+            message.setMsg("删除工作成功！");
+        } catch (RuntimeException e) {
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("删除工作失败！");
         }
         return message;
     }
@@ -127,8 +138,31 @@ public class WorkController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getWorkListByTypeId/{unitTypeId}", method = RequestMethod.GET)
+    public Message getWorkListByTypeId(@PathVariable Integer unitTypeId) {
+        Message message = new Message();
+        try {
+            List<Work> workList = workService.getWorkListByTypeId(unitTypeId);
+            message.setData(workList);
+            message.setMsg("工作查询成功！");
+        } catch (RuntimeException e) {
+            logger.error(e.getClass().getName() + ":" + e.getMessage());
+            message.setCode(0);
+            message.setMsg("工作查询失败！");
+        }
+        return message;
+    }
+
+    /**
+     * user
+     * work页面获取工作的列表
+     *
+     * @param unitId
+     * @return
+     */
+    @ResponseBody
     @RequestMapping(value = {"/getWorkListByUnitId/{unitId}"}, method = RequestMethod.GET)
-    public Map<String,List<WorkFull>> getWorkListByUnitId(@PathVariable Integer unitId) {
+    public Map<String, List<WorkFull>> getWorkListByUnitId(@PathVariable Integer unitId) {
         return workService.selectWorkSetListByUnitId(unitId);
     }
 
@@ -152,50 +186,9 @@ public class WorkController {
      */
     @ResponseBody
     @RequestMapping(value = {"/searchWork"}, method = RequestMethod.POST)
-    public List<Integer> searchWork(@RequestParam(value = "unitTypeId") Integer unitTypeId, @RequestParam(value = "keyword", required = false) String keyword) {
+    public List<Integer> searchWork(@RequestParam(value = "unitTypeId") Integer unitTypeId,
+                                    @RequestParam(value = "keyword", required = false) String keyword) {
         return workService.selectWorkIdsByKeyword(unitTypeId, keyword);
-    }
-
-
-    /**
-     * map 1: wokrlist in type_work
-     * map 2: worklist not in type_work
-     * @param unitTypeId
-     * @param type
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getWorkInTypeWork/{unitTypeId}/{type}",method = RequestMethod.GET)
-    public Message getWorkInTypeWork(@PathVariable Integer unitTypeId,@PathVariable String type){
-        Message message = new Message();
-        try {
-            List<Work> listInTypeWork= workService.getWorkListInTypeWork(unitTypeId,type);
-            message.setCode(1);
-            message.setMsg("查询成功！");
-            message.setData(listInTypeWork);
-        } catch (RuntimeException e) {
-            logger.error(e.getClass().getName() + ":" + e.getMessage());
-            message.setCode(0);
-            message.setMsg("查询失败！");
-        }
-        return message;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/getWorkNotInTypeWork",method = RequestMethod.POST)
-    public Message getWorkNotInTypeWork(@RequestParam(value = "unitTypeId") Integer unitTypeId,@RequestParam(value = "type") String type){
-        Message message = new Message();
-        try {
-            List<Work> listNotInTypeWork= workService.getWorkListNotInTypeWork(unitTypeId,type);
-            message.setCode(1);
-            message.setMsg("查询成功！");
-            message.setData(listNotInTypeWork);
-        } catch (RuntimeException e) {
-            logger.error(e.getClass().getName() + ":" + e.getMessage());
-            message.setCode(0);
-            message.setMsg("查询失败！");
-        }
-        return message;
     }
 
     @ResponseBody

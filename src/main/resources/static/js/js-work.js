@@ -137,7 +137,7 @@ var bindSearch = function () {
                 $.each(data, function (i, item) {
                     $("[data-workid='" + item + "']").addClass("search-show");
                 })
-                $(".panel-worktype:has(li.search-show)").addClass("search-show").find(".panel-collapse").addClass("in");
+                $(".panel-worktype:has(li.search-show)").addClass("search-show");
             }
         })
     })
@@ -158,7 +158,7 @@ var bindSearch = function () {
                     $.each(data, function (i, item) {
                         $("[data-workid='" + item + "']").addClass("search-show");
                     })
-                    $(".panel-worktype:has(li.search-show)").addClass("search-show").find(".panel-collapse").addClass("in");
+                    $(".panel-worktype:has(li.search-show)").addClass("search-show");
                 }
             })
         }

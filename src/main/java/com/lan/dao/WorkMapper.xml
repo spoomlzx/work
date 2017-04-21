@@ -10,6 +10,7 @@
     <resultMap id="WorkFullColumnMap" type="com.lan.model.WorkFull">
         <result column="work_id" property="workId"/>
         <result column="name" property="name"/>
+        <result column="unit_type_id" property="unitTypeId"/>
         <result column="type" property="type"/>
         <result column="basis" property="basis"/>
         <result column="content" property="content"/>
@@ -27,7 +28,7 @@
 
     <!--auto generated Code-->
     <sql id="all_column">
-        `work_id`, `name`, `type`, `basis`, `content`, `flow_chart`, `regulation_ids`, `tips`
+        `work_id`, `name`, `unit_type_id`, `type`, `basis`, `content`, `flow_chart`, `regulation_ids`, `tips`
     </sql>
 
     <select id="getTypeById" resultType="java.lang.String">
@@ -40,16 +41,8 @@
         FROM work WHERE work_id=#{workId}
     </select>
     
-    <select id="getWorkList" resultMap="WorkColumnMap">
-        SELECT work_id,`name`,type FROM work
-    </select>
-
-    <select id="selectWorkList" resultMap="WorkStatusMap">
-        SELECT w.work_id,w.name,w.type FROM type_work t INNER JOIN `work` w ON t.work_id=w.work_id AND t.unit_type_id=#{unitTypeId}
-        WHERE 1=1
-        <if test="type != null">
-            AND w.type=#{type}
-        </if>
+    <select id="getWorkListByTypeId" resultMap="WorkColumnMap">
+        SELECT work_id,`name`,type FROM work WHERE unit_type_id=#{unitTypeId}
     </select>
 
     <select id="selectWork" resultMap="WorkFullColumnMap">
@@ -65,27 +58,14 @@
     </select>
 
     <select id="selectWorkIdsByKeyword" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT s.work_id FROM type_work t
-        INNER JOIN searchtext s ON t.unit_type_id=#{unitTypeId} AND t.work_id=s.work_id
+        SELECT s.work_id FROM work w
+        INNER JOIN searchtext s ON w.unit_type_id=#{unitTypeId} AND w.work_id=s.work_id
         AND s.text LIKE '%${keyword}%'
     </select>
 
     <select id="getWorkListWithStatus" resultMap="WorkStatusMap">
         SELECT h.work_id,w.`name`,h.`status`->'${index}' AS status,JSON_LENGTH(h.`status`->'${index}') AS finish_days,w.type FROM history h
         INNER JOIN work w ON h.work_id=w.work_id AND h.unit_id=#{unitId}
-    </select>
-
-
-    <select id="getWorkListInTypeWork" resultMap="WorkStatusMap">
-        SELECT w.work_id, w.`name`, w.type FROM WORK w
-        WHERE w.work_id IN (SELECT work_id FROM type_work WHERE unit_type_id = #{unitTypeId})
-	    AND w.type = #{type}
-    </select>
-
-    <select id="getWorkListNotInTypeWork" resultMap="WorkStatusMap">
-        SELECT w.work_id, w.`name`, w.type FROM WORK w
-        WHERE w.work_id NOT IN (SELECT work_id FROM type_work WHERE unit_type_id = #{unitTypeId})
-        AND w.type = #{type}
     </select>
 
     <update id="deleteWorkRecord">
@@ -125,6 +105,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.workId!=null">`work_id`,</if>
             <if test="pojo.name!=null">`name`,</if>
+            <if test="pojo.unitTypeId!=null">`unit_type_id`,</if>
             <if test="pojo.type!=null">`type`,</if>
             <if test="pojo.basis!=null">`basis`,</if>
             <if test="pojo.content!=null">`content`,</if>
@@ -136,6 +117,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.workId!=null">#{pojo.workId},</if>
             <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.unitTypeId!=null">#{pojo.unitTypeId},</if>
             <if test="pojo.type!=null">#{pojo.type},</if>
             <if test="pojo.basis!=null">#{pojo.basis},</if>
             <if test="pojo.content!=null">#{pojo.content},</if>
@@ -170,6 +152,7 @@
         <set>
             <if test="pojo.workId != null">`work_id` = #{pojo.workId},</if>
             <if test="pojo.name != null">`name` = #{pojo.name},</if>
+            <if test="pojo.unitTypeId != null">`unit_type_id` = #{pojo.unitTypeId},</if>
             <if test="pojo.type != null">`type` = #{pojo.type},</if>
             <if test="pojo.basis != null">`basis` = #{pojo.basis},</if>
             <if test="pojo.content != null">`content` = #{pojo.content},</if>
@@ -179,5 +162,9 @@
         </set>
         WHERE work_id = #{pojo.workId}
     </update>
+
+    <delete id="delete">
+        DELETE FROM work WHERE work_id=#{workId}
+    </delete>
 </mapper>
 

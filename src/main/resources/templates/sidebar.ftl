@@ -36,14 +36,6 @@
             </a>
         </li>
     </#if>
-    <#if currentUser.role == "ADMIN">
-        <li <#if page=="workAssign">class="active"</#if> id="li-workAssign">
-            <a href="/workAssign">
-                <span class="fa fa-exclamation-triangle"></span>
-                <span>工作分配</span>
-            </a>
-        </li>
-    </#if>
         <li <#if page=="regulation">class="active"</#if> id="li-regulation">
             <a href="/regulation">
                 <span class="fa fa-file-text"></span>

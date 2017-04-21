@@ -18,6 +18,20 @@
 <#include "../sidebar.ftl"/>
 
 <div class="container-content">
+    <div class="work-edit-detail">
+        <div class="panel panel-default title">
+            <select class="form-control left" id="w-l-type" style="width: 10%">
+            <#list types as type>
+                <option value="${type.unitTypeId}">${type.name}</option>
+            </#list>
+            </select>
+            <div class="right">
+                <button class="btn btn-warning btn-show" onclick="window.location.href='/workAdd'">
+                    <span class="fa fa-plus"></span>添 加
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="center-container bk-white">
         <div class="regulation-list">
             <table class="table table-bordered table-hover" id="workList_table" style="width:100%;">
@@ -36,28 +50,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <#list workList as work>
-                <tr>
-                    <td> ${work.workId}</td>
-                    <td> ${work.name}</td>
-                    <td> ${work.type}</td>
-                    <td>
-                        <button class="btn btn-warning btn-show" onclick="window.location.href='/workAdd'">
-                            <span class="fa fa-edit"></span>添加
-                        </button>
-                        <button class="btn btn-success btn-show" onclick="window.location.href='/work/${work.workId}'">
-                            <span class="fa fa-edit"></span>编辑
-                        </button>
-                        <button class="btn btn-danger btn-show">
-                            <span class="fa fa-file"></span>删除
-                        </button>
-                    </td>
-                </tr>
-                </#list>
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
 
+<div class="modal fade" id="delete-modal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group notice-msg">
+                    <h3 id="w-d-name"></h3>
+                    删除后无法恢复,确定删除这项工作吗?
+                </div>
+                <div class="form-group notice-btn">
+                    <button class="btn btn-danger" id="w-delete">删 除</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
