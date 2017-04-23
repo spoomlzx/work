@@ -76,7 +76,7 @@
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/js/app.js" type="text/javascript"></script>
+<script src="/plugin/layer/layer.js" type="text/javascript"></script>
 <script src="/plugin/ztree/jquery.ztree.js" type="text/javascript"></script>
 <script src="/js/js-reg.js" type="text/javascript"></script>
 </body>

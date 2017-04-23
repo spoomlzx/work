@@ -472,36 +472,35 @@ body {
   cursor: pointer;
   background: #5cb85c; }
 
-.sidebar {
-  width: 320px;
+.event-detail {
+  width: 100%;
   padding: 20px 10px;
   position: absolute;
-  top: 60px;
   height: 100%;
   overflow: hidden;
   background-color: #fff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3); }
-  .sidebar .event-title-show {
+  .event-detail .event-title-show {
     margin-top: 40px;
     margin-bottom: 25px; }
-  .sidebar .event-time-show {
+  .event-detail .event-time-show {
     padding: 5px 0px;
     margin-bottom: 25px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-    .sidebar .event-time-show span {
+    .event-detail .event-time-show span {
       padding-right: 8px; }
-  .sidebar .event-person-show {
+  .event-detail .event-person-show {
     padding: 5px 0px;
     margin-bottom: 25px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-    .sidebar .event-person-show .label {
+    .event-detail .event-person-show .label {
       display: inline-block;
       margin-right: 10px;
       font-size: 12px;
       padding: 7px 15px;
       text-transform: none;
       cursor: pointer; }
-  .sidebar .event-describe-show {
+  .event-detail .event-describe-show {
     margin-right: 10px;
     display: block; }
 

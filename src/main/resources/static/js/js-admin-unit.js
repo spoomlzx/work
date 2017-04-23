@@ -76,10 +76,10 @@ var bindEditUnit = function () {
                 data: JSON.stringify(node),
                 success: function (message) {
                     if (message.code) {
-                        showTip("success", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 1});
                         zTree.updateNode(node);
                     } else {
-                        showTip("success", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 2, anim: 6});
                     }
                 }
             })
@@ -102,14 +102,14 @@ var bindAddUnit = function () {
             data: JSON.stringify(data),
             success: function (message) {
                 if (message.code) {
-                    showTip("success", "提示", message.msg);
+                    layer.msg(message.msg, {icon: 1});
                     var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                     var node = zTree.getSelectedNodes()[0];
 
                     zTree.addNodes(node, message.data);
 
                 } else {
-                    showTip("success", "提示", message.msg);
+                    layer.msg(message.msg, {icon: 2, anim: 6});
                 }
             }
         })
@@ -126,11 +126,11 @@ var bindDelUnit = function () {
                 url: "/delUnit/" + $("#u-id").val(),
                 success: function (message) {
                     if (message.code) {
-                        showTip("success", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 1});
                         zTree.removeNode(node);
 
                     } else {
-                        showTip("success", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 2, anim: 6});
                     }
                 }
             })
@@ -197,7 +197,7 @@ var initTable = function () {
             {
                 data: "userID",
                 render: function (data, type, row, meta) {
-                    var operation = '<button class="btn btn-primary user-reset-btn" data-id="' + row.userId + '" href="#reset-modal" data-toggle="modal"> 重置密码</button> ';
+                    var operation = '<button class="btn btn-primary user-reset-btn" data-id="' + row.userId + '" > 重置密码</button> ';
                     if (row.enabled) {
                         operation += '<button class="btn btn-success user-enable-btn" data-enable="1" data-id="' + row.userId + '" href="javascript:;"> 生效</button>';
                     } else {
@@ -210,47 +210,47 @@ var initTable = function () {
     });
 }
 
-var bindResetPassword=function(){
-    $('#reset-modal').on('show.bs.modal', function (e) {
-        var btn = $(e.relatedTarget);
-        var userId = btn.data("id");
-        $("#psw-reset").unbind("click");
-        $("#psw-reset").click(function(e){
+var bindResetPassword = function () {
+    $("#user-list").on('click','.user-reset-btn',function (e) {
+        var userId=$(this).data("id");
+        var index=layer.confirm('重置后密码将被恢复为：  123456', {
+            btn: ['重 置', '取 消'],icon:3,title:'提示'
+        }, function () {
             $.ajax({
                 type: "get",
-                url: "/resetPassword/"+userId,
+                url: "/resetPassword/" + userId,
                 success: function (message) {
-                    $('#reset-modal').modal('hide');
                     if (message.code) {
-                        showTip("success", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 1});
                     } else {
-                        showTip("danger", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 2, anim: 6});
                     }
+                    layer.close(index);
                 }
             })
-        })
+        });
     })
-
 }
 
-var bindChangeEnable=function () {
-    $("#user-list").on("click",".user-enable-btn",function(){
-        var enable=$(this).data("enable");
-        var userId=$(this).data("id");
-        var btn=$(this);
+var bindChangeEnable = function () {
+    $("#user-list").on("click", ".user-enable-btn", function () {
+        var enable = $(this).data("enable");
+        var userId = $(this).data("id");
+        var btn = $(this);
         $.ajax({
             type: "get",
-            url: "/changeEnable/"+userId,
+            url: "/changeEnable/" + userId,
             success: function (message) {
                 if (message.code) {
-                    showTip("success", "提示", message.msg);
-                    if(enable){
+                    layer.msg(message.msg, {icon: 1});
+                    btn.data("enable",!enable);
+                    if (enable) {
                         btn.removeClass("btn-success").addClass("btn-danger").html("禁用");
-                    }else{
+                    } else {
                         btn.removeClass("btn-danger").addClass("btn-success").html("生效");
                     }
                 } else {
-                    showTip("danger", "提示", message.msg);
+                    layer.msg(message.msg, {icon: 2, anim: 6});
                 }
             }
         })

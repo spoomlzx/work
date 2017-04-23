@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 var bindRegulationAdd = function () {
     $("#r-add").off("click");
-    $("#r-add").on("click",function (e) {
+    $("#r-add").on("click", function (e) {
         var title = $("#r-title").val();
         var titleError = $("#r-title-error");
         var content = editor.getContent();
@@ -50,7 +50,7 @@ var bindRegulationAdd = function () {
 
 var bindRegulationDelete = function (reguid, btn) {
     $("#r-delete").off("click")
-    $("#r-delete").on("click",function () {
+    $("#r-delete").on("click", function () {
         $.ajax({
             type: "get",
             url: "/admin/deleteRegulation/" + reguid,
@@ -66,7 +66,7 @@ var bindRegulationDelete = function (reguid, btn) {
 
 var bindRegulationEdit = function (btn) {
     $("#r-save").off("click");
-    $("#r-save").on("click",function () {
+    $("#r-save").on("click", function () {
         var data = {
             reguId: $(this).data("reguid"),
             title: $("#r-e-title").val(),
@@ -81,7 +81,7 @@ var bindRegulationEdit = function (btn) {
             data: JSON.stringify(data),
             success: function (message) {
                 $('#edit-modal').modal('hide');
-                if(message.code){
+                if (message.code) {
                     btn.parent().children('.regulation-content').html(data.content);
                     btn.parents('tr').children('.r-title').html(data.title);
                     btn.parents('tr').children('.r-department').html(data.department);
@@ -190,17 +190,44 @@ var initModal = function () {
         $('#r-title').val("");
         bindRegulationAdd();
     })
-    $('#delete-modal').on('show.bs.modal', function (e) {
-        var btn = $(e.relatedTarget);
-        var reguid = btn.data("reguid");
-        bindRegulationDelete(reguid, btn);
+    /**
+     * regulation删除的弹出确认框，使用layer
+     */
+    $(".regulation-delete").off('click').on('click', function (e) {
+        var reguid = $(this).data("reguid");
+        var btn = $(this);
+        var index = layer.confirm('删除后无法恢复,确定删除这条法规吗?', {
+            btn: ['确定', '取消'], icon: 0, title: '提示'
+        }, function () {
+            $.ajax({
+                type: "get",
+                url: "/admin/deleteRegulation/" + reguid,
+                success: function (message) {
+                    if (message.code) {
+                        layer.msg(message.msg, {time: 2000, icon: 1});
+                        table.row(btn.parents('tr')).remove().draw();
+                    } else {
+                        layer.msg(message.msg, {time: 2000, icon: 2, anim: 6});
+                    }
+                    layer.close(index);
+                }
+            })
+        });
     })
-    $('#content-modal').on('show.bs.modal', function (e) {
-        var btn = $(e.relatedTarget);
-        var content = btn.parent().children('.regulation-content').html();
+
+    $(".regulation-show").off('click').on('click', function (e) {
+        var content = $(this).parent().children('.regulation-content').html();
         var keyword = $("#regulation_table_filter input").val();
         content = content.replace(keyword, "<span class='search'> " + keyword + " </span>");
-        $('#content-modal .regulation-content').html(content);
+        content = "<div style='padding: 15px'>" + content + "</div>";
+        layer.open({
+            type: 1,
+            shade: 0.05,
+            shadeClose: true,
+            title: '<span class="fa fa-file-text-o" style="color: #498f3e"></span> 法规原文',
+            area: ['960px', '85%'],
+            content: content
+        });
     })
     $('#edit-modal').on('show.bs.modal', function (e) {
         var btn = $(e.relatedTarget);

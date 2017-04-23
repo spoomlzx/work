@@ -112,9 +112,9 @@ var bindRegUser = function () {
                 data: JSON.stringify(data),
                 success: function (message) {
                     if(message.code){
-                        showTip("success","提示",message.msg);
+                        layer.msg(message.msg, {time: 2000, icon: 1});
                     }else{
-                        showTip("error","提示",message.msg);
+                        layer.msg(message.msg, {time: 2000, icon: 2,anim:6});
                         $("#username").focus();
                     }
                 }

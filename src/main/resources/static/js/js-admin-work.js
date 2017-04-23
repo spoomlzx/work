@@ -29,13 +29,13 @@ var initFlowChart = function () {
         img=$("#img_area img")[0].src;
     }
     if (typeof(FileReader) === 'undefined') {
-        showTip("danger", "提示", "抱歉，你的浏览器不支持，请使用现代浏览器操作！");
+        layer.msg("抱歉，你的浏览器不支持！", {icon: 0});
         $("#img_input").disable();
     } else {
         $("#img_input").change(function () {
             var file = this.files[0];
             if (!/image\/\w+/.test(file.type)) {
-                alert("请确保文件为图像类型");
+                layer.msg("请确保文件为图像类型！", {icon: 0});
                 return false;
             }
             var reader = new FileReader();
@@ -83,9 +83,9 @@ var bindEditWork = function () {
                 data: JSON.stringify(data),
                 success: function (message) {
                     if (message.code) {
-                        showTip("success", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 1});
                     } else {
-                        showTip("danger", "提示", message.msg);
+                        layer.msg(message.msg, {icon: 2,anim:6});
                     }
                 }
             })
@@ -124,9 +124,9 @@ var bindAddWork = function () {
             data: JSON.stringify(data),
             success: function (message) {
                 if (message.code) {
-                    showTip("success", "提示", message.msg);
+                    layer.msg(message.msg, {icon: 1});
                 } else {
-                    showTip("danger", "提示", message.msg);
+                    layer.msg(message.msg, {icon: 2,anim:6});
                 }
             }
         })

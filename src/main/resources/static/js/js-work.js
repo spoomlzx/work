@@ -239,7 +239,7 @@ var bindInsertWorkLog=function(){
             success: function (message) {
                 if (message.code) {
                     $('#log-add-modal').modal('hide');
-                    showTip("success","成功",message.msg);
+                    layer.msg(message.msg, {time: 2000, icon: 1});
                 }
                 $("#l-duty-person").val("");
                 $("#l-person-type").val("");

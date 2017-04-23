@@ -215,7 +215,8 @@
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/js/app.js" type="text/javascript"></script>
+<script src="/plugin/moment.min.js" type="text/javascript"></script>
+<script src="/plugin/layer/layer.js" type="text/javascript"></script>
 <script src="/plugin/datetime/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <script src="/plugin/datetime/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
 <script src="/js/js-work.js" type="text/javascript"></script>

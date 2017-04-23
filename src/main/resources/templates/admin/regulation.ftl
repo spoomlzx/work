@@ -47,14 +47,14 @@
                     <td class="r-category"> ${regulation.category}</td>
                     <td>
                         <div class="regulation-content" style="display: none">${regulation.content}</div>
-                        <button href="#content-modal" data-toggle="modal" class="btn btn-info btn-show">
+                        <button class="btn btn-info regulation-show">
                             <span class="fa fa-file"></span>原文
                         </button>
                         <#if currentUser?? && currentUser.role == "ADMIN">
                             <button href="#edit-modal" data-toggle="modal" class="btn btn-success btn-edit" data-reguid="${regulation.reguId}">
                                 <span class="fa fa-edit"></span>修改
                             </button>
-                            <button href="#delete-modal" data-toggle="modal" class="btn btn-danger btn-delete" data-reguid="${regulation.reguId}">
+                            <button class="btn btn-danger regulation-delete" data-reguid="${regulation.reguId}">
                                 <span class="fa fa-cut"></span>删除
                             </button>
                         </#if>
@@ -71,38 +71,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="content-modal" tabindex="-1">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><span class="fa fa-file-code-o" style="color: #1c8f5f"></span> 法规原文</h4>
-            </div>
-            <div class="modal-body regulation-content">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="delete-modal" tabindex="-1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">提示</h4>
-            </div>
-            <div class="modal-body">
-                <div style="padding: 25px">删除后无法恢复,确定删除这条法规吗?</div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" id="r-delete">删 除</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="regulation-modal" tabindex="-1">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -219,6 +187,7 @@
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/plugin/layer/layer.js" type="text/javascript"></script>
 <script src="/plugin/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/js/js-regulation.js" type="text/javascript"></script>

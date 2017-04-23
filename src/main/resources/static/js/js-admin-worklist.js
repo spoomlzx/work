@@ -84,7 +84,7 @@ var initTable = function (unitTypeId) {
                 orderable: false,
                 render: function (data, type, row, meta) {
                     var operation = '<a class="btn btn-primary" href="/work/' + row.workId + '"> 编 辑</a> ';
-                    operation += '<a class="btn btn-danger" href="#delete-modal" data-toggle="modal" data-id="' + row.workId + '" data-name="'+row.name+'"> 删 除</a> ';
+                    operation += '<a class="btn btn-danger work-delete" data-id="' + row.workId + '" data-name="'+row.name+'"> 删 除</a> ';
                     return operation;
                 }
             }
@@ -124,20 +124,24 @@ var bindChangeUnitType = function () {
 }
 
 var bindDeleteWork=function () {
-    $("#w-delete").click(function () {
+    $("#workList_table").off('click').on('click','.work-delete',function (e) {
         var workId=$(this).data("id");
-        $.ajax({
-            type: "get",
-            url: "/deleteWork/"+workId,
-            success:function (message) {
-                $('#delete-modal').modal('hide');
-                table.ajax.reload();
-                if (message.code) {
-                    showTip("success", "提示", message.msg);
-                } else {
-                    showTip("danger", "提示", message.msg);
+        var index=layer.confirm('删除后无法恢复,确定删除这项工作吗?', {
+            btn: ['确定', '取消'],icon:3,title:'提示'
+        }, function () {
+            $.ajax({
+                type: "get",
+                url: "/deleteWork/"+workId,
+                success:function (message) {
+                    layer.close(index);
+                    if (message.code) {
+                        table.ajax.reload();
+                        layer.msg(message.msg, {icon: 1});
+                    } else {
+                        layer.msg(message.msg, {icon: 2,anim:6});
+                    }
                 }
-            }
-        })
+            })
+        });
     })
 }

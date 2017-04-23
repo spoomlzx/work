@@ -31,20 +31,21 @@ initCalendar = function () {
             initEventAddModal(start, end);
         },
         eventDrop: function (event, delta, revertFunc) {
-
-            //alert(event.title + " was dropped on " + event.start.format());
-
-            //showTip("warning","出错",event.title + " was dropped on " + event.start.format());
-
+            layer.open({
+                type: 1
+                , title: '在线调试'
+                , id: 'Lay_layer_debug'
+                , content: $('.event-detail')
+                , shade: 0.05
+                , shadeClose: true
+                , resize: false
+                , fixed: false
+                , area: ['360px', '80%']
+                , offset: 'rb'
+            });
         },
         eventResize: function (event, delta, revertFunc) {
-
-            alert(event.title + " end is now " + event.end.format());
-
-            // if (!confirm("is this okay?")) {
-            //     revertFunc();
-            // }
-
+            layer.msg(event.title + " end is now " + event.end.format(), {time: 2000, icon: 1, anim: 6});
         },
         eventClick: function (event) {
             /**
@@ -63,47 +64,39 @@ initCalendar = function () {
             $(".event-person-show > div > span:nth-child(3)").html(event.person);
             $(".event-person-show label").css("background-color", event.color);
             $(".event-describe-show").html(event.describe);
-
-            $('#delete-modal').on('show.bs.modal', function (e) {
-                $("#e-delete").unbind();
-                $("#e-delete").click(function () {
+            /**
+             * 显示event详情的右侧弹出栏，使用layer
+             */
+            var index=layer.open({
+                type: 1
+                , title: '<div class="fa fa-edit"></div> 工作详情'
+                , content: $('.event-detail')
+                , shade: 0.05
+                , shadeClose: true
+                , resize: false
+                , fixed: false
+                , area: ['360px', '80%']
+                , offset: 'rb'
+            });
+            $(".event-delete").unbind('click').click(function () {
+                layer.confirm('删除后无法恢复,确定删除这条法规吗?', {
+                    btn: ['确定', '取消'],icon:0,title:'提示'
+                }, function () {
                     $.ajax({
                         type: "get",
                         url: "/deleteEvent/" + event.id,
                         success: function (message) {
-                            $('#delete-modal').modal('hide');
                             if (message.code) {
-                                showTip("success","提示",message.msg);
-                                $('#calendar').fullCalendar('removeEvents',event.id);
-                            }
-                            //删除成功以后关闭event详情显示
-                            var _con = $(".sidebar");
-                            if (!_con.is(e.target) && _con.has(e.target).length === 0) {
-                                $(".sidebar").removeClass("in");
-                                setTimeout(function () {
-                                    $(".modal-sidebar").removeClass("display-block");
-                                }, 300);
+                                layer.msg(message.msg, {time: 2000, icon: 1});
+                                layer.close(index);
+                                $('#calendar').fullCalendar('removeEvents', event.id);
+                            } else {
+                                layer.msg(message.msg, {time: 2000, icon: 2, anim: 6});
                             }
                         }
                     })
-                })
+                });
             })
-            /**
-             * 显示event详情的右侧弹出栏，使用css动画
-             */
-            $(".modal-sidebar").addClass("display-block");
-            setTimeout(function () {
-                $(".sidebar").addClass("in");
-            }, 25);
-            $(".modal-sidebar").click(function (e) {
-                var _con = $(".sidebar");
-                if (!_con.is(e.target) && _con.has(e.target).length === 0) {
-                    $(".sidebar").removeClass("in");
-                    setTimeout(function () {
-                        $(".modal-sidebar").removeClass("display-block");
-                    }, 300);
-                }
-            });
         },
         editable: true,
         eventSources: [
@@ -169,9 +162,9 @@ var bindEventAddSubmit = function () {
                 success: function (message) {
                     if (message.code) {
                         $('#calendar').fullCalendar('renderEvent', message.data, true);
-                        showTip("success", "成功", message.msg);
+                        layer.msg(message.msg, {time: 2000, icon: 1});
                     } else {
-                        showTip("error", "出错", message.msg);
+                        layer.msg(message.msg, {time: 2000, icon: 2, anim: 6});
                     }
                 }
             })

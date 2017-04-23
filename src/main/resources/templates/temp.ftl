@@ -27,28 +27,26 @@
 </div>
 
 <#--显示event详情-->
-<div id="event-show-modal" class="modal modal-sidebar" tabindex="-1">
-    <div class="sidebar right-fade">
-        <div class="form-group">
-            <button type="button" class="btn btn-danger" href="#delete-modal" data-toggle="modal">删除</button>
-            <button type="button" class="btn btn-info">编辑</button>
+<div class="event-detail" style="display: none">
+    <div class="form-group">
+        <button type="button" class="btn btn-danger event-delete">删除</button>
+        <button type="button" class="btn btn-info hidden">编辑</button>
+    </div>
+    <div class="form-group event-title-show">
+        <h3>开发工作规范软件</h3>
+    </div>
+    <div class="form-group event-time-show">
+        <div class="display-inline-block ">
+            <span class="fa fa-calendar"></span><span>04-27 15:00 – 04-29 10:30</span>
         </div>
-        <div class="form-group event-title-show">
-            <h3>开发工作规范软件</h3>
+    </div>
+    <div class="form-group event-person-show">
+        <div class="display-inline-block ">
+            <label class="label">重要</label><span>责任人：</span><span></span>
         </div>
-        <div class="form-group event-time-show">
-            <div class="display-inline-block ">
-                <span class="fa fa-calendar"></span><span>04-27 15:00 – 04-29 10:30</span>
-            </div>
-        </div>
-        <div class="form-group event-person-show">
-            <div class="display-inline-block ">
-                <label class="label">重要</label><span>责任人：</span><span></span>
-            </div>
-        </div>
-        <div class="form-group event-describe-show">
+    </div>
+    <div class="form-group event-describe-show">
 
-        </div>
     </div>
 </div>
 
@@ -114,25 +112,10 @@
     </div>
 </div>
 
-<div class="modal fade" id="delete-modal" tabindex="-1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="form-group notice-msg">
-                    删除后无法恢复,确定删除这条法规吗?
-                </div>
-                <div class="form-group notice-btn">
-                    <button class="btn btn-danger" id="e-delete">删 除</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/js/app.js" type="text/javascript"></script>
+<script src="/plugin/moment.min.js" type="text/javascript"></script>
+<script src="/plugin/layer/layer.js" type="text/javascript"></script>
 <script src="/plugin/fullcalendar/fullcalendar.js" type="text/javascript"></script>
 <script src="/plugin/fullcalendar/zh-cn.js" type="text/javascript"></script>
 <script src="/plugin/datetime/bootstrap-datetimepicker.min.js" type="text/javascript"></script>

@@ -31,16 +31,17 @@
                 <option value="日" <#if work?? && work.type='日'>selected</#if>>日</option>
                 <option value="按需" <#if work?? && work.type='按需'>selected</#if>>按需</option>
             </select>
+        <#if types??>
             <select class="form-control left" id="w-e-unit-type" style="width: 10%">
-            <#list types as type>
-                <option value="${type.unitTypeId}">${type.name}</option>
-            </#list>
+                <#list types as type>
+                    <option value="${type.unitTypeId}">${type.name}</option>
+                </#list>
             </select>
+        </#if>
             <div class="right">
                 <button type="button" class="btn btn-success" onclick="javascript :history.back(-1);">返 回</button>
                 <button type="button" class="btn btn-primary <#if !work??>hidden</#if>" id="w-edit-btn">保存</button>
                 <button type="button" class="btn btn-warning <#if work??>hidden</#if>" id="w-add-btn">添加</button>
-                <button href="#delete-modal" data-toggle="modal" type="button" class="btn btn-danger" id="w-delete-btn">删除</button>
             </div>
         </div>
         <div class="work-panel">
@@ -94,11 +95,10 @@
 </div>
 
 
-
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/plugin/select2/js/select2.full.js" type="text/javascript"></script>
-<script src="/js/app.js" type="text/javascript"></script>
+<script src="/plugin/layer/layer.js" type="text/javascript"></script>
 <script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/js/js-admin-work.js" type="text/javascript"></script>
 </body>
