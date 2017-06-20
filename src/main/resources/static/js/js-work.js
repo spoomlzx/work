@@ -95,26 +95,25 @@ var getWork=function(unitId,workId){
             $("#p-tips").html(tips);
             $("#p-flowchart").empty();
             $("#p-flowchart").append("<img src='" + data.flowChart + "' width='90%'/>")
-            //重新绑定regulation的modal的显示动作
-            $('#regulation-modal').off('show.bs.modal');
-            $('#regulation-modal').on('show.bs.modal', function (e) {
-                var id = e.relatedTarget.dataset.id;
-                var b = data.regulations[id];
-                $("#regulation-modal .modal-title").empty();
-                $("#regulation-modal .modal-title").html(b.title);
-                $("#regulation-modal .modal-body").empty();
-                if (keyword != "") {
-                    var c = b.content.replace(kwpattern, "<span class='search'> " + keyword + " </span>");
-                    $("#regulation-modal .modal-body").html(c);
-                } else {
-                    $("#regulation-modal .modal-body").html(b.content);
-                }
-            })
             //添加regulation列表
             $("#p-regulations ul").empty();
             $.each(data.regulations, function (i, item) {
-                $("#p-regulations ul").append("<li data-toggle='modal' href='#regulation-modal' data-id=" + i + "><a href='javascript:;'>" + item.title + "</a></li>");
+                $("#p-regulations ul").append("<li class='regu-link' data-id=" + i + "><a href='javascript:;'>" + item.title + "</a></li>");
             })
+
+            $("#p-regulations").off('click').on('click','.regu-link',function (e) {
+                var id=$(this).data("id");
+                var b = data.regulations[id];
+                layer.open({
+                    type: 1,
+                    shade: 0.05,
+                    shadeClose: true,
+                    title: '<span class="fa fa-file-text-o" style="color: #498f3e"></span> '+b.title,
+                    area: ['960px', '85%'],
+                    content: "<div style='padding: 15px'>"+b.content+"</div>"
+                });
+            })
+
             getWorkLogList(workId,unitId);
         }
     })

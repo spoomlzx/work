@@ -11,6 +11,10 @@ import java.util.List;
 @Repository
 public interface WorkMapper {
 
+    Integer getPreId(Integer workId);
+
+    Integer getNextId(Integer workId);
+
     /**
      * 获取work的type
      * @param workId

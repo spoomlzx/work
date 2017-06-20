@@ -44,12 +44,12 @@
 }
 
 .work-list .panel-heading {
-    font-size: 22px;
+    font-size: 16px;
 }
 
 .work-list .panel-container .panel-heading {
-    padding: 7px 20px;
-    font-size: 16px;
+    padding: 4px 20px;
+    font-size: 14px;
 }
 
 .work-list .title-0 {
@@ -123,6 +123,7 @@
 //work-detail
 .work-detail {
     float: left;
+    padding-left: 10px;
     width: 60%;
     .work-panel {
         width: 50%;

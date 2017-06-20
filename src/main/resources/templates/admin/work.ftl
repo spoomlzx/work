@@ -39,9 +39,18 @@
             </select>
         </#if>
             <div class="right">
-                <button type="button" class="btn btn-success" onclick="javascript :history.back(-1);">返 回</button>
+            <#if work??>
+                <#if preId??>
+                    <a type="button" class="btn btn-default" href="/work/${preId}">上一条</a>
+                </#if>
+                <#if nextId??>
+                    <a type="button" class="btn btn-default" href="/work/${nextId}">下一条</a>
+                </#if>
+            </#if>
+                <a type="button" class="btn btn-success" href="/work">返 回</a>
                 <button type="button" class="btn btn-primary <#if !work??>hidden</#if>" id="w-edit-btn">保存</button>
                 <button type="button" class="btn btn-warning <#if work??>hidden</#if>" id="w-add-btn">添加</button>
+
             </div>
         </div>
         <div class="work-panel">
@@ -72,7 +81,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">引用法规</div>
                 <div class="panel-body">
-                    <select class="regulation-select form-control" multiple="multiple">
+                    <select class="regulation-select form-control" data-ids="<#if work??>${work.tips}</#if>" multiple="multiple">
                     <#list regulations as regulation>
                         <option value="${regulation.reguId}">${regulation.title}</option>
                     </#list>
@@ -99,7 +108,6 @@
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/plugin/select2/js/select2.full.js" type="text/javascript"></script>
 <script src="/plugin/layer/layer.js" type="text/javascript"></script>
-<script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/js/js-admin-work.js" type="text/javascript"></script>
 </body>
 </html>

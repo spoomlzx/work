@@ -19,9 +19,11 @@ initCalendar = function () {
             center: 'title',
             right: 'month,agendaWeek,today'
         },
+        editable: true,
+        showNonCurrentDates: false,
         currentTimezone: 'Asia/Beijing',
         weekNumbers: true,
-        navLinks: true, // can click day/week names to navigate views
+        navLinks: true,
         selectable: true,
         selectHelper: true,
         select: function (start, end) {
@@ -31,21 +33,37 @@ initCalendar = function () {
             initEventAddModal(start, end);
         },
         eventDrop: function (event, delta, revertFunc) {
-            layer.open({
-                type: 1
-                , title: '在线调试'
-                , id: 'Lay_layer_debug'
-                , content: $('.event-detail')
-                , shade: 0.05
-                , shadeClose: true
-                , resize: false
-                , fixed: false
-                , area: ['360px', '80%']
-                , offset: 'rb'
-            });
+            var start='', end='';
+            if (false==event.allDay) {
+                start = event.start.format("YYYY-MM-DD HH:mm:ss");
+                if(event.end){
+                    end = event.end.format("YYYY-MM-DD HH:mm:ss");
+                }
+            } else {
+                start = event.start.format("YYYY-MM-DD");
+                if(event.end){
+                    end = event.end.format("YYYY-MM-DD");
+                }
+            }
+            var data = {
+                id: event.id,
+                start: start,
+                end: end
+            }
+            updateEvent(data,revertFunc);
         },
         eventResize: function (event, delta, revertFunc) {
-            layer.msg(event.title + " end is now " + event.end.format(), {time: 2000, icon: 1, anim: 6});
+            var end;
+            if (true==event.allDay) {
+                end = event.end.format("YYYY-MM-DD");
+            } else {
+                end = event.end.format("YYYY-MM-DD HH:mm:ss");
+            }
+            var data = {
+                id: event.id,
+                end: end
+            }
+            updateEvent(data,revertFunc);
         },
         eventClick: function (event) {
             /**
@@ -56,7 +74,8 @@ initCalendar = function () {
             if (event.end == null) {
                 time = event.start.format("MM月DD日 HH:mm");
             } else if (event.start.format("HH:mm:ss") == "00:00:00" && event.end.format("HH:mm:ss") == "00:00:00") {
-                time = event.start.format("MM月DD日") + " – " + event.end.subtract('seconds', 1).format("MM月DD日");
+                time = event.start.format("MM月DD日") + " – " + event.end.subtract(1, 'd').format("MM月DD日");
+                event.end.add(1,'d');
             } else {
                 time = event.start.format("MM月DD日 HH:mm") + " – " + event.end.format("MM月DD日 HH:mm");
             }
@@ -67,7 +86,7 @@ initCalendar = function () {
             /**
              * 显示event详情的右侧弹出栏，使用layer
              */
-            var index=layer.open({
+            var index = layer.open({
                 type: 1
                 , title: '<div class="fa fa-edit"></div> 工作详情'
                 , content: $('.event-detail')
@@ -80,7 +99,7 @@ initCalendar = function () {
             });
             $(".event-delete").unbind('click').click(function () {
                 layer.confirm('删除后无法恢复,确定删除这条法规吗?', {
-                    btn: ['确定', '取消'],icon:0,title:'提示'
+                    btn: ['确定', '取消'], icon: 0, title: '提示'
                 }, function () {
                     $.ajax({
                         type: "get",
@@ -98,7 +117,6 @@ initCalendar = function () {
                 });
             })
         },
-        editable: true,
         eventSources: [
             {
                 url: '/getEvents',
@@ -109,6 +127,23 @@ initCalendar = function () {
             }
         ]
     });
+}
+
+var updateEvent=function (event,revertFunc) {
+    $.ajax({
+        type: "post",
+        url: "/editEvent",
+        contentType: "application/json",
+        data: JSON.stringify(event),
+        success: function (message) {
+            if (message.code) {
+                layer.msg(message.msg, {time: 2000, icon: 1});
+            } else {
+                layer.msg(message.msg, {time: 2000, icon: 2, anim: 6});
+                revertFunc();
+            }
+        }
+    })
 }
 
 var initEventAddModal = function (start, end) {

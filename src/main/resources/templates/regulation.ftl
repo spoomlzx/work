@@ -47,7 +47,7 @@
                     <td class="r-category"> ${regulation.category}</td>
                     <td>
                         <div class="regulation-content" style="display: none">${regulation.content}</div>
-                        <button href="#content-modal" data-toggle="modal" class="btn btn-info btn-show">
+                        <button class="btn btn-info regulation-show">
                             <span class="fa fa-file"></span>原文
                         </button>
                         <#if currentUser?? && currentUser.role == "ADMIN">
@@ -219,8 +219,8 @@
 
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/plugin/layer/layer.js" type="text/javascript"></script>
 <script src="/plugin/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="/plugin/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="/js/js-regulation.js" type="text/javascript"></script>
 </body>
 </html>

@@ -23,6 +23,14 @@ public class WorkService {
     @Autowired
     private RegulationMapper regulationMapper;
 
+    public Integer getPreId(Integer workId){
+        return workMapper.getPreId(workId);
+    }
+
+    public Integer getNextId(Integer workId){
+        return workMapper.getNextId(workId);
+    }
+
     public List<Work> getWorkListByTypeId(Integer unitTypeId){
         return workMapper.getWorkListByTypeId(unitTypeId);
     }

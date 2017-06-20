@@ -150,7 +150,6 @@
 <script src="/plugin/jquery.min.js" type="text/javascript"></script>
 <script src="/plugin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/plugin/moment.min.js" type="text/javascript"></script>
-<script src="/js/app.js" type="text/javascript"></script>
 <script src="/plugin/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="/plugin/ztree/jquery.ztree.js" type="text/javascript"></script>
 <script src="/js/js-progress.js" type="text/javascript"></script>

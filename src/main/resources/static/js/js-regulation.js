@@ -155,7 +155,7 @@ var initTable = function () {
             api.columns().indexes().flatten().each(function (i) {
                 if (i > 1 && i < 4) {
                     var column = api.column(i);
-                    var select = $('<select class="form-control"><option value=""></option></select>')
+                    var select = $('<select class="form-control"><option value="">全部</option></select>')
                         .appendTo($("#s-" + i).empty())
                         .on('change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
@@ -216,6 +216,7 @@ var initModal = function () {
     })
 
     $(".regulation-show").off('click').on('click', function (e) {
+        var title=$(this).parent().parent().children('.r-title').html();
         var content = $(this).parent().children('.regulation-content').html();
         var keyword = $("#regulation_table_filter input").val();
         content = content.replace(keyword, "<span class='search'> " + keyword + " </span>");
@@ -224,8 +225,9 @@ var initModal = function () {
             type: 1,
             shade: 0.05,
             shadeClose: true,
-            title: '<span class="fa fa-file-text-o" style="color: #498f3e"></span> 法规原文',
+            title: '<span class="fa fa-file-text-o" style="color: #498f3e"></span> '+title,
             area: ['960px', '85%'],
+            maxmin: true,
             content: content
         });
     })

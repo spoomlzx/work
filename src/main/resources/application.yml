@@ -10,7 +10,7 @@ logging:
 spring:
   freemarker:
     charset: UTF-8
-    cache: true
+    cache: false
   datasource:
     name: test
     url: jdbc:mysql://localhost:1024/work?useUnicode=true&characterEncoding=utf8&useSSL=true

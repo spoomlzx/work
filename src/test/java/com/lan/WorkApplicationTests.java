@@ -54,8 +54,7 @@ public class WorkApplicationTests {
     public void testSelectWork() {
         Gson gson = new Gson();
         String a = "{\"u1\": 1, \"u2\": 1, \"u3\": 1, \"u5\": 1}";
-        Map<String, Integer> m = gson.fromJson(a, new TypeToken<Map<String, Integer>>() {
-        }.getType());
+        Map<String, Integer> m = gson.fromJson(a, new TypeToken<Map<String, Integer>>() {}.getType());
         //System.out.println(m);
 
         System.out.println(gson.toJson(workService.selectWorkListWithStatus(1)));

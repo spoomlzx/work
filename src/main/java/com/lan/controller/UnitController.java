@@ -1,11 +1,8 @@
 package com.lan.controller;
 
-import com.lan.model.Event;
 import com.lan.model.Unit;
 import com.lan.model.User;
 import com.lan.model.utilMoel.Message;
-import com.lan.model.utilMoel.UserInfo;
-import com.lan.service.EventService;
 import com.lan.service.UnitService;
 import com.lan.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -30,8 +27,7 @@ public class UnitController {
     private final static Logger logger = LoggerFactory.getLogger(UnitController.class);
     @Autowired
     private UnitService unitService;
-    @Autowired
-    private EventService eventService;
+
     @Autowired
     private UserService userService;
 
@@ -192,48 +188,6 @@ public class UnitController {
             logger.error(e.getClass().getName() + ":" + e.getMessage());
             message.setCode(0);
             message.setMsg("新建用户失败！");
-        }
-        return message;
-    }
-
-
-    @ResponseBody
-    @RequestMapping(value = "/getEvents", method = RequestMethod.POST)
-    public List<Event> getEvents(@RequestParam(value = "start") String start,
-                                 @RequestParam(value = "end") String end,
-                                 @ModelAttribute("currentUser") UserInfo userInfo) {
-        List<Event> events = eventService.getEvents(userInfo.getUnitId(), start, end);
-        return events;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-    public Message addEvent(@RequestBody Event event, @ModelAttribute("currentUser") UserInfo userInfo) {
-        Message message = new Message();
-        try {
-            event.setUnitId(userInfo.getUnitId());
-            eventService.insertSelective(event);
-            message.setData(event);
-            message.setMsg("添加工作成功！");
-        } catch (RuntimeException e) {
-            logger.error(e.getClass().getName() + ":" + e.getMessage());
-            message.setCode(0);
-            message.setMsg("添加工作失败！");
-        }
-        return message;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/deleteEvent/{id}", method = RequestMethod.GET)
-    public Message deleteEvent(@PathVariable Integer id, @ModelAttribute("currentUser") UserInfo userInfo) {
-        Message message = new Message();
-        try {
-            eventService.deleteEvent(userInfo.getUnitId(), id);
-            message.setMsg("删除工作成功！");
-        } catch (RuntimeException e) {
-            logger.error(e.getClass().getName() + ":" + e.getMessage());
-            message.setCode(0);
-            message.setMsg("删除工作失败！");
         }
         return message;
     }

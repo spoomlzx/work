@@ -19,6 +19,9 @@ $(document).ready(function () {
         allowClear: true
     });
 
+
+    //$(".regulation-select").val(['2','1']).trigger('change');
+
     initFlowChart();
     bindEditWork();
     bindAddWork();

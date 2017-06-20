@@ -31,6 +31,14 @@
         `work_id`, `name`, `unit_type_id`, `type`, `basis`, `content`, `flow_chart`, `regulation_ids`, `tips`
     </sql>
 
+    <select id="getPreId" resultType="java.lang.Integer">
+        SELECT work_id FROM work WHERE work_id &lt; #{workId} ORDER BY unit_type_id,work_id desc limit 0,1
+    </select>
+    
+    <select id="getNextId" resultType="java.lang.Integer">
+        SELECT work_id FROM work WHERE work_id &gt; #{workId} ORDER BY unit_type_id,work_id limit 0,1
+    </select>
+
     <select id="getTypeById" resultType="java.lang.String">
         SELECT type FROM work WHERE work_id=#{workId}
     </select>

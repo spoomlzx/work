@@ -32,11 +32,11 @@
   float: right; }
 
 .work-list .panel-heading {
-  font-size: 22px; }
+  font-size: 16px; }
 
 .work-list .panel-container .panel-heading {
-  padding: 7px 20px;
-  font-size: 16px; }
+  padding: 4px 20px;
+  font-size: 14px; }
 
 .work-list .title-0 {
   background-color: #E7505A; }
@@ -91,6 +91,7 @@
 
 .work-detail {
   float: left;
+  padding-left: 10px;
   width: 60%; }
   .work-detail .work-panel {
     width: 50%;
@@ -180,7 +181,7 @@ html, body {
 body {
   padding-top: 60px;
   background-color: #e6e6e6;
-  font-size: 16px; }
+  font-size: 14px; }
 
 .header {
   position: fixed;

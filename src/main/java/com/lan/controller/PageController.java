@@ -103,6 +103,12 @@ public class PageController {
         List<Regulation> regulations=regulationService.getRegulationNames();
         model.addAttribute("regulations",regulations);
 
+        //上一条，下一条
+        Integer preId=workService.getPreId(workId);
+        Integer nextId=workService.getNextId(workId);
+        model.addAttribute("preId",preId);
+        model.addAttribute("nextId",nextId);
+
         WorkFull work = workService.selectWorkById(workId);
         model.addAttribute("work",work);
         return "admin/work";

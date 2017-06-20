@@ -95,7 +95,7 @@ var initTable = function (unitTypeId) {
             api.columns().indexes().flatten().each(function (i) {
                 if (i > 0 && i < 3) {
                     var column = api.column(i);
-                    var select = $('<select class="form-control"><option value=""></option></select>')
+                    var select = $('<select class="form-control"><option value="">全部</option></select>')
                         .appendTo($("#s-" + i).empty()).off('change')
                         .on('change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(

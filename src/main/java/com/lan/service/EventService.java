@@ -31,8 +31,13 @@ public class EventService{
         return eventMapper.insertList(pojos);
     }
 
+    @Transactional
     public int update(Event pojo){
-        return eventMapper.update(pojo);
+        try {
+            return eventMapper.update(pojo);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Transactional
